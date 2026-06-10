@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dorna Admin Panel</title>
+    <link rel="icon" type="image/png" href="/admin/static/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/static/styles.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo">
+                        <img src="/admin/static/Logo.png" alt="Dorna Admin">
+                    </div>
+                    <h1>Dorna Admin</h1>
+                    <p>Sign in to access the admin panel</p>
+                </div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="admin@dorna.ai" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span>Sign In</span>
+                        <svg class="loading-spinner" width="20" height="20" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <p id="login-error" class="error-message"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard-page" class="page hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-small">
+                    <img src="/admin/static/Logo.png" alt="Dorna" class="logo-image">
+                </div>
+                <span class="sidebar-title">Dorna Admin</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" rx="1"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1"/>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-section="users">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <span>Users</span>
+                </a>
+                <a href="#" class="nav-item" data-section="topics">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                    </svg>
+                    <span>Topics</span>
+                </a>
+                <a href="#" class="nav-item" data-section="analytics">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10"/>
+                        <line x1="12" y1="20" x2="12" y2="4"/>
+                        <line x1="6" y1="20" x2="6" y2="14"/>
+                    </svg>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" data-section="audit">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                    <span>Audit Log</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="theme-toggle">
+                    <span class="theme-label">Light</span>
+                    <label class="theme-switch">
+                        <input type="checkbox" id="theme-toggle-switch">
+                        <span class="theme-slider"></span>
+                    </label>
+                    <span class="theme-label">Dark</span>
+                </div>
+                <div class="admin-info">
+                    <div class="admin-avatar">
+                        <span id="admin-initials">A</span>
+                    </div>
+                    <div class="admin-details">
+                        <span id="admin-name">Admin</span>
+                        <span id="admin-role" class="role-badge">Admin</span>
+                    </div>
+                </div>
+                <button id="logout-btn" class="btn btn-ghost">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="section-dashboard" class="content-section">
+                <header class="section-header">
+                    <h2>Dashboard</h2>
+                    <p>Overview of your platform metrics</p>
+                </header>
+
+                <div class="dashboard-grid">
+                    <div class="metric-row">
+                        <div class="metric-card">
+                            <div class="metric-icon">👥</div>
+                            <div>
+                                <div class="metric-value" id="stat-total-users">—</div>
+                                <div class="metric-label">Total Users</div>
+                            </div>
+                            <span class="metric-foot">Usage Down 100%</span>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">✅</div>
+                            <div>
+                                <div class="metric-value" id="stat-active-today">—</div>
+                                <div class="metric-label">Active Today</div>
+                            </div>
+                            <span class="metric-foot">Usage Down 100%</span>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">⚡</div>
+                            <div>
+                                <div class="metric-value" id="stat-requests-today">—</div>
+                                <div class="metric-label">Requests Today</div>
+                            </div>
+                            <span class="metric-foot">Translate, Grammar, Podcast</span>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">🆕</div>
+                            <div>
+                                <div class="metric-value" id="stat-new-week">—</div>
+                                <div class="metric-label">New Users (7d)</div>
+                            </div>
+                            <span class="metric-foot">Last 7 days</span>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">🧭</div>
+                            <div>
+                                <div class="metric-value" id="stat-topics">—</div>
+                                <div class="metric-label">Active Topics</div>
+                            </div>
+                            <span class="metric-foot">News topics in rotation</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-main">
+                        <div class="system-card">
+                            <h3>System Status</h3>
+                            <ul>
+                                <li><span id="status-dot-ai" class="dot warn"></span> AI: <span id="status-ai">Unknown</span></li>
+                                <li><span id="status-dot-tts" class="dot warn"></span> TTS: <span id="status-tts">Unknown</span></li>
+                                <li><span id="status-dot-db" class="dot warn"></span> Database: <span id="status-db">Unknown</span></li>
+                            </ul>
+                        </div>
+                        <div class="chart-card-dark coming-soon">
+                            <span class="coming-soon-badge">Coming Soon</span>
+                            <div class="chart-header">
+                                <h3>User Growth</h3>
+                                <span class="pill">+56.2%</span>
+                            </div>
+                            <div class="chart-placeholder-dark">
+                                <div class="chart-line"></div>
+                                <div class="chart-legend">Mon · Tue · Wed · Thu · Fri · Sat · Sun</div>
+                            </div>
+                        </div>
+                        <div class="token-card">
+                            <h3>Token Usage</h3>
+                            <ul>
+                                <li>
+                                    Last 7 Days
+                                    <div class="token-split">
+                                        <span>User <strong id="token-7-user">—</strong></span>
+                                        <span>System <strong id="token-7-system">—</strong></span>
+                                        <span>TTS <strong id="token-7-tts">—</strong></span>
+                                    </div>
+                                    <div class="token-total">Total Cost <strong id="token-7-cost">—</strong></div>
+                                </li>
+                                <li>
+                                    Last 30 Days
+                                    <div class="token-split">
+                                        <span>User <strong id="token-30-user">—</strong></span>
+                                        <span>System <strong id="token-30-system">—</strong></span>
+                                        <span>TTS <strong id="token-30-tts">—</strong></span>
+                                    </div>
+                                    <div class="token-total">Total Cost <strong id="token-30-cost">—</strong></div>
+                                </li>
+                                <li>
+                                    Last 90 Days
+                                    <div class="token-split">
+                                        <span>User <strong id="token-90-user">—</strong></span>
+                                        <span>System <strong id="token-90-system">—</strong></span>
+                                        <span>TTS <strong id="token-90-tts">—</strong></span>
+                                    </div>
+                                    <div class="token-total">Total Cost <strong id="token-90-cost">—</strong></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-bottom">
+                        <div class="chart-card-dark coming-soon">
+                            <span class="coming-soon-badge">Coming Soon</span>
+                            <div class="chart-header">
+                                <h3>Token Usage Today</h3>
+                                <span class="pill">12,450 tokens</span>
+                            </div>
+                            <div class="chart-placeholder-dark">
+                                <div class="chart-line"></div>
+                                <div class="chart-legend">Mon · Tue · Wed · Thu · Fri · Sat · Sun</div>
+                            </div>
+                        </div>
+                        <div class="hot-topic-card coming-soon">
+                            <span class="coming-soon-badge">Coming Soon</span>
+                            <h3>🔥 Hot Topic Today</h3>
+                            <div class="hot-topic">
+                                <strong>Immigration News</strong>
+                                <p>⭐ 18 Likes · Used by 12 users</p>
+                                <span class="pill warn">Trending</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="section-users" class="content-section hidden">
+                <header class="section-header">
+                    <h2>User Management</h2>
+                    <p>Manage and monitor user accounts</p>
+                </header>
+
+                <div class="notice-card">
+                    <div class="notice-header">
+                        <h3>Token Usage Report</h3>
+                        <span class="status-badge active">Active</span>
+                    </div>
+                    <p class="muted">Per-user token usage analytics will appear here.</p>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        <input type="text" id="user-search" placeholder="Search users...">
+                    </div>
+                    <div class="filters">
+                        <select id="user-status-filter">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="deleted">Deleted</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table" id="users-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Status</th>
+                                <th>Token</th>
+                                <th>CLB Level</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <tr>
+                                <td colspan="5" class="loading-row">Loading users...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination" id="users-pagination">
+                    <button class="btn btn-ghost" id="users-prev-btn" disabled>Previous</button>
+                    <span id="users-page-info">Page 1</span>
+                    <button class="btn btn-ghost" id="users-next-btn">Next</button>
+                </div>
+            </section>
+
+            <!-- Topics Section -->
+            <section id="section-topics" class="content-section hidden">
+                <header class="section-header">
+                    <div>
+                        <h2>Topic Management</h2>
+                        <p>Manage news topics and content</p>
+                    </div>
+                    <button class="btn btn-primary" id="add-topic-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Add Topic
+                    </button>
+                </header>
+
+                <div class="table-container">
+                    <table class="data-table" id="topics-table">
+                        <thead>
+                            <tr>
+                                <th>Topic</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                                <th>News Items</th>
+                                <th>Last Refresh</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topics-table-body">
+                            <tr>
+                                <td colspan="6" class="loading-row">Loading topics...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="script-panel">
+                    <div class="script-header">
+                        <h3 id="topic-script-title">Podcast Script</h3>
+                        <span class="muted">Generated from live news</span>
+                    </div>
+                    <div class="script-body" id="topic-script-body">
+                        <p class="muted">Pick a topic and generate a script to view it here.</p>
+                    </div>
+                    <div class="script-sources" id="topic-script-sources"></div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="section-analytics" class="content-section hidden">
+                <header class="section-header">
+                    <h2>Analytics</h2>
+                    <p>Platform analytics and insights</p>
+                </header>
+
+                <div class="analytics-cards">
+                    <div class="analytics-card">
+                        <h3>CLB Distribution</h3>
+                        <div id="clb-distribution" class="chart-placeholder">
+                            Loading...
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Top Grammar Issues</h3>
+                        <div id="grammar-issues" class="list-placeholder">
+                            Loading...
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Audit Log Section -->
+            <section id="section-audit" class="content-section hidden">
+                <header class="section-header">
+                    <h2>Audit Log</h2>
+                    <p>Track all admin actions</p>
+                </header>
+
+                <div class="table-container">
+                    <table class="data-table" id="audit-table">
+                        <thead>
+                            <tr>
+                                <th>Admin</th>
+                                <th>Action</th>
+                                <th>Resource</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-table-body">
+                            <tr>
+                                <td colspan="5" class="loading-row">Loading audit logs...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- User Detail Modal -->
+    <div id="user-modal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>User Details</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="user-modal-body">
+                Loading...
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost modal-close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Topic Modal -->
+    <div id="topic-modal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="topic-modal-title">Add Topic</h3>
+                <button class="modal-close" id="topic-modal-close">&times;</button>
+            </div>
+            <form id="topic-form" class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="topic_id">Topic ID</label>
+                        <input type="text" id="topic_id" name="topic_id" placeholder="gen-001" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" placeholder="Top Headlines" required>
+                    </div>
+                    <div class="form-group full">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" rows="3" placeholder="Short description"></textarea>
+                    </div>
+                    <div class="form-group full">
+                        <label for="ai_search_prompt">AI Search Prompt</label>
+                        <textarea id="ai_search_prompt" name="ai_search_prompt" rows="4" placeholder="Search for top headlines..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">Tags (comma separated)</label>
+                        <input type="text" id="tags" name="tags" placeholder="top,global,news">
+                    </div>
+                    <div class="form-group">
+                        <label for="geo_codes">Geo Codes (comma separated)</label>
+                        <input type="text" id="geo_codes" name="geo_codes" placeholder="global,us,ca">
+                    </div>
+                    <div class="form-group">
+                        <label for="update_minutes">Update Minutes</label>
+                        <input type="number" id="update_minutes" name="update_minutes" min="15" max="1440" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <input type="number" id="priority" name="priority" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="language">Language</label>
+                        <input type="text" id="language" name="language" placeholder="en">
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label for="is_active">Active</label>
+                        <input type="checkbox" id="is_active" name="is_active">
+                    </div>
+                </div>
+                <p class="hint hidden" id="topic-delete-hint">To delete a topic use the delete button in the table.</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ghost" id="topic-modal-cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Podcast Script Modal -->
+    <div id="script-modal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="script-modal-title">Podcast Script</h3>
+                <button class="modal-close" id="script-modal-close">&times;</button>
+            </div>
+            <div class="modal-body scrollable">
+                <div class="script-body" id="script-modal-body">
+                    <p class="muted">Generating script…</p>
+                </div>
+                <div class="script-sources" id="script-modal-sources"></div>
+                <p class="hint hidden" id="script-modal-error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ghost" id="script-modal-cancel">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Modal -->
+    <div id="article-modal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="article-modal-title">Article</h3>
+                <button class="modal-close" id="article-modal-close">&times;</button>
+            </div>
+            <div class="modal-body scrollable">
+                <div class="article-layout">
+                    <div class="article-list" id="article-modal-list"></div>
+                    <div class="article-detail">
+                        <p class="muted" id="article-modal-date"></p>
+                        <div class="article-hero">
+                            <img id="article-modal-image" class="article-image hidden" alt="Article image">
+                            <button id="article-hero-refresh" class="article-hero-refresh" title="Regenerate image">↻</button>
+                        </div>
+                        <div class="article-body" id="article-modal-body">
+                            <p class="muted">Select an article to view details.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="script-sources" id="article-modal-sources"></div>
+                <p class="hint hidden" id="article-modal-error"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/admin/static/app.js?v=35"></script>
+</body>
+</html>

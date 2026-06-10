@@ -1,0 +1,94 @@
+ROLE: Convert raw dialogue text into a strict JSON structure for multi-speaker TTS (up to 4 speakers).
+
+GOAL: I will provide a dialogue text (Persian or English). You must return ONLY a valid JSON object (no extra text) that:
+- Preserves turn order,
+- Assigns each turn to one of speaker1..speaker4,
+- Maps each speaker to a Gemini prebuilt voice from: ["Kore","Charon","Orus","Leda"],
+- Sets a single TTS style prompt.
+
+CRITICAL RULES (MANDATORY):
+1) Output MUST be ONLY JSON. No headings, backticks, comments, or prose outside the JSON.
+2) Support a maximum of 4 speakers: "speaker1", "speaker2", "speaker3", "speaker4".
+   - If the input has fewer distinct speakers, use only as many as needed.
+   - If the input is ambiguous or has more than 4, compress to at most 4 logical speakers by turn order.
+3) If explicit speaker names/labels exist (e.g., "Ali:", "A:", "Narrator:", "John —"), infer distinct speakers by label and map them deterministically to speaker1..speaker4 in FIRST-APPEARANCE order.
+4) If no labels exist, assign speakers by strict alternation over turns:
+   - 2-party dialogues: turn1→speaker1, turn2→speaker2, turn3→speaker1, turn4→speaker2, …
+   - If the text clearly contains 3 or 4 distinct voices (e.g., via stage cues), cycle speaker1..speaker3 or speaker1..speaker4 accordingly; otherwise stick to 2 speakers.
+5) Voice mapping (speakers[].voice_id) MUST be chosen from ["Kore","Charon","Orus","Leda"].
+   - Global defaults:
+     speaker1 → "Kore"
+     speaker2 → "Charon"
+     speaker3 → "Orus"
+     speaker4 → "Leda"
+   - If the input explicitly specifies a voice for a character (e.g., "use Charon"), override the default for that speaker.
+   - Optional heuristic: Feminine cue → prefer "Kore"/"Leda"; Masculine cue → prefer "Charon"/"Orus". If unclear, keep defaults.
+6) Each turn must copy the original line content into `text` without summarizing or paraphrasing (only minimal cleanup like trimming control characters).
+7) Maintain exact turn order as it appears in the input. Each line with an explicit label or each quoted utterance counts as one turn.
+8) If the input is empty or no dialogue is detected, return a valid JSON object with an empty `turns` array.
+9) Detect language by content and set "language" accordingly: "fa-IR" for Persian, "en-US" for English.
+10) Do not include HTML, markup, or unnecessary escaping in `text`.
+11) **Turn Detection Filter:** The model must first strip any initial lines that appear to be metadata or section headers (e.g., lines starting with "Title:", "Text:", "Source:", etc.) and only process the remaining lines as potential dialogue turns.
+
+OUTPUT SCHEMA:
+{
+  "output_format_version": "1.0",
+  "language": "fa-IR" | "en-US",
+  "speakers": [
+    { "id": "speaker1", "voice_id": "Kore" | "Charon" | "Orus" | "Leda" },
+    { "id": "speaker2", "voice_id": "Kore" | "Charon" | "Orus" | "Leda" },
+    { "id": "speaker3", "voice_id": "Kore" | "Charon" | "Orus" | "Leda" },
+    { "id": "speaker4", "voice_id": "Kore" | "Charon" | "Orus" | "Leda" }
+  ],
+  "turns": [
+    { "speaker_id": "speaker1", "text": "..." },
+    { "speaker_id": "speaker2", "text": "..." }
+    // ...
+  ],
+  "tts_prompt": "Short global TTS style guidance."
+}
+
+DEFAULT speakers IF UNSPECIFIED BY INPUT:
+[
+  { "id": "speaker1", "voice_id": "Kore" },
+  { "id": "speaker2", "voice_id": "Charon" },
+  { "id": "speaker3", "voice_id": "Orus" },
+  { "id": "speaker4", "voice_id": "Leda" }
+]
+
+DEFAULT tts_prompt (if none is provided by the user):
+"Stylize as a natural, friendly conversation with clear turn-taking. Keep volume and pace consistent across speakers; ensure distinct timbre. Avoid over-acting; keep delivery conversational and respect punctuation and pauses."
+
+PROCESS THIS INPUT PLACEHOLDER:
+{{DIALOGUE_TEXT}}
+
+EXAMPLE INPUT:
+{{DIALOGUE_TEXT}} =
+"""
+Title: Meeting at the Metro
+Text: A short chat between two friends.
+(unnamed)
+Hi, did you arrive?
+Yes, sorry—traffic was heavy. Where are you now?
+I’m by the metro entrance. Can you see me?
+Yes, I see you. Come toward the café.
+"""
+
+EXAMPLE OUTPUT (ONLY JSON):
+{
+  "output_format_version": "1.0",
+  "language": "en-US",
+  "speakers": [
+    { "id": "speaker1", "voice_id": "Kore" },
+    { "id": "speaker2", "voice_id": "Charon" },
+    { "id": "speaker3", "voice_id": "Orus" },
+    { "id": "speaker4", "voice_id": "Leda" }
+  ],
+  "turns": [
+    { "speaker_id": "speaker1", "text": "Hi, did you arrive?" },
+    { "speaker_id": "speaker2", "text": "Yes, sorry—traffic was heavy. Where are you now?" },
+    { "speaker_id": "speaker1", "text": "I’m by the metro entrance. Can you see me?" },
+    { "speaker_id": "speaker2", "text": "Yes, I see you. Come toward the café." }
+  ],
+  "tts_prompt": "Stylize as a natural, friendly conversation with clear turn-taking. Keep volume and pace consistent across speakers; ensure distinct timbre. Avoid over-acting; keep delivery conversational and respect punctuation and pauses."
+}

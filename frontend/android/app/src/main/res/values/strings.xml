@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dorna</string>
+    <string name="accessibility_service_description">This service helps to capture text input from other apps to provide suggestions.</string>
+
+    <!-- Keyboard Labels -->
+    <string name="keyboard_label_space">Space</string>
+    <string name="keyboard_label_symbols">\?123</string>
+    <string name="keyboard_label_letters">ABC</string>
+    <string name="keyboard_label_numbers">123</string>
+    <string name="keyboard_label_period">.</string>
+</resources>

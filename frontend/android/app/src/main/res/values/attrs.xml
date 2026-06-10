@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom attributes for keyboard -->
+    <attr name="keyBackground" format="reference" />
+    <attr name="keyTextColor" format="color" />
+    <attr name="keyTextSize" format="dimension" />
+    <attr name="keyPreviewLayout" format="reference" />
+    <attr name="keyPreviewTextSize" format="dimension" />
+</resources> 

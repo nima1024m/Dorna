@@ -1,0 +1,32 @@
+topic_id,region,area,title_short,description_short,ai_search_prompt,tags,update_minutes,priority,geo_scope,default_enabled
+GEN-001,Global,All,Breaking News,Latest breaking news worldwide,"Search for breaking news from the last 6 hours. List 5 most impactful stories ranked by importance. Avoid duplicates and rumors.","breaking,urgent,global,top",30,1,global,true
+GEN-002,Global,All,Top Headlines,Most important global headlines,"Search for top global headlines from the last 24 hours. Return 10 items ranked by importance.","top,global,news,headlines",180,2,global,true
+GEN-003,Global,All,Technology News,Latest technology and innovation updates,"Search for technology news from the last 48 hours. Focus on major companies, startups, product launches, and innovations.","tech,technology,innovation,startups",240,2,global,true
+GEN-004,Global,All,AI News,Artificial intelligence updates,"Search for AI-related news from the last 48 hours. Include models, research, regulation, funding, and major AI companies.","ai,technology,innovation,ml",240,2,global,true
+GEN-005,Global,All,Business News,Global business and corporate news,"Search for global business news from the last 48 hours. Include major corporate moves, earnings, and regulation.","business,economy,corporate",240,3,global,true
+GEN-006,Global,All,Markets,Stock and financial markets,"Search for global market news from the last 24 hours. Include major indices, market movers, and key financial events.","stocks,markets,finance,investing",120,2,global,true
+GEN-007,Global,All,Crypto News,Crypto and blockchain updates,"Search for crypto news from the last 24 hours. Include Bitcoin, Ethereum, regulation, and major exchanges.","crypto,blockchain,finance,markets",120,3,global,false
+GEN-008,Global,All,Science & Health,Science and health discoveries,"Search for science and health news from the last 7 days. Prioritize reputable sources and real-world impact.","science,health,research",1440,6,global,false
+
+CA-001,Canada,National,Canada News,Latest news from Canada,"Search for Canada news from the last 48 hours. Rank by national importance.","canada,news,national",180,1,canada,true
+CA-002,Canada,National,Immigration News,Canada immigration updates,"Search for Canadian immigration news from the last 72 hours. Include IRCC updates, policy changes, and announcements.","canada,immigration,ircc,policy",360,2,canada,true
+CA-003,Canada,National,Canada Economy,Economic updates in Canada,"Search for Canada economic news from the last 72 hours. Include inflation, interest rates, housing, and jobs.","canada,economy,finance,housing",360,3,canada,false
+CA-004,Canada,National,Canada Tech,Technology in Canada,"Search for Canadian technology news from the last 72 hours. Include startups, AI, and tech companies.","canada,tech,startups,ai",360,3,canada,false
+
+BC-001,Canada,British Columbia,BC News,British Columbia news,"Search for British Columbia news from the last 48 hours. Rank by regional importance.","bc,canada,local,news",180,1,bc,true
+BC-002,Canada,British Columbia,BC Housing,BC housing market updates,"Search for BC housing and real estate news from the last 72 hours.","bc,housing,realestate,canada",360,2,bc,false
+BC-003,Canada,British Columbia,BC Weather,Weather alerts in BC,"Search for BC weather alerts and warnings from the last 24 hours.","bc,weather,alerts,local",120,1,bc,true
+BC-004,Canada,British Columbia,BC Tech,BC technology ecosystem,"Search for BC tech and startup news from the last 72 hours.","bc,tech,startups,ai",360,3,bc,false
+
+VAN-001,Canada,Vancouver,Vancouver News,Local Vancouver news,"Search for Vancouver news from the last 48 hours. Focus on city-level events.","vancouver,local,news,city",180,1,vancouver,true
+VAN-002,Canada,Vancouver,Vancouver Traffic,Traffic and transit updates,"Search for Vancouver traffic and transit updates from the last 24 hours.","vancouver,traffic,transit,local",120,1,vancouver,true
+VAN-003,Canada,Vancouver,Vancouver Events,Events and happenings,"Search for Vancouver local events from the next 7 days.","vancouver,events,local,lifestyle",720,5,vancouver,false
+VAN-004,Canada,Vancouver,Vancouver Housing,Vancouver real estate,"Search for Vancouver real estate and housing news from the last 72 hours.","vancouver,housing,realestate",360,3,vancouver,false
+
+US-001,USA,National,US Breaking,Breaking news in the US,"Search for major US breaking news from the last 12 hours. Rank by national impact.","usa,breaking,news,politics",60,1,usa,true
+US-002,USA,National,US Politics,US political news,"Search for US politics news from the last 48 hours. Include elections, policies, and major statements.","usa,politics,government",240,2,usa,false
+US-003,USA,National,US Economy,US economic updates,"Search for US economy and market news from the last 48 hours.","usa,economy,finance,markets",240,2,usa,false
+US-004,USA,National,US Tech,Technology news in the US,"Search for US technology news from the last 48 hours. Focus on Big Tech and startups.","usa,tech,ai,startups",240,2,usa,true
+
+ON-001,Canada,Ontario,Ontario News,Ontario regional news,"Search for Ontario news from the last 48 hours.","ontario,canada,local,news",240,2,ontario,false
+ON-002,Canada,Ontario,Toronto News,Toronto city news,"Search for Toronto news from the last 48 hours.","toronto,ontario,local,city",240,3,ontario,false
