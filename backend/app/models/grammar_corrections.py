@@ -19,7 +19,6 @@ class GrammarCorrection(Base):
     )
     __table_args__ = (
         sa.Index("idx_corrections_grammar_id", "grammar_id"),
-        sa.Index("idx_corrections_grammar_id_uuid", "grammar_id"),
     )
     changed: Mapped[bool] = mapped_column(sa.Boolean, nullable=False)
     suggestion: Mapped[str] = mapped_column(sa.Text, nullable=False)
