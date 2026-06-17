@@ -1,19 +1,52 @@
 """Topic & Content management service."""
 from __future__ import annotations
-from typing import Optional, List, Tuple, Dict, Any
-from datetime import datetime
+from typing import Optional, List, Tuple, Dict
 
 from sqlalchemy import select, update, func, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
-import json
 import httpx
-from google.genai import types
 
 from app.core.config import settings
-from app.core.agents.genai_client import make_genai_client
+from app.core.agents.grounded import GroundedGeminiAgent
 from app.models import NewsTopic, NewsItem, TopicPodcastScript, TopicArticle
 from app.services.token_usage import TokenUsageService
+
+
+# Domain-specific grounded-generation schemas. The grounding machinery itself
+# lives in GroundedGeminiAgent.
+_TOPIC_PODCAST_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "script": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "speaker": {"type": "STRING"},
+                    "text": {"type": "STRING"},
+                },
+            },
+        }
+    },
+}
+
+_TOPIC_ARTICLES_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "articles": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "title": {"type": "STRING"},
+                    "published_at": {"type": "STRING"},
+                    "content": {"type": "STRING"},
+                },
+            },
+        }
+    },
+}
 
 
 class TopicManagementService:
@@ -277,45 +310,15 @@ class TopicManagementService:
           }}
         """
 
-        client = make_genai_client(force_direct=True)  # Google Search grounding — gateway can't proxy it
-
         try:
-            content = types.Content(parts=[types.Part(text=prompt)])
-            response = client.models.generate_content(
-                model="gemini-3-flash-preview",
-                contents=content,
-                config=types.GenerateContentConfig(
-                    tools=[types.Tool(google_search=types.GoogleSearch())],
-                    response_mime_type="application/json",
-                    response_schema={
-                        "type": "OBJECT",
-                        "properties": {
-                            "script": {
-                                "type": "ARRAY",
-                                "items": {
-                                    "type": "OBJECT",
-                                    "properties": {
-                                        "speaker": {"type": "STRING"},
-                                        "text": {"type": "STRING"}
-                                    }
-                                }
-                            }
-                        }
-                    }
-                )
+            result = GroundedGeminiAgent().generate(
+                prompt, schema=_TOPIC_PODCAST_SCHEMA, model=settings.PODCAST_GENERATE_MODEL
             )
+            await TokenUsageService.record(self.db, result.usage, user_id=None, source="system")
 
-            data = json.loads(response.text)
+            data = result.data or {}
             script = data.get("script", [])
-
-            sources = []
-            if response.candidates and response.candidates[0].grounding_metadata:
-                chunks = response.candidates[0].grounding_metadata.grounding_chunks or []
-                for c in chunks:
-                    if c.web and c.web.uri and c.web.title:
-                        sources.append({"title": c.web.title, "url": c.web.uri})
-
-            unique_sources = list({s["url"]: s for s in sources}.values())
+            unique_sources = result.sources_as_dicts()
 
             existing = await self.get_topic_podcast(topic_id)
             if existing:
@@ -482,63 +485,14 @@ class TopicManagementService:
           }}
         """
 
-        client = make_genai_client(force_direct=True)  # Google Search grounding — gateway can't proxy it
-
-        content = types.Content(parts=[types.Part(text=prompt)])
-        response = client.models.generate_content(
-            model="gemini-3-flash-preview",
-            contents=content,
-            config=types.GenerateContentConfig(
-                tools=[types.Tool(google_search=types.GoogleSearch())],
-                response_mime_type="application/json",
-                response_schema={
-                    "type": "OBJECT",
-                    "properties": {
-                        "articles": {
-                            "type": "ARRAY",
-                            "items": {
-                                "type": "OBJECT",
-                                "properties": {
-                                    "title": {"type": "STRING"},
-                                    "published_at": {"type": "STRING"},
-                                    "content": {"type": "STRING"},
-                                }
-                            }
-                        }
-                    }
-                }
-            )
+        result = GroundedGeminiAgent().generate(
+            prompt, schema=_TOPIC_ARTICLES_SCHEMA, model=settings.PODCAST_GENERATE_MODEL
         )
+        await TokenUsageService.record(self.db, result.usage, user_id=None, source="system")
 
-        usage = getattr(response, "usage_metadata", None) or getattr(response, "usageMetadata", None)
-        if usage:
-            prompt_tokens = getattr(usage, "prompt_token_count", None) or getattr(usage, "promptTokenCount", None)
-            completion_tokens = getattr(usage, "candidates_token_count", None) or getattr(usage, "candidatesTokenCount", None)
-            total_tokens = getattr(usage, "total_token_count", None) or getattr(usage, "totalTokenCount", None)
-            if total_tokens is None and (prompt_tokens is not None or completion_tokens is not None):
-                total_tokens = (prompt_tokens or 0) + (completion_tokens or 0)
-            if total_tokens is not None:
-                await TokenUsageService.record_usage(
-                    self.db,
-                    user_id=None,
-                    source="system",
-                    model_name="gemini-3-flash-preview",
-                    prompt_tokens=int(prompt_tokens or 0),
-                    completion_tokens=int(completion_tokens or 0),
-                    total_tokens=int(total_tokens or 0),
-                )
-
-        data = json.loads(response.text)
+        data = result.data or {}
         articles = data.get("articles") or []
-
-        sources = []
-        if response.candidates and response.candidates[0].grounding_metadata:
-            chunks = response.candidates[0].grounding_metadata.grounding_chunks or []
-            for c in chunks:
-                if c.web and c.web.uri and c.web.title:
-                    sources.append({"title": c.web.title, "url": c.web.uri})
-
-        unique_sources = list({s["url"]: s for s in sources}.values())
+        unique_sources = result.sources_as_dicts()
         image_url = await self._resolve_article_image(topic.title)
 
         from datetime import datetime

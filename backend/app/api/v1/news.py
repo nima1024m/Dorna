@@ -1,14 +1,11 @@
-import json
-
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
-from google.genai import types
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_db
 from app.core.auth_deps import auth_required
 from app.core.config import settings
-from app.core.agents.genai_client import make_genai_client
+from app.core.agents.grounded import GroundedGeminiAgent
 from app.models import User, UserTopicFeedback
 from app.schemas.news import (
     NewsTopicCreate,
@@ -28,8 +25,19 @@ from app.services.podcast import get_curated_image
 from app.services.token_usage import TokenUsageService
 from app.worker.news_tasks import enqueue_topic_refresh
 
+# Domain-specific schema for the live-news podcast script (a flat array of turns).
+_NEWS_PODCAST_SCRIPT_SCHEMA = {
+    "type": "ARRAY",
+    "items": {
+        "type": "OBJECT",
+        "properties": {
+            "speaker": {"type": "STRING"},
+            "text": {"type": "STRING"},
+        },
+    },
+}
+
 router = APIRouter()
-client = make_genai_client(force_direct=True)  # Google Search grounding — gateway can't proxy it
 
 
 def _topic_to_out(obj) -> NewsTopicOut:
@@ -236,49 +244,12 @@ Output strictly a JSON Array:
 [{{"speaker": "Alex"|"Sarah", "text": "..."}}]
 """
 
-        content = types.Content(parts=[types.Part(text=prompt)])
-        response = client.models.generate_content(
-            model="gemini-2.5-flash-preview-05-20",
-            contents=content,
-            config=types.GenerateContentConfig(
-                tools=[types.Tool(google_search=types.GoogleSearch())],
-                response_mime_type="application/json",
-                response_schema={
-                    "type": "ARRAY",
-                    "items": {
-                        "type": "OBJECT",
-                        "properties": {
-                            "speaker": {"type": "STRING"},
-                            "text": {"type": "STRING"},
-                        },
-                    },
-                },
-            ),
+        result = GroundedGeminiAgent().generate(
+            prompt, schema=_NEWS_PODCAST_SCRIPT_SCHEMA, model=settings.PODCAST_GENERATE_MODEL
         )
+        await TokenUsageService.record(db, result.usage, user_id=current_user.id, source="system")
 
-        # Record token usage (exact extraction pattern)
-        usage = getattr(response, "usage_metadata", None) or getattr(response, "usageMetadata", None)
-        if usage:
-            prompt_tokens = getattr(usage, "prompt_token_count", None) or getattr(usage, "promptTokenCount", None)
-            completion_tokens = getattr(usage, "candidates_token_count", None) or getattr(usage, "candidatesTokenCount", None)
-            total_tokens = getattr(usage, "total_token_count", None) or getattr(usage, "totalTokenCount", None)
-            if total_tokens is None and (prompt_tokens is not None or completion_tokens is not None):
-                total_tokens = (prompt_tokens or 0) + (completion_tokens or 0)
-            if total_tokens is not None:
-                await TokenUsageService.record_usage(
-                    db,
-                    user_id=current_user.id,
-                    source="system",
-                    model_name="gemini-2.5-flash-preview-05-20",
-                    prompt_tokens=int(prompt_tokens or 0),
-                    completion_tokens=int(completion_tokens or 0),
-                    total_tokens=int(total_tokens or 0),
-                )
-
-        script_raw = json.loads(response.text or "[]")
-        if not isinstance(script_raw, list):
-            script_raw = []
-
+        script_raw = result.data if isinstance(result.data, list) else []
         script: list[ScriptItem] = []
         for item in script_raw:
             if not isinstance(item, dict):
@@ -288,26 +259,7 @@ Output strictly a JSON Array:
             except Exception:
                 continue
 
-        # Extract news sources from search grounding metadata
-        sources: list[NewsSource] = []
-        seen_urls: set[str] = set()
-
-        candidates = getattr(response, "candidates", None) or []
-        if candidates:
-            candidate0 = candidates[0]
-            gm = getattr(candidate0, "grounding_metadata", None) or getattr(candidate0, "groundingMetadata", None)
-            chunks = getattr(gm, "grounding_chunks", None) or getattr(gm, "groundingChunks", None) or []
-            for chunk in chunks:
-                web = getattr(chunk, "web", None)
-                uri = (getattr(web, "uri", None) or "").strip() if web else ""
-                title = (getattr(web, "title", None) or "").strip() if web else ""
-                if not uri or uri in seen_urls:
-                    continue
-                seen_urls.add(uri)
-                sources.append(NewsSource(title=title or uri, url=uri))
-                if len(sources) >= 5:
-                    break
-
+        sources = [NewsSource(title=s.title, url=s.url) for s in result.sources[:5]]
         image_url = get_curated_image("general")
 
         return NewsPodcastResponse(
