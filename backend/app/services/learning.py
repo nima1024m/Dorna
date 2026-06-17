@@ -8,6 +8,7 @@ from app.models.grammar_suggestions import GrammarSuggestion
 from app.models.grammar_corrections import GrammarCorrection
 from app.models.user import User
 from app.core.agents.gemini import GeminiAgent
+from app.core.agents.usage import pop_usages
 from app.core.email.brevo import send_html_email
 from app.services.token_usage import TokenUsageService
 
@@ -123,16 +124,7 @@ class MistakeTrackerService:
             try:
                 if pattern_data:
                     pattern_res = await agent.extract_linguistic_patterns(pattern_data)
-                    if isinstance(pattern_res, dict) and pattern_res.get("_usage"):
-                        await TokenUsageService.record_usage(
-                            db,
-                            user_id=user_id,
-                            source="gemini",
-                            model_name=pattern_res["_usage"].get("model"),
-                            prompt_tokens=pattern_res["_usage"].get("prompt_tokens", 0),
-                            completion_tokens=pattern_res["_usage"].get("completion_tokens", 0),
-                            total_tokens=pattern_res["_usage"].get("total_tokens", 0),
-                        )
+                    await TokenUsageService.record_all(db, pop_usages(pattern_res), user_id=user_id, source="gemini")
                     insights.estimated_clb_level = pattern_res.get("estimated_clb_level", "CLB 5")
                     insights.linguistic_profile = pattern_res.get("patterns", [])
                     insights.language_development_grammar = pattern_res.get("language_development_grammar", [])
@@ -155,16 +147,7 @@ class MistakeTrackerService:
                         # Pass only AI-vetted words for the summary
                         ai_res = await agent.user_learning_summary(top_grammar, ai_words)
                         insights.overall_summary = ai_res.get("summary")
-                        if isinstance(ai_res, dict) and ai_res.get("_usage"):
-                            await TokenUsageService.record_usage(
-                                db,
-                                user_id=user_id,
-                                source="gemini",
-                                model_name=ai_res["_usage"].get("model"),
-                                prompt_tokens=ai_res["_usage"].get("prompt_tokens", 0),
-                                completion_tokens=ai_res["_usage"].get("completion_tokens", 0),
-                                total_tokens=ai_res["_usage"].get("total_tokens", 0),
-                            )
+                        await TokenUsageService.record_all(db, pop_usages(ai_res), user_id=user_id, source="gemini")
             except Exception:
                 if not insights.overall_summary:
                     insights.overall_summary = "Learning profile in progress..."
@@ -232,17 +215,8 @@ class LearningExperienceService:
             profile, 
             user_name=user.full_name or "Dorna Achiever"
         )
-        if isinstance(email_data, dict) and email_data.get("_usage"):
-            await TokenUsageService.record_usage(
-                db,
-                user_id=user_id,
-                source="gemini",
-                model_name=email_data["_usage"].get("model"),
-                prompt_tokens=email_data["_usage"].get("prompt_tokens", 0),
-                completion_tokens=email_data["_usage"].get("completion_tokens", 0),
-                total_tokens=email_data["_usage"].get("total_tokens", 0),
-            )
-        
+        await TokenUsageService.record_all(db, pop_usages(email_data), user_id=user_id, source="gemini")
+
         # 4. Send via Brevo
         send_html_email(
             to_email=user.email,

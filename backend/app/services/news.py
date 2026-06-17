@@ -7,12 +7,34 @@ from typing import Iterable, List, Dict, Any, Tuple
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from google.genai import types
-
 from app.core.config import settings
-from app.core.agents.genai_client import make_genai_client
+from app.core.agents.grounded import GroundedGeminiAgent
 from app.models import NewsTopic, UserTopicPreference, NewsItem, TopicRefreshJob
 from app.services.token_usage import TokenUsageService
+
+
+# Schema for the grounded news-items search. Domain-specific; the grounding
+# machinery itself lives in GroundedGeminiAgent.
+_NEWS_ITEMS_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "items": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "title": {"type": "STRING"},
+                    "summary": {"type": "STRING"},
+                    "url": {"type": "STRING"},
+                    "source_name": {"type": "STRING"},
+                    "published_at": {"type": "STRING"},
+                    "image_url": {"type": "STRING"},
+                    "importance": {"type": "NUMBER"},
+                },
+            },
+        }
+    },
+}
 
 
 UTC = timezone.utc
@@ -230,57 +252,12 @@ Return JSON in this exact format:
 }}
 """
 
-    client = make_genai_client(force_direct=True)  # Google Search grounding — gateway can't proxy it
-    content = types.Content(parts=[types.Part(text=prompt)])
-    response = client.models.generate_content(
-        model=settings.PODCAST_GENERATE_MODEL,
-        contents=content,
-        config=types.GenerateContentConfig(
-            tools=[types.Tool(google_search=types.GoogleSearch())],
-            response_mime_type="application/json",
-            response_schema={
-                "type": "OBJECT",
-                "properties": {
-                    "items": {
-                        "type": "ARRAY",
-                        "items": {
-                            "type": "OBJECT",
-                            "properties": {
-                                "title": {"type": "STRING"},
-                                "summary": {"type": "STRING"},
-                                "url": {"type": "STRING"},
-                                "source_name": {"type": "STRING"},
-                                "published_at": {"type": "STRING"},
-                                "image_url": {"type": "STRING"},
-                                "importance": {"type": "NUMBER"}
-                            }
-                        }
-                    }
-                }
-            },
-        ),
+    result = GroundedGeminiAgent().generate(
+        prompt, schema=_NEWS_ITEMS_SCHEMA, model=settings.PODCAST_GENERATE_MODEL
     )
+    await TokenUsageService.record(db, result.usage, user_id=None, source="system")
 
-    # Record token usage
-    usage = getattr(response, "usage_metadata", None) or getattr(response, "usageMetadata", None)
-    if usage:
-        prompt_tokens = getattr(usage, "prompt_token_count", None) or getattr(usage, "promptTokenCount", None)
-        completion_tokens = getattr(usage, "candidates_token_count", None) or getattr(usage, "candidatesTokenCount", None)
-        total_tokens = getattr(usage, "total_token_count", None) or getattr(usage, "totalTokenCount", None)
-        if total_tokens is None and (prompt_tokens is not None or completion_tokens is not None):
-            total_tokens = (prompt_tokens or 0) + (completion_tokens or 0)
-        if total_tokens is not None:
-            await TokenUsageService.record_usage(
-                db,
-                user_id=None,
-                source="system",
-                model_name=settings.PODCAST_GENERATE_MODEL,
-                prompt_tokens=int(prompt_tokens or 0),
-                completion_tokens=int(completion_tokens or 0),
-                total_tokens=int(total_tokens or 0),
-            )
-
-    payload = json.loads(response.text)
+    payload = result.data or {}
     items = payload.get("items", [])
     dedup = {}
     for item in items:

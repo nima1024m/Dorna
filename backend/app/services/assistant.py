@@ -1,10 +1,10 @@
 import uuid
-from datetime import datetime
 
 from sqlalchemy import select, and_, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import app.core.ai as AI
+from app.core.agents.usage import pop_usages
 from app.core.config import settings
 from app.core.database import AIStatus, ActionStatus
 from app.models import GrammarSuggestion, GrammarCorrection, ToneAdjustments, TranslateTexts
@@ -24,27 +24,7 @@ class AssistantService:
 
     @staticmethod
     async def _record_usage(db: AsyncSession, user_id: int, source: str, payload: dict) -> None:
-        if not payload:
-            return
-        usage_list = payload.get("_usage_list")
-        if isinstance(usage_list, list):
-            for usage in usage_list:
-                await AssistantService._record_usage(db, user_id, source, {"_usage": usage})
-            return
-
-        usage = payload.get("_usage")
-        if not isinstance(usage, dict):
-            return
-
-        await TokenUsageService.record_usage(
-            db,
-            user_id=user_id,
-            source=source,
-            model_name=usage.get("model"),
-            prompt_tokens=usage.get("prompt_tokens", 0),
-            completion_tokens=usage.get("completion_tokens", 0),
-            total_tokens=usage.get("total_tokens", 0),
-        )
+        await TokenUsageService.record_all(db, pop_usages(payload), user_id=user_id, source=source)
 
     @staticmethod
     async def grammar_correction(db: AsyncSession, data: SuggestGrammarIn) -> dict:

@@ -5,9 +5,9 @@ Usage:
     python -m app.scripts.batch_test_polish
 """
 import asyncio
-import json
 
 from app.core.agents.gemini import GeminiAgent
+from app.core.agents.usage import pop_usages
 
 
 TEST_INPUTS = [
@@ -36,11 +36,10 @@ async def run():
             )
             print(f"STATUS: {result.get('status')}")
             print(f"OUTPUT: {result.get('adjusted')}")
-            if result.get("_usage"):
-                usage = result["_usage"]
-                print(f"TOKENS: prompt={usage.get('prompt_tokens', 0)} "
-                      f"completion={usage.get('completion_tokens', 0)} "
-                      f"total={usage.get('total_tokens', 0)}")
+            for usage in pop_usages(result):
+                print(f"TOKENS: prompt={usage.prompt_tokens} "
+                      f"completion={usage.completion_tokens} "
+                      f"total={usage.total_tokens}")
         except Exception as e:
             print(f"ERROR:  {e}")
 

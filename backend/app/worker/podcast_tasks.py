@@ -18,6 +18,7 @@ from app.core.config import settings
 from app.core.database import PodcastJobStatus
 from app.models import PodcastJob
 from app.core.agents.gc_renderer import render_service_account_json
+from app.core.agents.usage import pop_usages
 from app.services.token_usage import TokenUsageService
 import app.core.ai as AI
 
@@ -181,18 +182,8 @@ async def _script_stage(job_id):
         script_json_str = json.dumps(script, ensure_ascii=False)
         total_segments = len(script)
 
-        # Record token usage (extracted by GeminiAgent.__agenerate_json)
-        usage = llm_res.get("_usage")
-        if usage:
-            await TokenUsageService.record_usage(
-                db,
-                user_id=job.user_id,
-                source="gemini",
-                model_name=usage.get("model", ""),
-                prompt_tokens=int(usage.get("prompt_tokens", 0)),
-                completion_tokens=int(usage.get("completion_tokens", 0)),
-                total_tokens=int(usage.get("total_tokens", 0)),
-            )
+        # Record token usage
+        await TokenUsageService.record_all(db, pop_usages(llm_res), user_id=job.user_id, source="gemini")
 
         # Save script to database
         await db.execute(

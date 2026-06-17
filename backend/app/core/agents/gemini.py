@@ -22,6 +22,7 @@ from google.genai import types
 from app.core.config import settings
 from app.core.agents.genai_client import make_genai_client
 from app.core.agents.gc_renderer import render_service_account_json
+from app.core.agents.usage import attach_usage, extract_usage
 
 
 logger = logging.getLogger(__name__)
@@ -73,6 +74,15 @@ class GeminiAgent:
 
         self.__jinja_env.filters.setdefault("tojson", _tojson)
 
+    # ---------- prompt loading ----------
+    def __read_prompt(self, name: str) -> str:
+        """Read a system-prompt file from the prompt dir, stripped."""
+        with open(f"{self.__prompt_dir}/{name}", encoding="utf-8") as f:
+            return f.read().strip()
+
+    def __render(self, template_name: str, **context) -> str:
+        """Render a Jinja prompt template with the given context."""
+        return self.__jinja_env.get_template(template_name).render(**context)
 
     # ---------- prompt builders ----------
     def __normalize_line_breaks(self, text: Optional[str]) -> str:
@@ -368,28 +378,6 @@ class GeminiAgent:
             temperature=0.1,
         )
 
-    def __extract_usage(self, response, model: str) -> dict | None:
-        usage = getattr(response, "usage_metadata", None) or getattr(response, "usageMetadata", None)
-        if not usage:
-            return None
-
-        prompt_tokens = getattr(usage, "prompt_token_count", None) or getattr(usage, "promptTokenCount", None)
-        completion_tokens = getattr(usage, "candidates_token_count", None) or getattr(usage, "candidatesTokenCount", None)
-        total_tokens = getattr(usage, "total_token_count", None) or getattr(usage, "totalTokenCount", None)
-
-        if total_tokens is None and (prompt_tokens is not None or completion_tokens is not None):
-            total_tokens = (prompt_tokens or 0) + (completion_tokens or 0)
-
-        if total_tokens is None:
-            return None
-
-        return {
-            "model": model,
-            "prompt_tokens": int(prompt_tokens or 0),
-            "completion_tokens": int(completion_tokens or 0),
-            "total_tokens": int(total_tokens or 0),
-        }
-
     def __raise_if_error_status(self, payload: dict) -> None:
         """
         Decide whether the model's JSON payload represents an application-level failure.
@@ -448,11 +436,9 @@ class GeminiAgent:
         if not isinstance(payload, dict):
             raise ValueError("Model did not return a JSON object.")
         self.__raise_if_error_status(payload)
-        usage = self.__extract_usage(response, model)
-        if usage:
-            payload["_usage"] = usage
+        attach_usage(payload, extract_usage(response, model))
         return payload
-    
+
     @retry(
         stop=stop_after_attempt(3),
         wait=wait_exponential(multiplier=1, min=2, max=10),
@@ -492,9 +478,7 @@ class GeminiAgent:
         if not isinstance(payload, dict):
             raise ValueError("Model did not return a JSON object.")
         self.__raise_if_error_status(payload)
-        usage = self.__extract_usage(response, model)
-        if usage:
-            payload["_usage"] = usage
+        attach_usage(payload, extract_usage(response, model))
         return payload
 
     async def ai_health(self) -> bool:
@@ -519,9 +503,7 @@ class GeminiAgent:
     # ---------- tasks ----------
     async def sentence_seperator(self, user_input: str) -> dict:
         model = settings.GRAMMAR_MODEL['seperator']
-        punctuation_system_prompt = open(
-            f"{self.__prompt_dir}/{self.__punctuation_prompt}", encoding="utf-8"
-        ).read().strip()
+        punctuation_system_prompt = self.__read_prompt(self.__punctuation_prompt)
 
         user_prompt_punctuation = self.__build_user_punctuation_prompt(user_input=user_input)
         full_prompt = f"{punctuation_system_prompt}\n\n{user_prompt_punctuation}"
@@ -536,9 +518,7 @@ class GeminiAgent:
 
     async def grammar_correction(self, user_input: str) -> dict:
         model = settings.GRAMMAR_MODEL
-        grammar_system_prompt = open(
-            f"{self.__prompt_dir}/{self.__grammar_prompt}", encoding="utf-8"
-        ).read().strip()
+        grammar_system_prompt = self.__read_prompt(self.__grammar_prompt)
 
         user_prompt_grammar = self.__build_user_grammar_prompt(user_input=user_input)
         full_prompt = f"{grammar_system_prompt}\n\n{user_prompt_grammar}"
@@ -547,9 +527,7 @@ class GeminiAgent:
 
     async def translate_text(self, user_input: str, target_lang: str) -> dict:
         model = settings.TRANSLATE_MODEL
-        translate_system_prompt = open(
-            f"{self.__prompt_dir}/{self.__translate_prompt}", encoding="utf-8"
-        ).read().strip()
+        translate_system_prompt = self.__read_prompt(self.__translate_prompt)
 
         user_prompt_translate = self.__build_user_translate_prompt(
             user_input=user_input,
@@ -647,9 +625,7 @@ class GeminiAgent:
     # ---------- TTS ----------
     async def book_cover(self, image_paths: List[str]) -> dict:
         model = settings.TTS_COVER_MODEL
-        cover_system_prompt = open(
-            f"{self.__prompt_dir}/{self.__cover_prompt}", encoding="utf-8"
-        ).read().strip()
+        cover_system_prompt = self.__read_prompt(self.__cover_prompt)
 
         parts: List[types.Part] = []
         for idx, p in enumerate(image_paths):
@@ -665,9 +641,7 @@ class GeminiAgent:
 
     async def ocr_images(self, image_paths: List[str]) -> dict:
         model = settings.TTS_OCR_MODEL
-        ocr_system_prompt = open(
-            f"{self.__prompt_dir}/{self.__ocr_prompt}", encoding="utf-8"
-        ).read().strip()
+        ocr_system_prompt = self.__read_prompt(self.__ocr_prompt)
 
         parts: List[types.Part] = []
         for idx, p in enumerate(image_paths):
@@ -686,9 +660,7 @@ class GeminiAgent:
 
     async def dialogue_spec_from_text(self, raw_text: str) -> dict:
         model = settings.TTS_PROCESS_MODEL
-        system_prompt = open(
-            f"{self.__prompt_dir}/{self.__dialogue_prompt}", encoding="utf-8"
-        ).read().strip()
+        system_prompt = self.__read_prompt(self.__dialogue_prompt)
 
         user_block = "\n".join([
             "[INPUT — untrusted data]",
@@ -745,9 +717,7 @@ class GeminiAgent:
             speakers_spec = (spec or {}).get("speakers") or []
             turns_in = (spec or {}).get("turns") or []
 
-            prompt = open(
-                f"{self.__prompt_dir}/{self.__voice_prompt}", encoding="utf-8"
-            ).read().strip()
+            prompt = self.__read_prompt(self.__voice_prompt)
             model_name = settings.TTS_VOICE_MODEL
             speaking_rate = float((spec or {}).get("speaking_rate") or 1.0)
             pitch = float((spec or {}).get("pitch") or 0.0)
@@ -839,11 +809,10 @@ class GeminiAgent:
 
     async def user_learning_summary(self, grammar_issues: dict, misspelled_words: dict) -> dict:
         model = settings.TONE_MODEL  # Using TONE_MODEL for generic text tasks
-        template = self.__jinja_env.get_template(self.__learning_summary_prompt)
-        
-        full_prompt = template.render(
+        full_prompt = self.__render(
+            self.__learning_summary_prompt,
             grammar_issues=json.dumps(grammar_issues),
-            misspelled_words=json.dumps(misspelled_words)
+            misspelled_words=json.dumps(misspelled_words),
         )
 
         return await self.__agenerate_json(model, full_prompt, self.__learning_summary_schema())
@@ -905,10 +874,9 @@ class GeminiAgent:
 
     async def extract_linguistic_patterns(self, corrections: List[dict]) -> dict:
         model = settings.TONE_MODEL
-        template = self.__jinja_env.get_template(self.__pattern_extraction_prompt)
-        
-        full_prompt = template.render(
-            corrections_json=json.dumps(corrections, ensure_ascii=False)
+        full_prompt = self.__render(
+            self.__pattern_extraction_prompt,
+            corrections_json=json.dumps(corrections, ensure_ascii=False),
         )
 
         return await self.__agenerate_json(model, full_prompt, self.__pattern_schema())
@@ -925,11 +893,10 @@ class GeminiAgent:
 
     async def generate_learning_email_content(self, learning_profile: dict, user_name: str = "Dorna Achiever") -> dict:
         model = settings.TONE_MODEL
-        template = self.__jinja_env.get_template(self.__learning_email_prompt)
-        
-        full_prompt = template.render(
+        full_prompt = self.__render(
+            self.__learning_email_prompt,
             user_name=user_name,
-            learning_profile_json=json.dumps(learning_profile, ensure_ascii=False)
+            learning_profile_json=json.dumps(learning_profile, ensure_ascii=False),
         )
 
         return await self.__agenerate_json(model, full_prompt, self.__email_content_schema())

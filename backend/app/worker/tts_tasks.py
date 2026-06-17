@@ -12,8 +12,8 @@ from app.core.config import settings
 from app.core.database import TaskStatus
 from app.models import Task, TaskImage
 from app.core.agents.gemini import GeminiAgent
+from app.core.agents.usage import pop_usages
 from app.services.token_usage import TokenUsageService
-from app.core.config import settings
 
 
 @asynccontextmanager
@@ -63,17 +63,7 @@ async def _ocr_stage(task_id):
             ocr_json = await agent.ocr_images(image_paths)
 
             # Record token usage for OCR
-            usage = ocr_json.get("_usage")
-            if usage:
-                await TokenUsageService.record_usage(
-                    db,
-                    user_id=None,
-                    source="tts",
-                    model_name=usage.get("model") or settings.TTS_OCR_MODEL,
-                    prompt_tokens=usage.get("prompt_tokens", 0),
-                    completion_tokens=usage.get("completion_tokens", 0),
-                    total_tokens=usage.get("total_tokens", 0),
-                )
+            await TokenUsageService.record_all(db, pop_usages(ocr_json), user_id=None, source="tts")
 
             ocr_text_str = json.dumps(ocr_json, ensure_ascii=False)
             await db.execute(
@@ -115,17 +105,7 @@ async def _text_processing_stage(task_id):
             spec = await agent.dialogue_spec_from_text(f'Title: {task.cover_title}\nText: {raw_text}')
 
             # Record token usage for text processing
-            usage = spec.get("_usage")
-            if usage:
-                await TokenUsageService.record_usage(
-                    db,
-                    user_id=None,
-                    source="tts",
-                    model_name=usage.get("model") or settings.TTS_PROCESS_MODEL,
-                    prompt_tokens=usage.get("prompt_tokens", 0),
-                    completion_tokens=usage.get("completion_tokens", 0),
-                    total_tokens=usage.get("total_tokens", 0),
-                )
+            await TokenUsageService.record_all(db, pop_usages(spec), user_id=None, source="tts")
 
             spec_str = json.dumps(spec, ensure_ascii=False)
             await db.execute(

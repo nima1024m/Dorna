@@ -6,16 +6,54 @@ Used by: Learning Insights, Podcast, TTS, Admin Topic Service.
 from __future__ import annotations
 
 from datetime import date
-from typing import Optional
+from typing import Iterable, Optional
 
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
+from app.core.agents.usage import TokenUsage
 from app.models import TokenUsageDaily
 
 
 class TokenUsageService:
+    @staticmethod
+    async def record(
+        db: AsyncSession,
+        usage: Optional[TokenUsage],
+        *,
+        user_id: Optional[int],
+        source: str,
+    ) -> None:
+        """Record a typed :class:`TokenUsage`. No-op when ``usage`` is None.
+
+        The single seam for charging an AI call: callers hand over the typed
+        usage their agent returned instead of digging fields out of a payload.
+        """
+        if usage is None:
+            return
+        await TokenUsageService.record_usage(
+            db,
+            user_id=user_id,
+            source=source,
+            model_name=usage.model,
+            prompt_tokens=usage.prompt_tokens,
+            completion_tokens=usage.completion_tokens,
+            total_tokens=usage.total_tokens,
+        )
+
+    @staticmethod
+    async def record_all(
+        db: AsyncSession,
+        usages: Iterable[TokenUsage],
+        *,
+        user_id: Optional[int],
+        source: str,
+    ) -> None:
+        """Record every usage in ``usages`` (typically the output of pop_usages)."""
+        for usage in usages:
+            await TokenUsageService.record(db, usage, user_id=user_id, source=source)
+
     @staticmethod
     def _estimate_cost_cents(source: str, total_tokens: int) -> int:
         if total_tokens <= 0:
