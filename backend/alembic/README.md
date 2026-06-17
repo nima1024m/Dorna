@@ -117,7 +117,7 @@ runs on every backend change:
 2. `alembic upgrade head` — proves the migrations build the schema from scratch,
 3. `alembic check` — fails the build if the models and migrations disagree.
 
-The deploy pipeline (`.gitlab-ci.yml`) additionally runs `alembic upgrade head`
+The deploy pipeline (`backend/.gitlab-ci.yml`) additionally runs `alembic upgrade head`
 on each release so production schema tracks `head`.
 
 ---
