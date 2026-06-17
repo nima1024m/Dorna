@@ -1,4 +1,5 @@
 from enum import Enum
+from sqlalchemy import MetaData
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.types import UserDefinedType
@@ -8,8 +9,22 @@ engine = create_async_engine(settings.DB_URL, future=True, echo=False)
 AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False)
 
 
+# Deterministic names for indexes and constraints. Without this, autogenerate
+# can't reliably emit ALTER/DROP for unnamed constraints. Existing objects are
+# brought in line by the "align constraint names to convention" migration; see
+# alembic/README.md. Always give NEW multi-column unique/check constraints an
+# explicit name — the single-column templates below don't disambiguate them.
+NAMING_CONVENTION = {
+    "ix": "ix_%(column_0_label)s",
+    "uq": "uq_%(table_name)s_%(column_0_name)s",
+    "ck": "ck_%(table_name)s_%(constraint_name)s",
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+    "pk": "pk_%(table_name)s",
+}
+
+
 class Base(DeclarativeBase):
-    pass
+    metadata = MetaData(naming_convention=NAMING_CONVENTION)
 
 
 class CITEXT(UserDefinedType):
