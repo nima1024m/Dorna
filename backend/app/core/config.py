@@ -40,6 +40,12 @@ class Settings(BaseSettings):
     # the SDK appends the version path itself. In gateway mode GEMINI_API_KEY must
     # hold the gateway's API key (sent as the x-goog-api-key header).
     GEMINI_BASE_URL: Optional[str] = None
+    # Real Google Gemini API key used only by flows that must bypass the gateway
+    # (Google Search grounding in news/topics — see make_genai_client(force_direct=True)).
+    # In gateway mode GEMINI_API_KEY is the gateway's key, so those flows need this
+    # separate Google key. Leave unset when not using the gateway; the direct path
+    # then falls back to GEMINI_API_KEY, which is already the real Google key.
+    GEMINI_DIRECT_API_KEY: Optional[str] = None
     GRAMMAR_MODEL: Optional[dict] = None
     TRANSLATE_MODEL: Optional[str] = None
     TONE_MODEL: Optional[str] = None

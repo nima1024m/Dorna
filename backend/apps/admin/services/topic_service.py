@@ -277,7 +277,7 @@ class TopicManagementService:
           }}
         """
 
-        client = make_genai_client()
+        client = make_genai_client(force_direct=True)  # Google Search grounding — gateway can't proxy it
 
         try:
             content = types.Content(parts=[types.Part(text=prompt)])
@@ -482,7 +482,7 @@ class TopicManagementService:
           }}
         """
 
-        client = make_genai_client()
+        client = make_genai_client(force_direct=True)  # Google Search grounding — gateway can't proxy it
 
         content = types.Content(parts=[types.Part(text=prompt)])
         response = client.models.generate_content(

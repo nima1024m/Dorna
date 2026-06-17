@@ -230,7 +230,7 @@ Return JSON in this exact format:
 }}
 """
 
-    client = make_genai_client()
+    client = make_genai_client(force_direct=True)  # Google Search grounding — gateway can't proxy it
     content = types.Content(parts=[types.Part(text=prompt)])
     response = client.models.generate_content(
         model=settings.PODCAST_GENERATE_MODEL,

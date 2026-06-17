@@ -29,7 +29,7 @@ from app.services.token_usage import TokenUsageService
 from app.worker.news_tasks import enqueue_topic_refresh
 
 router = APIRouter()
-client = make_genai_client()
+client = make_genai_client(force_direct=True)  # Google Search grounding — gateway can't proxy it
 
 
 def _topic_to_out(obj) -> NewsTopicOut:
