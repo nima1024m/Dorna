@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
-from app.core.database import engine, Base
+from app.core.database import engine
 from app.core.security import hash_password
 from apps.admin.models.admin_user import AdminUser, AdminRole
 import app.models  # noqa: F401
@@ -13,8 +13,9 @@ import apps.admin.models  # noqa: F401
 
 
 async def main():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    # Schema is owned by Alembic — run `alembic upgrade head` before seeding.
+    # (Previously this script called Base.metadata.create_all, which bypassed
+    # migrations and was a source of schema drift.)
 
     email = "admin@dorna.local"
     password = f"DornaAdmin-{secrets.token_hex(4)}"
