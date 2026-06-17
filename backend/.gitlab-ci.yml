@@ -24,10 +24,11 @@ deploy:
     # ensure Poetry exists (pipx is fine on runners)
     - poetry --version || pipx install poetry
 
-    # Poetry: create venv in the project and use Python 3.12
+    # Poetry: create venv in the project and use Python 3.14
     - poetry config virtualenvs.create true
     - poetry config virtualenvs.in-project true
-    - poetry env use /usr/bin/python3.12 || poetry env use python3.12
+    # requires-python is >=3.14; recreate the venv if it was built on an older Python
+    - poetry env use /usr/bin/python3.14 || poetry env use python3.14
 
     # install exactly from poetry.lock (no prompts/ANSI in CI)
     - poetry install --no-interaction --no-ansi
