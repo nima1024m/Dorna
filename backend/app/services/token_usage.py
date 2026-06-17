@@ -6,7 +6,7 @@ Used by: Learning Insights, Podcast, TTS, Admin Topic Service.
 from __future__ import annotations
 
 from datetime import date
-from typing import Optional
+from typing import Iterable, Optional
 
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -41,6 +41,18 @@ class TokenUsageService:
             completion_tokens=usage.completion_tokens,
             total_tokens=usage.total_tokens,
         )
+
+    @staticmethod
+    async def record_all(
+        db: AsyncSession,
+        usages: Iterable[TokenUsage],
+        *,
+        user_id: Optional[int],
+        source: str,
+    ) -> None:
+        """Record every usage in ``usages`` (typically the output of pop_usages)."""
+        for usage in usages:
+            await TokenUsageService.record(db, usage, user_id=user_id, source=source)
 
     @staticmethod
     def _estimate_cost_cents(source: str, total_tokens: int) -> int:

@@ -22,6 +22,7 @@ from google.genai import types
 from app.core.config import settings
 from app.core.agents.genai_client import make_genai_client
 from app.core.agents.gc_renderer import render_service_account_json
+from app.core.agents.usage import attach_usage, extract_usage
 
 
 logger = logging.getLogger(__name__)
@@ -368,28 +369,6 @@ class GeminiAgent:
             temperature=0.1,
         )
 
-    def __extract_usage(self, response, model: str) -> dict | None:
-        usage = getattr(response, "usage_metadata", None) or getattr(response, "usageMetadata", None)
-        if not usage:
-            return None
-
-        prompt_tokens = getattr(usage, "prompt_token_count", None) or getattr(usage, "promptTokenCount", None)
-        completion_tokens = getattr(usage, "candidates_token_count", None) or getattr(usage, "candidatesTokenCount", None)
-        total_tokens = getattr(usage, "total_token_count", None) or getattr(usage, "totalTokenCount", None)
-
-        if total_tokens is None and (prompt_tokens is not None or completion_tokens is not None):
-            total_tokens = (prompt_tokens or 0) + (completion_tokens or 0)
-
-        if total_tokens is None:
-            return None
-
-        return {
-            "model": model,
-            "prompt_tokens": int(prompt_tokens or 0),
-            "completion_tokens": int(completion_tokens or 0),
-            "total_tokens": int(total_tokens or 0),
-        }
-
     def __raise_if_error_status(self, payload: dict) -> None:
         """
         Decide whether the model's JSON payload represents an application-level failure.
@@ -448,11 +427,9 @@ class GeminiAgent:
         if not isinstance(payload, dict):
             raise ValueError("Model did not return a JSON object.")
         self.__raise_if_error_status(payload)
-        usage = self.__extract_usage(response, model)
-        if usage:
-            payload["_usage"] = usage
+        attach_usage(payload, extract_usage(response, model))
         return payload
-    
+
     @retry(
         stop=stop_after_attempt(3),
         wait=wait_exponential(multiplier=1, min=2, max=10),
@@ -492,9 +469,7 @@ class GeminiAgent:
         if not isinstance(payload, dict):
             raise ValueError("Model did not return a JSON object.")
         self.__raise_if_error_status(payload)
-        usage = self.__extract_usage(response, model)
-        if usage:
-            payload["_usage"] = usage
+        attach_usage(payload, extract_usage(response, model))
         return payload
 
     async def ai_health(self) -> bool:

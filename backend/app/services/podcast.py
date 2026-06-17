@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import asyncio
-import json
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
@@ -10,6 +8,7 @@ from sqlalchemy import delete, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import app.core.ai as AI
+from app.core.agents.usage import pop_usages
 from app.core.config import settings
 from app.core.database import FeedItemStatus, PodcastJobStatus
 from app.models import (
@@ -168,18 +167,8 @@ async def generate_topics(count: int, user_id: int, db: AsyncSession) -> list[Fe
         )
         suggestions_raw: Any = llm_res.get("topics", [])
 
-        # Record token usage (extracted by GeminiAgent.__agenerate_json)
-        usage = llm_res.get("_usage")
-        if usage:
-            await TokenUsageService.record_usage(
-                db,
-                user_id=user_id,
-                source="gemini",
-                model_name=usage.get("model", ""),
-                prompt_tokens=int(usage.get("prompt_tokens", 0)),
-                completion_tokens=int(usage.get("completion_tokens", 0)),
-                total_tokens=int(usage.get("total_tokens", 0)),
-            )
+        # Record token usage
+        await TokenUsageService.record_all(db, pop_usages(llm_res), user_id=user_id, source="gemini")
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error suggesting topics: {type(e).__name__}: {str(e)}")

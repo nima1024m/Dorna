@@ -49,3 +49,48 @@ def extract_usage(response: Any, model: str) -> Optional[TokenUsage]:
         completion_tokens=int(completion_tokens or 0),
         total_tokens=int(total_tokens or 0),
     )
+
+
+# --------------------------------------------------------------------------- #
+# Carrying usage on a JSON payload
+#
+# Structured GeminiAgent calls return a plain dict (the model's JSON) and stash
+# the call's TokenUsage alongside it so the caller can record the charge. These
+# two reserved keys used to be read and re-mapped by hand at ~8 call sites; now
+# they are known ONLY here. Producers call attach_usage(s); consumers call
+# pop_usages and hand the result to TokenUsageService.record_all.
+# --------------------------------------------------------------------------- #
+_USAGE_KEY = "_usage"
+_USAGE_LIST_KEY = "_usage_list"
+
+
+def attach_usage(payload: Any, usage: Optional[TokenUsage]) -> Any:
+    """Stash a single TokenUsage on ``payload``. No-op when usage is None."""
+    if isinstance(payload, dict) and usage is not None:
+        payload[_USAGE_KEY] = usage
+    return payload
+
+
+def attach_usages(payload: Any, usages: list[TokenUsage]) -> Any:
+    """Stash several TokenUsage on ``payload`` (multi-call flows, e.g. grammar)."""
+    if isinstance(payload, dict) and usages:
+        payload[_USAGE_LIST_KEY] = list(usages)
+    return payload
+
+
+def pop_usages(payload: Any) -> list[TokenUsage]:
+    """Remove and return every TokenUsage a payload carries (single and/or list).
+
+    The single seam that knows the reserved keys. Mutates ``payload`` so the
+    usage never leaks downstream into an API response.
+    """
+    usages: list[TokenUsage] = []
+    if not isinstance(payload, dict):
+        return usages
+    single = payload.pop(_USAGE_KEY, None)
+    if isinstance(single, TokenUsage):
+        usages.append(single)
+    listed = payload.pop(_USAGE_LIST_KEY, None)
+    if isinstance(listed, list):
+        usages.extend(u for u in listed if isinstance(u, TokenUsage))
+    return usages
