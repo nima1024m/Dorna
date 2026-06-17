@@ -7,10 +7,10 @@ from typing import Iterable, List, Dict, Any, Tuple
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from google import genai
 from google.genai import types
 
 from app.core.config import settings
+from app.core.agents.genai_client import make_genai_client
 from app.models import NewsTopic, UserTopicPreference, NewsItem, TopicRefreshJob
 from app.services.token_usage import TokenUsageService
 
@@ -230,7 +230,7 @@ Return JSON in this exact format:
 }}
 """
 
-    client = genai.Client(api_key=settings.GEMINI_API_KEY)
+    client = make_genai_client()
     content = types.Content(parts=[types.Part(text=prompt)])
     response = client.models.generate_content(
         model=settings.PODCAST_GENERATE_MODEL,

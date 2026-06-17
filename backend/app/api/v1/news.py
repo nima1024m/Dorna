@@ -1,7 +1,6 @@
 import json
 
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
-from google import genai
 from google.genai import types
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -9,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.deps import get_db
 from app.core.auth_deps import auth_required
 from app.core.config import settings
+from app.core.agents.genai_client import make_genai_client
 from app.models import User, UserTopicFeedback
 from app.schemas.news import (
     NewsTopicCreate,
@@ -29,7 +29,7 @@ from app.services.token_usage import TokenUsageService
 from app.worker.news_tasks import enqueue_topic_refresh
 
 router = APIRouter()
-client = genai.Client(api_key=settings.GEMINI_API_KEY)
+client = make_genai_client()
 
 
 def _topic_to_out(obj) -> NewsTopicOut:

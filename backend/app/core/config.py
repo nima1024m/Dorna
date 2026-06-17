@@ -34,6 +34,12 @@ class Settings(BaseSettings):
     AVATAR_MAX_MB: Optional[int] = None
     LLM_AGENT: Optional[str] = None
     GEMINI_API_KEY: Optional[str] = None
+    # When set, all google-genai calls are routed to this base URL instead of
+    # Google's servers (e.g. a claude-gateway instance speaking the Gemini wire
+    # protocol). Leave unset to call Gemini directly. Do NOT include "/v1beta" —
+    # the SDK appends the version path itself. In gateway mode GEMINI_API_KEY must
+    # hold the gateway's API key (sent as the x-goog-api-key header).
+    GEMINI_BASE_URL: Optional[str] = None
     GRAMMAR_MODEL: Optional[dict] = None
     TRANSLATE_MODEL: Optional[str] = None
     TONE_MODEL: Optional[str] = None

@@ -83,7 +83,13 @@ async def ai_health() -> bool:
 async def grammar_correction(content: str) -> dict:
     agent = LLM_AGENTS[settings.LLM_AGENT]()
     punctuation_res = await agent.sentence_seperator(user_input=content)
-    punctuation_res['sentences'] = json.loads(punctuation_res['sentences'])
+    # The punctuation schema declares `sentences` as a STRING, so calling Gemini
+    # directly yields a JSON-encoded string. The claude-gateway ignores response
+    # schemas, so it returns the array as-is — accept either shape.
+    _sentences = punctuation_res['sentences']
+    if isinstance(_sentences, str):
+        _sentences = json.loads(_sentences)
+    punctuation_res['sentences'] = _sentences
     sentences = [s['correct'] for s in punctuation_res['sentences']]
     fixed_content = await agent.grammar_fix(sentences)
     usage_list = _collect_usage(punctuation_res, fixed_content)

@@ -16,10 +16,11 @@ from tenacity import (
 
 import logging
 
-from google import genai
+from google import genai  # noqa: F401 — kept so tests can patch genai.Client here
 from google.genai import types
 
 from app.core.config import settings
+from app.core.agents.genai_client import make_genai_client
 from app.core.agents.gc_renderer import render_service_account_json
 
 
@@ -35,7 +36,7 @@ class GeminiRetryableModelError(Exception):
 
 class GeminiAgent:
     def __init__(self):
-        self.__client = genai.Client(api_key=settings.GEMINI_API_KEY)
+        self.__client = make_genai_client()
 
         self.__prompt_dir = 'app/files/prompt'
         self.__grammar_prompt = 'grammar_system_prompt.txt'
@@ -499,6 +500,14 @@ class GeminiAgent:
     async def ai_health(self) -> bool:
         try:
             model = settings.GRAMMAR_MODEL['seperator']
+            if settings.GEMINI_BASE_URL:
+                # The gateway implements generateContent but not countTokens,
+                # so probe with a tiny generation instead.
+                await self.__client.aio.models.generate_content(
+                    model=model,
+                    contents="ping",
+                )
+                return True
             _ = self.__client.models.count_tokens(
                 model=model,
                 contents="ping"
