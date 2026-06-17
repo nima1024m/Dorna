@@ -112,5 +112,4 @@ class SignupTokens(Base):
 
     __table_args__ = (
         sa.Index("fki_signup_tokens_user_id_fkey", "user_id"),
-        sa.Index("ix_password_reset_tokens_user_id_copy1", "user_id"),
     )
