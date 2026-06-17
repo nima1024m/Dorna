@@ -1,7 +1,7 @@
 import asyncio
 from pathlib import Path
 
-from app.core.database import engine, Base
+from app.core.database import engine
 from app.services.news import parse_topics_csv, sync_topics_from_csv
 import app.models  # noqa: F401
 
@@ -11,8 +11,9 @@ async def main():
     if not csv_path.exists():
         raise SystemExit("Newstopics.csv not found")
 
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    # Schema is owned by Alembic — run `alembic upgrade head` before syncing.
+    # (Previously this script called Base.metadata.create_all, which bypassed
+    # migrations and was a source of schema drift.)
 
     rows = parse_topics_csv(str(csv_path))
     from sqlalchemy.ext.asyncio import AsyncSession
