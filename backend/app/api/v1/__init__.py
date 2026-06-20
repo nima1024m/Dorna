@@ -12,6 +12,7 @@ from app.api.v1 import stats
 from app.api.v1 import daily_brief
 from app.api.v1 import notifications
 from app.api.v1 import calendar
+from app.api.v1 import conversation
 
 api_router = APIRouter()
 api_router.include_router(auth.router, prefix='/auth', tags=["auth"])
@@ -27,3 +28,4 @@ api_router.include_router(stats.router, prefix='/stats', tags=["stats"])
 api_router.include_router(daily_brief.router, prefix='/daily-brief', tags=["daily-brief"])
 api_router.include_router(notifications.router, prefix='/notifications', tags=["notifications"])
 api_router.include_router(calendar.router, prefix='/calendar', tags=["calendar"])
+api_router.include_router(conversation.router, prefix='/conversation', tags=["conversation"])

@@ -13,6 +13,7 @@ import '../screens/auth/reset_password_otp_screen.dart';
 import '../screens/auth/sign_in_screen.dart';
 import '../screens/auth/sign_up_screen.dart';
 import '../screens/brief/brief_player_screen.dart';
+import '../screens/conversation/conversation_screen.dart';
 import '../screens/instruction/instruction_collect_data_screen.dart';
 import '../screens/phrase/phrase_library_screen.dart';
 import '../screens/phrase/saved_phrases_screen.dart';
@@ -80,6 +81,10 @@ List<GetPage> routes = [
   GetPage(
     name: BriefPlayerScreen.routeName,
     page: () => const BriefPlayerScreen(),
+  ),
+  GetPage(
+    name: ConversationScreen.routeName,
+    page: () => const ConversationScreen(),
   ),
   GetPage(
     name: SettingsScreen.routeName,

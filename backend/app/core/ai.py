@@ -85,3 +85,11 @@ async def generate_event_prep(
     return await get_agent().generate_event_prep(
         title=title, description=description, location=location, when=when, level=level
     )
+
+
+async def conversation_turn(
+    scene: str, history: str, user_message: str, level: int = 6
+) -> dict:
+    return await get_agent().conversation_turn(
+        scene=scene, history=history, user_message=user_message, level=level
+    )

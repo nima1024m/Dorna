@@ -57,6 +57,7 @@ class GeminiAgent:
         self.__podcast_script_prompt = 'podcast/podcast_script_system_prompt.txt'
         self.__daily_brief_prompt = 'daily_brief/brief_system_prompt.txt'
         self.__event_prep_prompt = 'calendar/event_prep_system_prompt.txt'
+        self.__conversation_prompt = 'conversation/conversation_system_prompt.txt'
 
         self.__allowed_langs = {str(x).lower().strip() for x in (settings.ASSISTANT_LANGS or [])}
         self.__allowed_tones = {str(x).lower().strip() for x in (settings.ASSISTANT_TONES or [])}
@@ -712,6 +713,39 @@ class GeminiAgent:
             level=int(level),
         )
         return await self.__agenerate_json(model, full_prompt, self.__event_prep_schema())
+
+    # ---------- Conversation practice ----------
+    def __conversation_schema(self) -> types.Schema:
+        return types.Schema(
+            type=types.Type.OBJECT,
+            properties={
+                "status": types.Schema(type=types.Type.STRING),
+                "reply": types.Schema(type=types.Type.STRING),
+                "correction": types.Schema(type=types.Type.STRING),
+                "tip": types.Schema(type=types.Type.STRING),
+                "message": types.Schema(type=types.Type.STRING),
+            },
+            required=["status", "reply"],
+        )
+
+    async def conversation_turn(
+        self,
+        scene: str,
+        history: str,
+        user_message: str,
+        level: int = 6,
+    ) -> dict:
+        model = settings.PODCAST_GENERATE_MODEL
+        template = self.__jinja_env.get_template(self.__conversation_prompt)
+        full_prompt = template.render(
+            scene=self.__sanitize_text_block(scene or "small talk"),
+            history=self.__sanitize_text_block(history or ""),
+            user_message=self.__sanitize_text_block(user_message or ""),
+            level=int(level),
+        )
+        return await self.__agenerate_json(
+            model, full_prompt, self.__conversation_schema()
+        )
 
     # ---------- TTS ----------
     async def book_cover(self, image_paths: List[str]) -> dict:
