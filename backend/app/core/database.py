@@ -68,6 +68,13 @@ class FeedItemStatus(str, Enum):
     ARCHIVED = "ARCHIVED"        # User dismissed/archived
 
 
+class DailyBriefStatus(str, Enum):
+    QUEUED = "QUEUED"            # Brief requested, not started
+    GENERATING = "GENERATING"    # Segments being generated
+    COMPLETED = "COMPLETED"      # Brief ready
+    FAILED = "FAILED"            # Generation failed
+
+
 async def get_db():
     async with AsyncSessionLocal() as session:
         yield session

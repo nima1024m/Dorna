@@ -55,6 +55,7 @@ class GeminiAgent:
         self.__learning_email_prompt = 'learning_email_prompt.txt'
         self.__podcast_topics_prompt = 'podcast/podcast_topics_system_prompt.txt'
         self.__podcast_script_prompt = 'podcast/podcast_script_system_prompt.txt'
+        self.__daily_brief_prompt = 'daily_brief/brief_system_prompt.txt'
 
         self.__allowed_langs = {str(x).lower().strip() for x in (settings.ASSISTANT_LANGS or [])}
         self.__allowed_tones = {str(x).lower().strip() for x in (settings.ASSISTANT_TONES or [])}
@@ -621,6 +622,56 @@ class GeminiAgent:
         model = settings.PODCAST_GENERATE_MODEL
         full_prompt = self.__render_podcast_script_prompt(topic=topic)
         return await self.__agenerate_json(model, full_prompt, self.__podcast_script_schema())
+
+    # ---------- Daily brief ----------
+    def __daily_brief_schema(self) -> types.Schema:
+        return types.Schema(
+            type=types.Type.OBJECT,
+            properties={
+                "status": types.Schema(type=types.Type.STRING),
+                "date": types.Schema(type=types.Type.STRING),
+                "segments": types.Schema(
+                    type=types.Type.ARRAY,
+                    items=types.Schema(
+                        type=types.Type.OBJECT,
+                        properties={
+                            "id": types.Schema(type=types.Type.STRING),
+                            "label": types.Schema(type=types.Type.STRING),
+                            "transcript": types.Schema(type=types.Type.STRING),
+                            "highlight": types.Schema(type=types.Type.STRING),
+                            "fa": types.Schema(type=types.Type.STRING),
+                        },
+                        required=["id", "label", "transcript"],
+                    ),
+                ),
+                "message": types.Schema(type=types.Type.STRING),
+            },
+            required=["status", "segments"],
+        )
+
+    def __render_daily_brief_prompt(
+        self, city: str, level: int, date_label: str, news_context: str
+    ) -> str:
+        template = self.__jinja_env.get_template(self.__daily_brief_prompt)
+        return template.render(
+            city=self.__sanitize_text_block(city or "Toronto"),
+            level=int(level),
+            date_label=self.__sanitize_text_block(date_label or ""),
+            news_context=self.__sanitize_text_block(news_context or ""),
+        )
+
+    async def generate_daily_brief(
+        self,
+        city: str,
+        level: int,
+        date_label: str = "",
+        news_context: str = "",
+    ) -> dict:
+        model = settings.PODCAST_GENERATE_MODEL
+        full_prompt = self.__render_daily_brief_prompt(
+            city=city, level=level, date_label=date_label, news_context=news_context
+        )
+        return await self.__agenerate_json(model, full_prompt, self.__daily_brief_schema())
 
     # ---------- TTS ----------
     async def book_cover(self, image_paths: List[str]) -> dict:

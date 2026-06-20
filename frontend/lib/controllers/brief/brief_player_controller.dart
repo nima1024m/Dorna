@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../config/api_client.dart';
+
 /// One chapter of the daily brief.
 class BriefSegment {
   final String id;
@@ -19,20 +21,57 @@ class BriefSegment {
     required this.highlight,
     required this.fa,
   });
+
+  factory BriefSegment.fromJson(Map<String, dynamic> j) {
+    final id = j['id']?.toString() ?? '';
+    return BriefSegment(
+      id: id,
+      label: j['label']?.toString() ?? id,
+      icon: iconFor(id),
+      transcript: j['transcript']?.toString() ?? '',
+      highlight: j['highlight']?.toString() ?? '',
+      fa: j['fa']?.toString() ?? '',
+    );
+  }
+
+  static IconData iconFor(String id) {
+    switch (id) {
+      case 'weather':
+        return Icons.wb_sunny_outlined;
+      case 'happening':
+        return Icons.public;
+      case 'phrases':
+        return Icons.forum_outlined;
+      case 'goodtoknow':
+        return Icons.tips_and_updates_outlined;
+      case 'challenge':
+        return Icons.bolt_outlined;
+      default:
+        return Icons.article_outlined;
+    }
+  }
 }
 
 /// Drives the redesigned Daily Brief player.
 ///
-/// Playback is a **local simulation** — there is no curated daily-brief audio
-/// backend yet (the podcast infra generates per-topic audio; F2 wires a real
-/// segmented daily brief). Position advances on a timer; segments, transcript
-/// and Persian gloss are placeholder content.
+/// Segments/transcript/date come from the F2 backend (`GET /v1/daily-brief/today`)
+/// when available; otherwise the placeholder set below is used. Audio playback
+/// itself is still a local timeline simulation (the brief is text/segments;
+/// per-segment TTS audio is a later add).
 class BriefPlayerController extends GetxController {
-  static const String dateLabel = 'Monday, Jun 1';
-  static const int totalSeconds = 300; // 5:00
-  static const int _segSeconds = totalSeconds ~/ 5;
+  final ApiClient _apiClient = ApiClient();
 
-  static const List<BriefSegment> segments = [
+  static const int totalSeconds = 300; // 5:00
+
+  final RxString dateLabel = 'Monday, Jun 1'.obs;
+  final RxList<BriefSegment> segments = RxList<BriefSegment>(_defaultSegments);
+
+  int get _segSeconds {
+    final n = segments.length;
+    return n == 0 ? totalSeconds : (totalSeconds ~/ n);
+  }
+
+  static const List<BriefSegment> _defaultSegments = [
     BriefSegment(
       id: 'weather',
       label: 'Weather',
@@ -102,11 +141,48 @@ class BriefPlayerController extends GetxController {
 
   Timer? _ticker;
 
-  int get currentIndex =>
-      (position.value ~/ _segSeconds).clamp(0, segments.length - 1);
-  BriefSegment get currentSegment => segments[currentIndex];
+  int get currentIndex => segments.isEmpty
+      ? 0
+      : (position.value ~/ _segSeconds).clamp(0, segments.length - 1);
+  BriefSegment get currentSegment =>
+      segments.isEmpty ? _defaultSegments.first : segments[currentIndex];
   double get speed => speeds[speedIndex.value];
   bool get isSaved => savedPhrases.contains(currentSegment.id);
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchBrief();
+  }
+
+  /// Pull today's generated brief; on success replace the placeholder segments.
+  /// On 202 (generating) / 404 / error, keep the placeholder set.
+  Future<void> fetchBrief() async {
+    try {
+      final r = await _apiClient.request(
+        url: 'v1/daily-brief/today',
+        method: ApiMethod.get,
+        skipErrorStatusCodes: const [202, 404],
+      );
+      if (r != null && r.statusCode == 200 && r.data is Map) {
+        final content = (r.data['content'] as Map?) ?? const {};
+        final segs = (content['segments'] as List?) ?? const [];
+        final parsed = segs
+            .whereType<Map>()
+            .map((e) => BriefSegment.fromJson(e.cast<String, dynamic>()))
+            .where((s) => s.transcript.isNotEmpty)
+            .toList();
+        if (parsed.isNotEmpty) {
+          segments.assignAll(parsed);
+          position.value = 0;
+        }
+        final d = content['date']?.toString();
+        if (d != null && d.isNotEmpty) dateLabel.value = d;
+      }
+    } catch (_) {
+      // keep placeholder segments
+    }
+  }
 
   @override
   void onClose() {

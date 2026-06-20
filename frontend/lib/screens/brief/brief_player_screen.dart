@@ -33,7 +33,7 @@ class BriefPlayerScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _TopBar(date: BriefPlayerController.dateLabel),
+              _TopBar(c: c),
               const SizedBox(height: DornaSpacing.gutter),
               _PlayerCard(c: c),
               const SizedBox(height: DornaSpacing.xl),
@@ -59,8 +59,8 @@ class BriefPlayerScreen extends StatelessWidget {
 }
 
 class _TopBar extends StatelessWidget {
-  final String date;
-  const _TopBar({required this.date});
+  final BriefPlayerController c;
+  const _TopBar({required this.c});
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +78,9 @@ class _TopBar extends StatelessWidget {
               Text('Daily Brief',
                   style: tt.headlineMedium
                       ?.copyWith(color: cs.onSurface, fontWeight: FontWeight.w700)),
-              Text(date,
+              Obx(() => Text(c.dateLabel.value,
                   style: tt.labelLarge?.copyWith(
-                      color: cs.onSurfaceVariant, fontSize: 12.5)),
+                      color: cs.onSurfaceVariant, fontSize: 12.5))),
             ],
           ),
         ),
@@ -325,10 +325,10 @@ class _SegmentRow extends StatelessWidget {
         final active = c.currentIndex;
         return ListView.separated(
           scrollDirection: Axis.horizontal,
-          itemCount: BriefPlayerController.segments.length,
+          itemCount: c.segments.length,
           separatorBuilder: (_, _) => const SizedBox(width: DornaSpacing.sm),
           itemBuilder: (context, i) {
-            final s = BriefPlayerController.segments[i];
+            final s = c.segments[i];
             return BriefSegmentChip(
               icon: s.icon,
               label: s.label,
@@ -437,7 +437,7 @@ class _TranscriptCard extends StatelessWidget {
                     },
                   )),
               Obx(() => DotIndicator(
-                    count: BriefPlayerController.segments.length,
+                    count: c.segments.length,
                     activeIndex: c.currentIndex,
                   )),
             ],

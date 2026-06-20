@@ -69,3 +69,11 @@ async def suggest_podcast_topics(interests: str, already_covered: str, count: in
 
 async def generate_podcast_script(topic: str) -> dict:
     return await get_agent().generate_podcast_script(topic=topic)
+
+
+async def generate_daily_brief(
+    city: str, level: int, date_label: str = "", news_context: str = ""
+) -> dict:
+    return await get_agent().generate_daily_brief(
+        city=city, level=level, date_label=date_label, news_context=news_context
+    )
