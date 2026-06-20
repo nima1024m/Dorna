@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../widgets/ui/app_colors.dart';
 import '../../widgets/ui/custom_list_tile.dart';
 
 class TermsAndPrivacyScreen extends StatelessWidget {
@@ -36,7 +35,7 @@ class TermsAndPrivacyScreen extends StatelessWidget {
                     'assets/icons/ic_terms.svg',
                     width: 18,
                     height: 18,
-                    color: AppColors.textMain(),
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -50,7 +49,7 @@ class TermsAndPrivacyScreen extends StatelessWidget {
                   'assets/icons/ic_privacy.svg',
                   width: 22,
                   height: 22,
-                  color: AppColors.textMain(),
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ],

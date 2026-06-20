@@ -1,5 +1,4 @@
 import 'package:dorna/utils/utils.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:dorna/widgets/ui/back_header.dart';
 import 'package:flutter/material.dart';
 
@@ -114,14 +113,16 @@ Address: 777 Fort Street, Victoria, BC V8W 1G9, Canada'''),
   buildBody(String text) {
     return Text(
       '$text\n',
-      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 13.sp, color: AppColors.textMain()),
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          fontSize: 13.sp, color: Theme.of(context).colorScheme.onSurface),
     );
   }
 
   buildTitle(String text) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.displayLarge?.copyWith(fontSize: 14.sp, color: AppColors.textMain()),
+      style: Theme.of(context).textTheme.displayLarge?.copyWith(
+          fontSize: 14.sp, color: Theme.of(context).colorScheme.onSurface),
     );
   }
 }

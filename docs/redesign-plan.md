@@ -233,8 +233,14 @@ design across most screens and makes dark mode correct.
 
 **Phase 7 done 2026-06-20.**
 
-**Phase 8 — Settings** (absorbs languages/tones per gap analysis)
-- [ ] settings (profile, Your-day toggles, Language, Keyboard, Plan, Account) · [ ] restyle about/contact/privacy/terms. Commit: `redesign(settings): …`
+**✅ Phase 8 — Settings — DONE 2026-06-20** (new hub; absorbs Languages)
+- [x] settings hub (`screens/settings/settings_screen.dart`, route `/settings`): profile quick-card (→ account ProfileScreen), **Your day** (Calendar/Location toggles, Daily-brief-time row with a real `showTimePicker`), **Explanations** (Your language en/fa, Simple-English-tips toggle — absorbs `languages_screen`), **Keyboard** (Dorna keyboard → real instruction setup), **Appearance** (Dark-mode toggle wired to `SettingsController.setDarkTheme` — real, working), **Plan** (Free plan / Upgrade pill), **Account** (Edit interests → `InterestsScreen`, Privacy → `TermsAndPrivacyScreen`, Sign out → existing `SignOutDialog`). New reusable `SettingsSection` + `SettingsRow` primitives; new `SettingsHubController` (local placeholder flags for calendar/location/language/tips — no backend yet).
+- [x] Restyled the legal/info sub-screens off `AppColors`: `terms_screen`, `terms_and_privacy_screen`, `contact_us_screen` → `ColorScheme`. (`about_us`/`privacy_policy` had no color coupling.)
+- [~] Real, working controls: dark mode, sign-out, daily-brief time picker, keyboard setup, navigation. Placeholders (no backend): calendar/location toggles, language, simple-tips, Upgrade, event reminders. Tones screen left as-is (keyboard-toolbar feature; not surfaced here). Settings is registered; the Profile-tab gear wires the entry in Phase 9.
+- [x] Verify: `flutter analyze` **0 errors** (294 lint-debt, net −1; new files lint-clean, legal-screen restyle shed debt), `flutter test` **All tests passed**, `flutter build apk` green.
+- Commit: `redesign(settings): settings hub + restyle legal screens`
+
+**Phase 8 done 2026-06-20.**
 
 **Phase 9 — Profile / progress**
 - [ ] you_profile_progress (streak, stat tiles, weak areas, interests, saved). Commit: `redesign(profile): …`

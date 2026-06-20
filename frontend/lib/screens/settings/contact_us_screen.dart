@@ -1,5 +1,4 @@
 import 'package:dorna/utils/utils.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:dorna/widgets/ui/back_header.dart';
 import 'package:dorna/widgets/ui/toast.dart';
 import 'package:flutter/material.dart';
@@ -105,18 +104,16 @@ class _ContactRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final cs = Theme.of(context).colorScheme;
     final TextStyle labelStyle =
         Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: isDarkMode
-                  ? AppColors.textMain()
-                  : const Color(0xFF232E36).withOpacity(0.5),
+              color: cs.onSurfaceVariant,
               fontSize: 13.sp,
             );
     final TextStyle valueStyle =
         Theme.of(context).textTheme.bodyLarge!.copyWith(
-          color: isDarkMode ? AppColors.textMain() : const Color(0xFF232E36),
-          fontSize: 14.sp,
+              color: cs.onSurface,
+              fontSize: 14.sp,
             );
 
     return InkWell(
@@ -137,7 +134,7 @@ class _ContactRow extends StatelessWidget {
                     icon,
                     width: 18,
                     height: 18,
-                    color: isDarkMode ? AppColors.textMain() : null,
+                    color: cs.onSurface,
                   ),
                   const SizedBox(width: 8),
                   Expanded(

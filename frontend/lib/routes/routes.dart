@@ -29,6 +29,7 @@ import '../screens/podcast/preparing_podcast_screen.dart';
 import '../screens/settings/about_us_screen.dart';
 import '../screens/settings/contact_us_screen.dart';
 import '../screens/settings/privacy_policy_screen.dart';
+import '../screens/settings/settings_screen.dart';
 import '../screens/settings/terms_and_privacy_screen.dart';
 import '../screens/settings/terms_screen.dart';
 import '../screens/onboarding/building_brief_screen.dart';
@@ -77,6 +78,10 @@ List<GetPage> routes = [
   GetPage(
     name: BriefPlayerScreen.routeName,
     page: () => const BriefPlayerScreen(),
+  ),
+  GetPage(
+    name: SettingsScreen.routeName,
+    page: () => const SettingsScreen(),
   ),
   GetPage(
     name: WelcomeScreen.routeName,
