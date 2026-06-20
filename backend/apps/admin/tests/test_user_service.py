@@ -16,7 +16,7 @@ class TestAdminUserService:
         """Test getting a user by ID when user exists."""
         # Arrange
         mock_result = MagicMock()
-        mock_result.scalar_one_or_none.return_value = mock_user
+        mock_result.unique.return_value.scalar_one_or_none.return_value = mock_user
         mock_db.execute.return_value = mock_result
         
         service = AdminUserService(mock_db)
@@ -34,7 +34,7 @@ class TestAdminUserService:
         """Test getting a user by ID when user doesn't exist."""
         # Arrange
         mock_result = MagicMock()
-        mock_result.scalar_one_or_none.return_value = None
+        mock_result.unique.return_value.scalar_one_or_none.return_value = None
         mock_db.execute.return_value = mock_result
         
         service = AdminUserService(mock_db)

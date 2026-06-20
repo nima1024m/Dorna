@@ -4,6 +4,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 
 void main() {
+  // Initialize the test binding so platform-channel access inside the controller
+  // (keyboard status / connectivity checks) doesn't throw "Binding has not yet
+  // been initialized" during these plain unit tests.
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   late KeyboardStatusController controller;
 
   setUp(() {

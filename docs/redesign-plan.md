@@ -101,13 +101,13 @@ Legend: **R** = redesign existing · **N** = new · **M** = merged/absorbed · B
 
 ## 4. PHASES (execute top-to-bottom)
 
-### ☐ Baseline (B0) — test-only, BEFORE Phase A
-Precondition: 0 `flutter analyze` errors + green test suites. Currently NOT met (pre-existing).
-- [ ] Fix/replace stale `frontend/test/widget_test.dart` (wrong package `dorna_widget`, nonexistent `MyApp`) → 2 analyze errors gone.
-- [ ] Add `TestWidgetsFlutterBinding.ensureInitialized()` (or proper mocking) to the 2 failing cases in `keyboard_status_controller_test.dart`.
-- [ ] Fix the 2 backend admin user-service mock tests (`apps/admin/tests/test_user_service.py` — mock `.unique().scalar_one_or_none()`).
-- [ ] Verify: `fvm flutter analyze` (0 errors), `fvm flutter test` green, `poetry run pytest tests apps/admin/tests` green.
-- Commit: `test: fix stale boilerplate + binding/mock baseline tests` (NO `lib`/app source, NO lint-debt).
+### ✅ Baseline (B0) — test-only, BEFORE Phase A — DONE 2026-06-20
+Precondition: 0 `flutter analyze` errors + green test suites. **Met.**
+- [x] Deleted stale `frontend/test/widget_test.dart` (wrong package `dorna_widget`, nonexistent `MyApp`) → 2 analyze errors gone.
+- [x] Added `TestWidgetsFlutterBinding.ensureInitialized()` to `keyboard_status_controller_test.dart` (fixes the 2 binding failures).
+- [x] Fixed the 2 backend admin user-service mock tests (`apps/admin/tests/test_user_service.py` — mock `.unique().scalar_one_or_none()`).
+- [x] Verified: `flutter analyze` **0 errors** (261 info/warn lint-debt remain, untouched), `flutter test` **All tests passed**, `pytest tests apps/admin/tests` **105 passed**.
+- Commit: `test: green up baseline (stale widget test, binding init, admin mocks)` (NO `lib`/app source, NO lint-debt).
 
 > Do NOT attempt to clear the ~264 analyze info/warning lints — separate debt, never mixed in.
 
