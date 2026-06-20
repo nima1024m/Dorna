@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#dff0ff",
+                        "on-tertiary": "#f6f9ff",
+                        "outline-variant": "#9cb5c8",
+                        "on-background": "#1d3544",
+                        "surface-bright": "#f6faff",
+                        "surface-dim": "#c4ddf1",
+                        "secondary-fixed-dim": "#77e3ff",
+                        "inverse-primary": "#6ab2fe",
+                        "primary-dim": "#005690",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#a83836",
+                        "tertiary-fixed": "#31abf7",
+                        "inverse-surface": "#050f17",
+                        "surface-variant": "#cce6fa",
+                        "surface": "#f6faff",
+                        "on-tertiary-container": "#00283f",
+                        "on-primary-fixed-variant": "#003963",
+                        "secondary-container": "#adecff",
+                        "on-surface-variant": "#4a6273",
+                        "outline": "#667e8f",
+                        "background": "#f6faff",
+                        "secondary": "#00687b",
+                        "on-surface": "#1d3544",
+                        "on-tertiary-fixed": "#000001",
+                        "on-primary": "#f7f9ff",
+                        "on-secondary": "#effbff",
+                        "tertiary": "#006497",
+                        "surface-container-high": "#d6ebfc",
+                        "on-secondary-container": "#005a6a",
+                        "secondary-dim": "#005b6c",
+                        "primary-fixed": "#6ab2fe",
+                        "on-secondary-fixed": "#004653",
+                        "tertiary-dim": "#005884",
+                        "primary": "#0062a3",
+                        "on-error-container": "#6e0a12",
+                        "on-tertiary-fixed-variant": "#00314d",
+                        "error-dim": "#67040d",
+                        "inverse-on-surface": "#939ea8",
+                        "secondary-fixed": "#adecff",
+                        "on-error": "#fff7f6",
+                        "surface-tint": "#0062a3",
+                        "on-primary-fixed": "#00152a",
+                        "tertiary-container": "#31abf7",
+                        "primary-container": "#6ab2fe",
+                        "tertiary-fixed-dim": "#119ee8",
+                        "primary-fixed-dim": "#5ba5ef",
+                        "on-primary-container": "#003054",
+                        "error-container": "#fa746f",
+                        "surface-container-low": "#eaf5ff",
+                        "surface-container-highest": "#cce6fa",
+                        "on-secondary-fixed-variant": "#006577"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f6faff; overflow: hidden; }
+        .ios-shadow { box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05); }
+        .grammar-error { text-decoration: underline; text-decoration-style: dotted; text-decoration-color: #a83836; text-underline-offset: 4px; }
+        .keyboard-gradient { background: linear-gradient(180deg, #FFFFFF 0%, #F2F2F2 100%); }
+        .dorna-btn-gradient { background: linear-gradient(135deg, #0062a3 0%, #05C1E2 100%); }
+        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
+        .key-shadow { box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.25); }
+        .key-active:active { background-color: #d1d1d1 !important; transform: scale(0.95); transition: all 0.1s; }
+        .single-viewport { height: 844px; width: 390px; position: relative; overflow: hidden; margin: 0 auto; border: 8px solid #1d3544; border-radius: 48px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="single-viewport bg-background shadow-2xl relative">
+<!-- Top App Bar (Shared Component Logic) -->
+<header class="bg-surface shadow-sm h-16 flex justify-between items-center px-margin-mobile fixed top-0 w-full z-40">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary cursor-pointer">arrow_back</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-bold">Sarah Miller</span>
+<span class="text-[10px] text-outline">Active now</span>
+</div>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary">videocam</span>
+<span class="material-symbols-outlined text-primary">call</span>
+</div>
+</header>
+<!-- Floating Toast Notification -->
+<div class="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[90%] transform transition-all duration-500 translate-y-0 opacity-100" id="toast">
+<div class="glass border border-white/40 ios-shadow rounded-xl px-4 py-3 flex items-center gap-3">
+<div class="bg-primary-container p-1.5 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<p class="text-[13px] font-medium text-on-background">Learned a new mistake — added to your phrases</p>
+<button class="ml-auto opacity-40" onclick="document.getElementById('toast').style.opacity='0'">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+<!-- Chat History -->
+<div class="pt-20 pb-80 px-4 flex flex-col gap-4 overflow-y-auto h-full scroll-smooth">
+<div class="flex flex-col items-center mb-4">
+<span class="text-[11px] text-outline font-medium uppercase tracking-widest">Today</span>
+</div>
+<!-- Recipient Message -->
+<div class="flex justify-start">
+<div class="max-w-[80%] bg-surface-container-high text-on-background px-4 py-3 rounded-2xl rounded-bl-none">
+<p class="text-body-md font-body-md">Hey! Welcome to Toronto! How is your first week going?</p>
+</div>
+</div>
+<!-- Recipient Message 2 -->
+<div class="flex justify-start">
+<div class="max-w-[80%] bg-surface-container-high text-on-background px-4 py-3 rounded-2xl rounded-bl-none">
+<p class="text-body-md font-body-md">What are you working on these days?</p>
+</div>
+</div>
+<!-- User Message (With Grammar Error) -->
+<div class="flex justify-end">
+<div class="max-w-[80%] dorna-btn-gradient text-white px-4 py-3 rounded-2xl rounded-br-none ios-shadow">
+<p class="text-body-md font-body-md">It is great. <span class="grammar-error">I am software engineer</span>, so I'm looking for some tech meetups here.</p>
+</div>
+</div>
+</div>
+<!-- Dorna Keyboard Overlay -->
+<div class="absolute bottom-0 left-0 w-full z-50">
+<!-- Suggestion Strip -->
+<div class="bg-white/95 backdrop-blur-md h-12 flex items-center px-3 gap-2 border-t border-surface-variant overflow-x-auto whitespace-nowrap scrollbar-hide">
+<div class="flex items-center gap-1.5 bg-secondary-container/50 border border-secondary-container px-3 py-1.5 rounded-full animate-pulse">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">spellcheck</span>
+<span class="text-[13px] font-semibold text-on-secondary-container">I'm a software engineer.</span>
+</div>
+<div class="flex gap-2 ml-auto">
+<button class="dorna-btn-gradient text-white px-4 py-1.5 rounded-full text-[12px] font-bold shadow-sm flex items-center gap-1">
+                        Fix
+                    </button>
+<button class="bg-surface-container-low text-primary px-3 py-1.5 rounded-full text-[12px] font-medium border border-outline-variant/30 flex items-center gap-1">
+                        Tone
+                    </button>
+<button class="bg-surface-container-low text-primary px-3 py-1.5 rounded-full text-[12px] font-medium border border-outline-variant/30 flex items-center gap-1">
+                        Translate
+                    </button>
+</div>
+</div>
+<!-- Main Keyboard Area -->
+<div class="keyboard-gradient pt-2 pb-8 px-1">
+<!-- Row 1 -->
+<div class="flex justify-center gap-1.5 mb-2 px-1">
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">Q</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">W</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">E</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">R</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">T</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">Y</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">U</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">I</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">O</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">P</div>
+</div>
+<!-- Row 2 -->
+<div class="flex justify-center gap-1.5 mb-2 px-4">
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">A</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">S</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">D</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">F</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">G</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">H</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">J</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">K</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">L</div>
+</div>
+<!-- Row 3 -->
+<div class="flex justify-center gap-1.5 mb-2 px-1">
+<div class="bg-outline-variant/30 h-10 w-12 rounded-lg flex items-center justify-center text-on-surface key-shadow key-active">
+<span class="material-symbols-outlined text-[20px]">shift</span>
+</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">Z</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">X</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">C</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">V</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">B</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">N</div>
+<div class="bg-white h-10 w-8 rounded-lg flex items-center justify-center text-on-surface font-medium key-shadow key-active">M</div>
+<div class="bg-outline-variant/30 h-10 w-12 rounded-lg flex items-center justify-center text-on-surface key-shadow key-active">
+<span class="material-symbols-outlined text-[20px]">backspace</span>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="flex justify-center gap-1.5 px-1">
+<div class="bg-outline-variant/30 h-10 w-12 rounded-lg flex items-center justify-center text-on-surface text-[12px] font-bold key-shadow key-active">123</div>
+<div class="bg-outline-variant/30 h-10 w-10 rounded-lg flex items-center justify-center text-on-surface key-shadow key-active">
+<span class="material-symbols-outlined text-[20px]">sentiment_satisfied</span>
+</div>
+<div class="bg-white h-10 w-36 rounded-lg flex items-center justify-center text-on-surface text-[13px] font-medium key-shadow key-active">space</div>
+<div class="bg-primary/10 h-10 w-20 rounded-lg flex items-center justify-center text-primary text-[13px] font-bold key-shadow key-active">Return</div>
+</div>
+</div>
+<!-- Home Indicator -->
+<div class="bg-surface-dim h-8 w-full flex justify-center items-end pb-2">
+<div class="w-32 h-1 bg-black/20 rounded-full"></div>
+</div>
+</div>
+<!-- Persian Hint Block (Contextual UI) -->
+<div class="absolute bottom-[380px] right-4 left-4 z-30 transition-all">
+<div class="bg-[#EDEDED] p-3 rounded-lg flex items-start gap-3 border border-black/5 ios-shadow">
+<span class="material-symbols-outlined text-primary text-[20px]">lightbulb</span>
+<div class="flex-1">
+<p class="text-[12px] leading-relaxed text-on-background">
+<span class="font-bold">Pro Tip:</span> In English, we always use the article "a" or "an" before a singular profession.
+                    </p>
+<p class="text-[12px] text-primary/80 mt-1" dir="rtl">
+                        در انگلیسی، همیشه از حروف تعریف قبل از شغل‌های مفرد استفاده می‌کنیم.
+                    </p>
+</div>
+</div>
+</div>
+</div>
+<script>
+        // Simple micro-interaction for the "Fix" button
+        document.querySelector('.dorna-btn-gradient').addEventListener('click', function() {
+            const errorText = document.querySelector('.grammar-error');
+            errorText.classList.add('transition-all', 'duration-500');
+            errorText.innerHTML = "I'm a software engineer";
+            errorText.classList.remove('grammar-error');
+            errorText.style.color = '#fff';
+            
+            this.innerHTML = '<span class="material-symbols-outlined text-[16px]">check</span> Fixed';
+            this.classList.replace('dorna-btn-gradient', 'bg-emerald-500');
+            
+            setTimeout(() => {
+                document.getElementById('toast').style.transform = 'translate(-50%, -100px)';
+                document.getElementById('toast').style.opacity = '0';
+            }, 1000);
+        });
+
+        // Key interactions
+        document.querySelectorAll('.key-active').forEach(key => {
+            key.addEventListener('touchstart', () => {
+                key.style.backgroundColor = '#e5e7eb';
+            });
+            key.addEventListener('touchend', () => {
+                key.style.backgroundColor = '';
+            });
+        });
+    </script>
+</body></html>

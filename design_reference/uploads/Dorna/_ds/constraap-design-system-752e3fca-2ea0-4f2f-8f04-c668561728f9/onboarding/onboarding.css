@@ -1,0 +1,225 @@
+/* ConstraAP — Onboarding prototype styles. Pairs with colors_and_type.css + app.css.
+   Material 3 token vocabulary only; no new hex. */
+
+/* ──────────────────────────── Wizard stage ──────────────────────────── */
+.ob-stage {
+  min-height: 100%;
+  background: var(--color-surface-container-low);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+}
+.ob-brand { width: 100%; max-width: 512px; margin-bottom: 24px; text-align: center; }
+.ob-brand .wordmark { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; color: var(--color-primary); }
+.ob-brand p { font-size: 12px; font-weight: 500; color: var(--color-on-surface-variant); margin-top: 2px; }
+
+.ob-card {
+  width: 100%;
+  max-width: 512px;
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+}
+
+/* Step dots — same pattern as OrgOnboardingPage */
+.ob-dots { display: flex; gap: 8px; justify-content: center; margin-bottom: 28px; }
+.ob-dot { height: 8px; border-radius: 999px; transition: all .25s ease; }
+.ob-dot.upcoming { width: 8px; background: var(--color-outline-variant); }
+.ob-dot.done     { width: 8px; background: color-mix(in srgb, var(--color-on-surface-variant) 40%, transparent); }
+.ob-dot.active   { width: 24px; background: var(--color-primary); }
+
+.ob-eyebrow { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-on-surface-variant); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; justify-content: center; }
+.ob-eyebrow .material-symbols-outlined { font-size: 15px; }
+.ob-card h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; color: var(--color-primary); margin-bottom: 6px; }
+.ob-card .sub { font-size: 13px; line-height: 1.5; color: var(--color-on-surface-variant); margin-bottom: 24px; }
+
+.ob-field { display: block; margin-bottom: 16px; }
+.ob-field .lbl { display: block; font-size: 12px; font-weight: 500; color: var(--color-on-surface-variant); margin-bottom: 6px; }
+.ob-field .lbl .req { color: var(--color-on-surface-variant); }
+.ob-field input {
+  width: 100%; height: 36px; padding: 0 12px;
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant); border-radius: 4px;
+  font-size: 13px; color: var(--color-on-surface); font-family: inherit; outline: none;
+  transition: border-color .15s;
+}
+.ob-field input.mono { font-family: var(--font-mono); letter-spacing: 0.02em; text-transform: uppercase; }
+.ob-field input::placeholder { color: color-mix(in srgb, var(--color-on-surface-variant) 70%, transparent); }
+.ob-field input:focus { border-color: var(--color-primary); }
+.ob-field .hint { font-size: 11px; color: var(--color-on-surface-variant); margin-top: 6px; line-height: 1.4; }
+.ob-field .hint code { font-family: var(--font-mono); color: var(--color-on-surface); }
+
+.ob-error {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--color-error);
+  background: color-mix(in srgb, var(--color-error-container) 30%, transparent);
+  border-radius: 8px; padding: 10px 14px; margin-top: 4px; margin-bottom: 4px;
+}
+.ob-error .material-symbols-outlined { font-size: 16px; }
+
+.ob-actions { display: flex; gap: 12px; margin-top: 24px; }
+.ob-btn { flex: 1; height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border-radius: 4px; font-size: 13px; font-weight: 500; transition: all .15s; }
+.ob-btn .material-symbols-outlined { font-size: 18px; }
+.ob-btn.primary { background: var(--color-primary); color: var(--color-on-primary); }
+.ob-btn.primary:hover { background: var(--color-inverse-surface); }
+.ob-btn.primary:disabled { opacity: .5; cursor: default; }
+.ob-btn.ghost { background: var(--color-surface-container-lowest); border: 1px solid var(--color-outline-variant); color: var(--color-primary); }
+.ob-btn.ghost:hover { background: var(--color-surface-container); }
+
+/* tiny progress-of-required caption under the card */
+.ob-foot { width: 100%; max-width: 512px; margin-top: 18px; display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 11px; color: var(--color-on-surface-variant); }
+.ob-foot .seg { display: flex; align-items: center; gap: 5px; }
+.ob-foot .seg .material-symbols-outlined { font-size: 14px; }
+.ob-foot .seg.done { color: var(--color-status-connected); }
+.ob-foot .seg.now  { color: var(--color-primary); font-weight: 600; }
+.ob-foot .div { width: 14px; height: 1px; background: var(--color-outline-variant); }
+
+/* celebration */
+.ob-done { text-align: center; }
+.ob-done .burst { width: 64px; height: 64px; margin: 0 auto 8px; border-radius: 999px;
+  background: color-mix(in srgb, var(--color-status-connected) 12%, transparent);
+  display: flex; align-items: center; justify-content: center; }
+.ob-done .burst .material-symbols-outlined { font-size: 34px; color: var(--color-status-connected); }
+.ob-done .pill { display: inline-flex; align-items: center; gap: 6px; margin: 4px 0 14px; padding: 5px 12px;
+  border-radius: 999px; background: var(--color-surface-container); font-size: 12px; color: var(--color-on-surface); }
+.ob-done .pill .code { font-family: var(--font-mono); font-weight: 500; }
+
+/* ───────────────────────── Get-started card ─────────────────────────── */
+.gs-card {
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.gs-head { display: flex; align-items: center; gap: 14px; padding: 16px 18px; cursor: pointer; }
+.gs-head .lead { width: 38px; height: 38px; border-radius: 9px; flex-shrink: 0;
+  background: var(--color-primary); color: var(--color-on-primary);
+  display: flex; align-items: center; justify-content: center; }
+.gs-head .lead .material-symbols-outlined { font-size: 20px; }
+.gs-head .ht { flex: 1; min-width: 0; }
+.gs-head .ht h2 { font-size: 15px; font-weight: 700; color: var(--color-primary); letter-spacing: -0.01em; }
+.gs-head .ht p { font-size: 12px; color: var(--color-on-surface-variant); margin-top: 1px; }
+.gs-head .count { font-size: 12px; font-weight: 500; color: var(--color-on-surface-variant); font-family: var(--font-mono); white-space: nowrap; }
+.gs-head .chev { color: var(--color-on-surface-variant); display: flex; transition: transform .2s; }
+.gs-head .chev.open { transform: rotate(180deg); }
+
+/* progress bar lives under the header */
+.gs-progress { height: 4px; background: var(--color-surface-container-high); position: relative; }
+.gs-progress .fill { position: absolute; inset: 0 auto 0 0; background: var(--gs-accent, var(--color-primary)); transition: width .4s ease; border-radius: 0 999px 999px 0; }
+
+.gs-body { padding: 6px 10px 10px; }
+
+.gs-group-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--color-on-surface-variant); padding: 12px 8px 6px; }
+
+.gs-item { display: flex; align-items: center; gap: 12px; padding: 12px 8px; border-radius: 8px; transition: background .12s; }
+.gs-item + .gs-item { border-top: 1px solid color-mix(in srgb, var(--color-outline-variant) 45%, transparent); }
+.gs-item:hover { background: var(--color-surface-container-low); }
+.gs-item.locked { opacity: .85; }
+
+/* compact density */
+.gs-list.compact .gs-item { padding: 8px 8px; gap: 10px; }
+.gs-list.compact .gs-item .desc { display: none; }
+
+/* status icon / checkbox */
+.gs-check { width: 22px; height: 22px; border-radius: 999px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--color-outline); background: transparent; transition: all .15s; cursor: pointer; }
+.gs-check .material-symbols-outlined { font-size: 15px; }
+.gs-item.todo .gs-check:hover { border-color: var(--color-primary); background: var(--color-surface-container); }
+.gs-item.done .gs-check { background: var(--color-status-connected); border-color: var(--color-status-connected); color: #fff; }
+.gs-item.locked .gs-check { border-color: var(--color-outline-variant); color: var(--color-on-surface-variant); cursor: not-allowed; }
+.gs-item.required-core.todo .gs-check { border-color: var(--color-primary); }
+
+.gs-meta { flex: 1; min-width: 0; }
+.gs-meta .title { display: flex; align-items: center; gap: 8px; }
+.gs-meta .title .t { font-size: 13px; font-weight: 500; color: var(--color-on-surface); }
+.gs-item.done .gs-meta .title .t { color: var(--color-on-surface-variant); }
+.gs-meta .desc { font-size: 12px; color: var(--color-on-surface-variant); margin-top: 2px; line-height: 1.4; }
+
+.gs-badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 999px; letter-spacing: 0.02em; white-space: nowrap; }
+.gs-badge.optional { background: var(--color-surface-container-high); color: var(--color-on-surface-variant); }
+.gs-badge.required { background: color-mix(in srgb, var(--color-primary) 10%, transparent); color: var(--color-primary); }
+.gs-badge.unlocks { display: inline-flex; align-items: center; gap: 3px; background: transparent; color: var(--color-on-surface-variant); padding: 0; font-weight: 500; }
+.gs-badge.unlocks .material-symbols-outlined { font-size: 13px; }
+
+/* right-side action */
+.gs-cta { height: 30px; padding: 0 13px; border-radius: 4px; font-size: 12px; font-weight: 500; flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 5px; transition: all .15s; white-space: nowrap; }
+.gs-cta .material-symbols-outlined { font-size: 15px; }
+.gs-cta.solid { background: var(--color-primary); color: var(--color-on-primary); }
+.gs-cta.solid:hover { background: var(--color-inverse-surface); }
+.gs-cta.outline { border: 1px solid var(--color-outline-variant); color: var(--color-primary); background: var(--color-surface-container-lowest); }
+.gs-cta.outline:hover { background: var(--color-surface-container); }
+.gs-done-tick { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: var(--color-status-connected); font-weight: 500; flex-shrink: 0; }
+.gs-done-tick .material-symbols-outlined { font-size: 16px; }
+
+/* locked row — lock chip + tooltip */
+.gs-lock { position: relative; display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;
+  font-size: 12px; color: var(--color-on-surface-variant); padding: 0 4px; cursor: help; }
+.gs-lock .material-symbols-outlined { font-size: 16px; }
+.gs-tip { position: absolute; bottom: calc(100% + 8px); right: 0; width: 220px; z-index: 30;
+  background: var(--color-inverse-surface); color: var(--color-inverse-on-surface);
+  font-size: 11px; line-height: 1.45; font-weight: 400; padding: 9px 11px; border-radius: 8px;
+  box-shadow: var(--shadow-menu); opacity: 0; transform: translateY(4px); pointer-events: none; transition: all .15s; text-align: left; }
+.gs-tip::after { content: ""; position: absolute; top: 100%; right: 16px; border: 5px solid transparent; border-top-color: var(--color-inverse-surface); }
+.gs-lock:hover .gs-tip { opacity: 1; transform: translateY(0); }
+
+/* card footer */
+.gs-foot { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-top: 1px solid var(--color-outline-variant); }
+.gs-foot .txt { font-size: 12px; color: var(--color-on-surface-variant); }
+.gs-foot .dismiss { font-size: 12px; color: var(--color-on-surface-variant); display: inline-flex; align-items: center; gap: 4px; }
+.gs-foot .dismiss:hover { color: var(--color-primary); }
+.gs-foot .dismiss .material-symbols-outlined { font-size: 15px; }
+
+/* completed celebration state */
+.gs-complete { display: flex; align-items: center; gap: 14px; padding: 18px; }
+.gs-complete .burst { width: 40px; height: 40px; border-radius: 999px; flex-shrink: 0;
+  background: color-mix(in srgb, var(--color-status-connected) 12%, transparent);
+  display: flex; align-items: center; justify-content: center; }
+.gs-complete .burst .material-symbols-outlined { font-size: 22px; color: var(--color-status-connected); }
+.gs-complete .gt h2 { font-size: 14px; font-weight: 700; color: var(--color-primary); }
+.gs-complete .gt p { font-size: 12px; color: var(--color-on-surface-variant); margin-top: 1px; }
+
+/* ── Poll Email locked button on the dashboard toolbar ── */
+.btn.is-locked { position: relative; opacity: .55; cursor: not-allowed; }
+.btn.is-locked .material-symbols-outlined.lk { font-size: 13px; }
+.tt-wrap { position: relative; display: inline-flex; }
+.tt-wrap .tt { position: absolute; top: calc(100% + 8px); right: 0; width: 230px; z-index: 30;
+  background: var(--color-inverse-surface); color: var(--color-inverse-on-surface);
+  font-size: 11px; line-height: 1.45; padding: 9px 11px; border-radius: 8px; box-shadow: var(--shadow-menu);
+  opacity: 0; transform: translateY(-4px); pointer-events: none; transition: all .15s; text-align: left; }
+.tt-wrap .tt::after { content: ""; position: absolute; bottom: 100%; right: 22px; border: 5px solid transparent; border-bottom-color: var(--color-inverse-surface); }
+.tt-wrap:hover .tt { opacity: 1; transform: translateY(0); }
+
+/* connected dot for the Poll Email button once enabled */
+.conn-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--color-status-connected); }
+
+/* empty dashboard */
+.dash-empty { background: var(--color-surface-container-lowest); border: 1px dashed var(--color-outline-variant); border-radius: 12px;
+  padding: 44px 24px; text-align: center; }
+.dash-empty .ico { width: 56px; height: 56px; margin: 0 auto 14px; border-radius: 12px; background: var(--color-surface-container);
+  display: flex; align-items: center; justify-content: center; }
+.dash-empty .ico .material-symbols-outlined { font-size: 28px; color: var(--color-on-surface-variant); }
+.dash-empty h3 { font-size: 15px; font-weight: 600; color: var(--color-on-surface); }
+.dash-empty p { font-size: 13px; color: var(--color-on-surface-variant); margin-top: 4px; max-width: 360px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+.dash-empty .e-actions { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
+
+/* restart pill */
+.ob-restart { position: fixed; right: 16px; bottom: 16px; z-index: 60;
+  display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px;
+  background: var(--color-inverse-surface); color: var(--color-inverse-on-surface);
+  font-size: 12px; font-weight: 500; box-shadow: var(--shadow-menu); transition: opacity .15s; }
+.ob-restart:hover { opacity: .9; }
+.ob-restart .material-symbols-outlined { font-size: 15px; }
+
+/* fade-in helper — transform-only so content is ALWAYS visible even if the
+   animation is frozen at frame 0 (background/throttled tabs, captures). */
+@keyframes obfade { from { transform: translateY(8px); } to { transform: none; } }
+.obfade { animation: obfade .35s ease both; }
+@media (prefers-reduced-motion: reduce) { .obfade { animation: none; } }

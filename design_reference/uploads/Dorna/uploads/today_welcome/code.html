@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-dim": "#67040d",
+                        "surface-container": "#dff0ff",
+                        "tertiary": "#006497",
+                        "primary-fixed": "#6ab2fe",
+                        "secondary": "#00687b",
+                        "on-primary-fixed": "#00152a",
+                        "error-container": "#fa746f",
+                        "surface-container-highest": "#cce6fa",
+                        "secondary-fixed-dim": "#77e3ff",
+                        "on-primary-fixed-variant": "#003963",
+                        "on-secondary-container": "#005a6a",
+                        "primary-fixed-dim": "#5ba5ef",
+                        "inverse-on-surface": "#939ea8",
+                        "inverse-primary": "#6ab2fe",
+                        "on-tertiary-fixed": "#000001",
+                        "background": "#f6faff",
+                        "primary-container": "#6ab2fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#f7f9ff",
+                        "on-tertiary": "#f6f9ff",
+                        "on-background": "#1d3544",
+                        "on-primary-container": "#003054",
+                        "tertiary-fixed-dim": "#119ee8",
+                        "secondary-dim": "#005b6c",
+                        "error": "#a83836",
+                        "surface-container-low": "#eaf5ff",
+                        "surface-dim": "#c4ddf1",
+                        "secondary-container": "#adecff",
+                        "surface-variant": "#cce6fa",
+                        "on-tertiary-container": "#00283f",
+                        "surface": "#f6faff",
+                        "on-surface": "#1d3544",
+                        "on-secondary": "#effbff",
+                        "tertiary-container": "#31abf7",
+                        "surface-container-high": "#d6ebfc",
+                        "on-tertiary-fixed-variant": "#00314d",
+                        "tertiary-dim": "#005884",
+                        "primary": "#0062a3",
+                        "on-secondary-fixed-variant": "#006577",
+                        "on-error-container": "#6e0a12",
+                        "outline": "#667e8f",
+                        "inverse-surface": "#050f17",
+                        "on-secondary-fixed": "#004653",
+                        "surface-tint": "#0062a3",
+                        "on-surface-variant": "#4a6273",
+                        "surface-bright": "#f6faff",
+                        "tertiary-fixed": "#31abf7",
+                        "secondary-fixed": "#adecff",
+                        "primary-dim": "#005690",
+                        "outline-variant": "#9cb5c8",
+                        "on-error": "#fff7f6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .signature-gradient {
+            background: linear-gradient(135deg, #0062a3 0%, #05C1E2 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+        }
+        .single-viewport {
+            height: 844px;
+            width: 390px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background flex items-center justify-center min-h-screen">
+<!-- Mobile Screen Wrapper -->
+<div class="single-viewport bg-background relative shadow-2xl">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-margin-mobile pt-6 w-full z-10">
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md text-primary">Welcome, Nima</h1>
+<p class="font-label-lg text-label-lg text-on-surface-variant">Your English companion</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden border-2 border-white shadow-sm transition-transform active:scale-95">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a young man with dark hair, representing a user profile avatar for a modern mobile application. The image features soft, natural studio lighting with a neutral, clean background. The aesthetic is high-quality and premium, aligning with a corporate yet friendly UI design using soft tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXvUBODgEwBrHOmzNi4356UJxzsoexKAvStdi1DhS12etR0MySHacFw8C3JrJDYE7oBeJ_fXxCr11a35gUC2JIztzJ9Gdnid5swSi1RwduPRsueoBtjdXi-TJrjUTbtMKFBXnvC4kZBh3cEHzRVSqhyoYcYeG4se6-LxQ9uocZtWIs_5fLK9OmAKYy1J3jpN4D2pWjm0-b4DZNrzd3U1F714_YXUs6fH3raBVaV55Lg1BxTjUt1feu16OSqwqOgE3gSj_Y5-U8Ybs"/>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 px-margin-mobile py-6 overflow-hidden flex flex-col gap-6">
+<!-- Hero: 5-min Brief Card -->
+<section class="relative">
+<div class="signature-gradient rounded-3xl p-6 text-white shadow-lg overflow-hidden relative group active:scale-[0.98] transition-all">
+<!-- Subtle Wave Pattern Decoration -->
+<div class="absolute top-0 right-0 opacity-10 pointer-events-none transform translate-x-1/4 -translate-y-1/4 scale-150">
+<span class="material-symbols-outlined text-[120px]">graphic_eq</span>
+</div>
+<div class="flex justify-between items-start relative z-10">
+<div class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span class="font-label-lg text-[12px] uppercase tracking-wider">5 min</span>
+</div>
+</div>
+<div class="mt-8 relative z-10">
+<h2 class="font-headline-lg text-headline-lg font-extrabold leading-tight">Your 5-min brief</h2>
+<p class="font-body-md text-body-md opacity-90 mt-2">Daily English insights for your life in Canada.</p>
+</div>
+<div class="mt-8 flex justify-end relative z-10">
+<button class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-primary shadow-xl hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Today's Plan: Empty State Section -->
+<section class="flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-md text-[18px] text-on-surface">Today's Plan</h3>
+<button class="text-primary font-label-lg text-label-lg">Connect</button>
+</div>
+<!-- Bento Style Card for Empty State -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 flex flex-col items-center justify-center text-center shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-surface-variant flex-1 max-h-[280px]">
+<div class="w-24 h-24 mb-4">
+<img alt="No events" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlecpVpdzx_pUFHhe4BfKFyoL9uZ5lUhAH9sHmakELLZc1shEJt3vuFmBfCfNMN5gxQ_IrmFrsi0XZoIkTTgcJo5FLtFjZxyEQRfhMXlqCv2ZS3uV-hfIqRlc2SAscxBDELV1D9TGAsjdH8Fi1GN3r267RBlWUUiMCi4-Q4G4LvZfcqgJ1xPJVK5cS-obDL_SE_GyKns0w3Cg09kLQBdoJd-btjyLJ7vNVEF1tc4xW03HYXjvwwu_ZZOTgw7s2YkLM8GjcFVgMQpU"/>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">No events yet</h4>
+<p class="font-body-md text-body-md text-on-surface-variant px-4 mb-6">Connect your calendar to get prep before meetings and events</p>
+<button class="border-2 border-secondary text-secondary rounded-full px-8 py-3 font-label-lg text-label-lg hover:bg-secondary/5 transition-colors active:scale-95">
+                        Connect calendar
+                    </button>
+</div>
+</section>
+<!-- Around You Section -->
+<section class="bg-surface-container-low rounded-2xl p-4 flex items-center gap-4 transition-all hover:bg-surface-container">
+<div class="bg-white p-2 rounded-xl shadow-sm text-secondary">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface-variant leading-tight">
+                        Turn on location for tips near you. 
+                        <a class="text-secondary font-bold ml-1 hover:underline" href="#">Enable location</a>
+</p>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-margin-mobile h-20 bg-surface shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-3xl">
+<button class="flex flex-col items-center gap-1 text-primary group">
+<div class="w-12 h-8 rounded-full bg-primary-container flex items-center justify-center transition-all group-active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+<span class="font-label-lg text-[10px] text-primary">Dorna</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant group">
+<div class="w-12 h-8 rounded-full flex items-center justify-center transition-all group-active:scale-90 hover:bg-surface-variant">
+<span class="material-symbols-outlined">graphic_eq</span>
+</div>
+<span class="font-label-lg text-[10px] text-on-surface-variant">Practice</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant group">
+<div class="w-12 h-8 rounded-full flex items-center justify-center transition-all group-active:scale-90 hover:bg-surface-variant">
+<span class="material-symbols-outlined">person</span>
+</div>
+<span class="font-label-lg text-[10px] text-on-surface-variant">Profile</span>
+</button>
+</nav>
+</div>
+<script>
+        // Simple Micro-interactions
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => btn.style.transform = 'scale(1)', 100);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Around You - Dorna</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#4a6273",
+                        "tertiary-container": "#31abf7",
+                        "inverse-primary": "#6ab2fe",
+                        "secondary-fixed-dim": "#77e3ff",
+                        "on-secondary": "#effbff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#6ab2fe",
+                        "inverse-surface": "#050f17",
+                        "outline-variant": "#9cb5c8",
+                        "on-tertiary-fixed-variant": "#00314d",
+                        "tertiary-fixed-dim": "#119ee8",
+                        "background": "#f6faff",
+                        "secondary-dim": "#005b6c",
+                        "on-error": "#fff7f6",
+                        "error-dim": "#67040d",
+                        "on-primary": "#f7f9ff",
+                        "primary-fixed-dim": "#5ba5ef",
+                        "on-tertiary": "#f6f9ff",
+                        "inverse-on-surface": "#939ea8",
+                        "on-secondary-container": "#005a6a",
+                        "surface-bright": "#f6faff",
+                        "surface-dim": "#c4ddf1",
+                        "tertiary-fixed": "#31abf7",
+                        "error-container": "#fa746f",
+                        "on-primary-fixed-variant": "#003963",
+                        "surface-container-highest": "#cce6fa",
+                        "secondary-container": "#adecff",
+                        "on-secondary-fixed": "#004653",
+                        "on-secondary-fixed-variant": "#006577",
+                        "tertiary": "#006497",
+                        "primary": "#0062a3",
+                        "secondary-fixed": "#adecff",
+                        "on-primary-container": "#003054",
+                        "secondary": "#00687b",
+                        "outline": "#667e8f",
+                        "surface": "#f6faff",
+                        "error": "#a83836",
+                        "primary-fixed": "#6ab2fe",
+                        "surface-container-high": "#d6ebfc",
+                        "primary-dim": "#005690",
+                        "surface-container-low": "#eaf5ff",
+                        "surface-variant": "#cce6fa",
+                        "on-background": "#1d3544",
+                        "on-tertiary-fixed": "#000001",
+                        "on-tertiary-container": "#00283f",
+                        "on-error-container": "#6e0a12",
+                        "surface-container": "#dff0ff",
+                        "tertiary-dim": "#005884",
+                        "surface-tint": "#0062a3",
+                        "on-surface": "#1d3544",
+                        "on-primary-fixed": "#00152a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "34px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f6faff; color: #1d3544; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .safe-area-pb { padding-bottom: env(safe-area-inset-bottom); }
+        .single-viewport { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        .custom-shadow { box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05); }
+        .persian-hint { background-color: #EDEDED; }
+        .gradient-button { background: linear-gradient(135deg, #0062a3 0%, #05C1E2 100%); }
+    </style>
+</head>
+<body class="bg-background">
+<div class="single-viewport max-w-[390px] mx-auto bg-background relative">
+<!-- TopAppBar (Based on Shared Components JSON) -->
+<header class="w-full top-0 sticky z-50 bg-surface dark:bg-surface-dim flex justify-between items-center px-margin-mobile h-14 w-full">
+<button class="text-primary dark:text-primary-fixed hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile font-semibold text-primary dark:text-primary-fixed">Around you</h1>
+<button class="text-primary dark:text-primary-fixed hover:opacity-80 transition-opacity active:scale-95 transition-transform">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto px-margin-mobile pb-24">
+<!-- Page Header -->
+<div class="mt-4 mb-6">
+<h2 class="font-headline-md text-headline-md-mobile text-on-surface">Around you</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Conversation tips for where you are.</p>
+</div>
+<!-- Current Location Card (Asymmetric/Bento style) -->
+<section class="mb-6">
+<div class="bg-surface-container-lowest rounded-xl custom-shadow overflow-hidden flex flex-col">
+<div class="h-32 w-full relative">
+<img alt="Local map view" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWezT1A96EaeO8H1I-z4wNfsOQ6hE5oX6CrwPJ47DczFu2Uyd7TpDnu_KFJ_1iGtYjXE9Q_l_mP9CggZJ2y7ieDFgNIV8VIYhi-QOvf7eIWcLcR0elHLkoK3MCzuS-xvp1WrtecbanwAeO82js2g9uVFOJwzfMEIEDf0jCB79UKQ5j-kCTpoo0hmKwR6Ghz1wQzuKuZflBSc6F24x-jGz5-v2a9v3EIlcIm0h5yisoUWakKsVp7LttFqj270nVmFd1nMeOqvyWbKg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+<div class="p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-[18px]">location_on</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Central Library · 50 m</span>
+</div>
+<div class="persian-hint p-3 rounded-lg flex gap-3 items-start border-l-4 border-secondary">
+<span class="material-symbols-outlined text-secondary-dim text-[20px] mt-0.5">lightbulb</span>
+<p class="font-body-md text-body-md text-on-surface leading-tight">
+                                Quiet spot — keep it low-key. Try a soft opener.
+                            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Nearby List Section -->
+<section>
+<h3 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider mb-3 ml-1">Nearby Venues</h3>
+<div class="space-y-3">
+<!-- Coffee Shop Card -->
+<div class="bg-surface-container-lowest p-4 rounded-xl custom-shadow flex items-center gap-4 hover:bg-surface-container-low transition-colors group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">local_cafe</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-label-lg text-label-lg text-on-surface font-bold">Coffee shop</h4>
+<p class="font-body-md text-body-md text-on-surface-variant truncate italic">"Is this seat taken?"</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center text-secondary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+</button>
+<span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</div>
+<!-- Gym Card -->
+<div class="bg-surface-container-lowest p-4 rounded-xl custom-shadow flex items-center gap-4 hover:bg-surface-container-low transition-colors group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">fitness_center</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-label-lg text-label-lg text-on-surface font-bold">Gym</h4>
+<p class="font-body-md text-body-md text-on-surface-variant truncate italic">"How many sets you got left?"</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center text-secondary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+</button>
+<span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</div>
+<!-- Bus Stop Card -->
+<div class="bg-surface-container-lowest p-4 rounded-xl custom-shadow flex items-center gap-4 hover:bg-surface-container-low transition-colors group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">directions_bus</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-label-lg text-label-lg text-on-surface font-bold">Bus stop</h4>
+<p class="font-body-md text-body-md text-on-surface-variant truncate italic">"Do you know if the 5 is running?"</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center text-secondary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+</button>
+<span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</div>
+<!-- Grocery Store Card -->
+<div class="bg-surface-container-lowest p-4 rounded-xl custom-shadow flex items-center gap-4 hover:bg-surface-container-low transition-colors group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">shopping_cart</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-label-lg text-label-lg text-on-surface font-bold">Grocery store</h4>
+<p class="font-body-md text-body-md text-on-surface-variant truncate italic">"Have you tried these?"</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center text-secondary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+</button>
+<span class="material-symbols-outlined text-outline-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Based on Shared Components JSON) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-surface-container-low dark:bg-surface-container-lowest rounded-t-xl shadow-sm">
+<!-- Explore Tab (Active) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-dim text-on-secondary-container dark:text-on-secondary-fixed rounded-full px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span class="font-label-lg text-label-lg">Explore</span>
+</button>
+<!-- Lessons Tab -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 transition-transform">
+<span class="material-symbols-outlined">record_voice_over</span>
+<span class="font-label-lg text-label-lg">Lessons</span>
+</button>
+<!-- Profile Tab -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 transition-transform">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg">Profile</span>
+</button>
+</nav>
+<!-- Contextual FAB for Recording / Audio Interactivity -->
+<button class="gradient-button fixed bottom-24 right-6 w-14 h-14 rounded-full flex items-center justify-center text-white custom-shadow active:scale-90 transition-transform z-40">
+<span class="material-symbols-outlined" style="font-size: 28px;">mic</span>
+</button>
+</div>
+<script>
+        // Micro-interaction for feedback on list items
+        document.querySelectorAll('.cursor-pointer').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.add('scale-95');
+                setTimeout(() => item.classList.remove('scale-95'), 150);
+            });
+        });
+
+        // Simple audio icon animation simulation
+        document.querySelectorAll('button .material-symbols-outlined[style*="FILL"]').forEach(icon => {
+            icon.parentElement.addEventListener('click', (e) => {
+                e.stopPropagation();
+                icon.style.color = '#0062a3';
+                setTimeout(() => icon.style.color = '', 1000);
+            });
+        });
+    </script>
+</body></html>

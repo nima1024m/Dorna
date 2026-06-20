@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-dim": "#005884",
+                        "on-secondary-fixed-variant": "#006577",
+                        "outline": "#667e8f",
+                        "on-error": "#fff7f6",
+                        "tertiary-fixed": "#31abf7",
+                        "on-error-container": "#6e0a12",
+                        "inverse-primary": "#6ab2fe",
+                        "background": "#f6faff",
+                        "inverse-surface": "#050f17",
+                        "on-tertiary-fixed-variant": "#00314d",
+                        "tertiary": "#006497",
+                        "surface-container-high": "#d6ebfc",
+                        "secondary-container": "#adecff",
+                        "on-primary-container": "#003054",
+                        "on-surface-variant": "#4a6273",
+                        "surface-container-low": "#eaf5ff",
+                        "error-container": "#fa746f",
+                        "secondary": "#00687b",
+                        "surface-tint": "#0062a3",
+                        "error-dim": "#67040d",
+                        "primary-container": "#6ab2fe",
+                        "on-secondary-container": "#005a6a",
+                        "tertiary-container": "#31abf7",
+                        "secondary-dim": "#005b6c",
+                        "on-secondary-fixed": "#004653",
+                        "primary-fixed": "#6ab2fe",
+                        "on-primary-fixed-variant": "#003963",
+                        "surface-container": "#dff0ff",
+                        "on-primary": "#f7f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f6faff",
+                        "error": "#a83836",
+                        "surface-container-highest": "#cce6fa",
+                        "primary-dim": "#005690",
+                        "on-primary-fixed": "#00152a",
+                        "surface-variant": "#cce6fa",
+                        "primary-fixed-dim": "#5ba5ef",
+                        "on-tertiary-container": "#00283f",
+                        "on-secondary": "#effbff",
+                        "surface": "#f6faff",
+                        "primary": "#0062a3",
+                        "on-surface": "#1d3544",
+                        "tertiary-fixed-dim": "#119ee8",
+                        "surface-dim": "#c4ddf1",
+                        "on-tertiary-fixed": "#000001",
+                        "on-tertiary": "#f6f9ff",
+                        "inverse-on-surface": "#939ea8",
+                        "on-background": "#1d3544",
+                        "outline-variant": "#9cb5c8",
+                        "secondary-fixed": "#adecff",
+                        "secondary-fixed-dim": "#77e3ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f6faff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .mic-wave {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+        .waveform-bar {
+            animation: wave-bounce 1.2s ease-in-out infinite;
+        }
+        @keyframes wave-bounce {
+            0%, 100% { height: 8px; }
+            50% { height: 24px; }
+        }
+        .viewport-container {
+            width: 390px;
+            height: 844px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface">
+<div class="viewport-container bg-surface-bright">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-10 bg-background flex items-center justify-between px-margin-mobile h-16 max-w-[390px] mx-auto">
+<button class="transition-opacity duration-200 active:scale-95 hover:opacity-80 text-primary">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary text-center">Talk with Dorna</h1>
+<button class="transition-opacity duration-200 active:scale-95 hover:opacity-80 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 mt-16 px-margin-mobile pt-4 pb-48 flex flex-col overflow-y-auto">
+<!-- Scene Chip -->
+<div class="flex justify-center mb-8">
+<div class="bg-surface-container-low px-4 py-1.5 rounded-full border border-outline-variant/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary" data-icon="restaurant">restaurant</span>
+<span class="font-label-lg text-label-lg text-on-surface-variant">Scene: Networking event</span>
+</div>
+</div>
+<!-- Chat Area -->
+<div class="space-y-6 flex-1">
+<!-- Dorna Bubble -->
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-surface-container rounded-xl rounded-tl-none p-4 shadow-sm border border-surface-variant/50 relative">
+<div class="flex items-start gap-3">
+<button class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-[20px]" data-icon="volume_up">volume_up</span>
+</button>
+<p class="font-body-lg text-body-lg text-on-surface">Hi! Tell me what you do.</p>
+</div>
+</div>
+<span class="text-[11px] font-medium text-outline mt-1 ml-2">Dorna • Just now</span>
+</div>
+<!-- User Bubble -->
+<div class="flex flex-col items-end self-end max-w-[85%]">
+<div class="bg-primary text-on-primary rounded-xl rounded-tr-none p-4 shadow-md relative">
+<p class="font-body-lg text-body-lg">
+                            I <span class="border-b-2 border-dotted border-on-primary/60" title="Did you mean: 'I am a software engineer'?">am</span> software engineer.
+                        </p>
+</div>
+<span class="text-[11px] font-medium text-outline mt-1 mr-2">You • Transcribed</span>
+</div>
+</div>
+</main>
+<!-- Interaction Zone (Docked) -->
+<section class="absolute bottom-20 left-0 w-full px-margin-mobile pb-8 bg-gradient-to-t from-surface-bright via-surface-bright/95 to-transparent pt-12 flex flex-col items-center">
+<!-- Animated Waveform Ring -->
+<div class="relative flex items-center justify-center mb-4">
+<div class="absolute w-24 h-24 rounded-full bg-tertiary/20 mic-wave"></div>
+<div class="absolute w-28 h-28 rounded-full border border-tertiary/10 mic-wave" style="animation-delay: 0.5s"></div>
+<!-- Circular Mic Button -->
+<button class="relative z-10 w-20 h-20 rounded-full bg-gradient-to-br from-tertiary-container to-tertiary shadow-xl active:scale-90 transition-transform duration-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-[36px] text-on-tertiary-container" data-icon="mic" data-weight="fill" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+</div>
+<p class="font-label-lg text-label-lg text-tertiary-dim mb-6 tracking-wide">Tap to speak</p>
+<!-- Secondary Actions -->
+<div class="flex items-center gap-4 w-full">
+<button class="flex-1 py-3 px-4 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-on-surface-variant font-label-lg text-label-lg flex items-center justify-center gap-2 hover:bg-surface-variant/20 transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="keyboard">keyboard</span>
+                    Type instead
+                </button>
+<button class="flex-1 py-3 px-4 rounded-xl bg-secondary-container/50 text-on-secondary-container font-label-lg text-label-lg flex items-center justify-center gap-2 hover:bg-secondary-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+                    End &amp; feedback
+                </button>
+</div>
+</section>
+<!-- BottomNavBar (Shared Component) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-8 pb-6 h-20 bg-surface-container-lowest rounded-t-xl shadow-[0px_-4px_20px_rgba(0,0,0,0.05)] max-w-[390px] mx-auto">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</button>
+<!-- Mic (Active) -->
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-4 scale-110 -translate-y-4 shadow-md transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+</button>
+<!-- Profile -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</nav>
+</div>
+<!-- Micro-interaction for feedback underline -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const correction = document.querySelector('.border-dotted');
+            if (correction) {
+                correction.addEventListener('click', () => {
+                    alert("Dorna's Tip: Remember to use 'a' or 'an' before a profession. e.g., 'I am a software engineer.'");
+                });
+            }
+
+            // Visual feedback on mic press
+            const micBtn = document.querySelector('button .material-symbols-outlined[data-icon="mic"]').parentElement;
+            micBtn.addEventListener('mousedown', () => {
+               // Logic for audio recording start visualization
+            });
+        });
+    </script>
+</body></html>

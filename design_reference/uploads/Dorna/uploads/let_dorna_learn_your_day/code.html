@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f6faff",
+                        "secondary-fixed-dim": "#77e3ff",
+                        "primary-container": "#6ab2fe",
+                        "error-dim": "#67040d",
+                        "surface-dim": "#c4ddf1",
+                        "on-tertiary-container": "#00283f",
+                        "on-primary-fixed": "#00152a",
+                        "secondary-dim": "#005b6c",
+                        "on-secondary": "#effbff",
+                        "secondary": "#00687b",
+                        "primary": "#0062a3",
+                        "tertiary-fixed-dim": "#119ee8",
+                        "on-tertiary-fixed": "#000001",
+                        "error": "#a83836",
+                        "secondary-fixed": "#adecff",
+                        "on-error": "#fff7f6",
+                        "surface-container": "#dff0ff",
+                        "on-secondary-fixed-variant": "#006577",
+                        "on-surface-variant": "#4a6273",
+                        "on-background": "#1d3544",
+                        "on-tertiary": "#f6f9ff",
+                        "tertiary-fixed": "#31abf7",
+                        "surface-container-low": "#eaf5ff",
+                        "secondary-container": "#adecff",
+                        "outline": "#667e8f",
+                        "tertiary-dim": "#005884",
+                        "surface-tint": "#0062a3",
+                        "surface-container-high": "#d6ebfc",
+                        "primary-dim": "#005690",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#005a6a",
+                        "on-surface": "#1d3544",
+                        "on-primary-fixed-variant": "#003963",
+                        "on-primary": "#f7f9ff",
+                        "on-error-container": "#6e0a12",
+                        "background": "#f6faff",
+                        "tertiary-container": "#31abf7",
+                        "on-secondary-fixed": "#004653",
+                        "inverse-on-surface": "#939ea8",
+                        "tertiary": "#006497",
+                        "on-primary-container": "#003054",
+                        "inverse-surface": "#050f17",
+                        "inverse-primary": "#6ab2fe",
+                        "primary-fixed-dim": "#5ba5ef",
+                        "primary-fixed": "#6ab2fe",
+                        "on-tertiary-fixed-variant": "#00314d",
+                        "surface-container-highest": "#cce6fa",
+                        "surface-variant": "#cce6fa",
+                        "surface-bright": "#f6faff",
+                        "error-container": "#fa746f",
+                        "outline-variant": "#9cb5c8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "16px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background-color: #f6faff;
+        }
+        .main-viewport {
+            width: 390px;
+            height: 844px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #0062a3 0%, #05C1E2 100%);
+        }
+        .card-shadow {
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface">
+<div class="main-viewport bg-surface">
+<!-- Top App Bar / Progress Header -->
+<header class="flex justify-between items-center px-margin-mobile h-16 w-full shrink-0">
+<button class="active:scale-95 transition-transform text-on-surface-variant hover:opacity-80">
+<span class="material-symbols-outlined font-label-lg text-[24px]">close</span>
+</button>
+<div class="flex gap-2">
+<div class="w-2 h-2 rounded-full bg-surface-container-highest"></div>
+<div class="w-2 h-2 rounded-full bg-surface-container-highest"></div>
+<div class="w-5 h-2 rounded-full bg-primary transition-all duration-300"></div>
+</div>
+<div class="w-6"></div> <!-- Spacer for center alignment -->
+</header>
+<!-- Content Canvas (Single Viewport) -->
+<main class="flex-1 flex flex-col px-margin-mobile pt-4 overflow-y-auto no-scrollbar pb-8">
+<!-- Headline Section -->
+<section class="mb-8">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-4">
+                    Let Dorna learn your day
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                    Connect your calendar and location so Dorna can prepare you for real conversations — like before a 5 PM networking event, or when you're at a cafe.
+                </p>
+</section>
+<!-- Permission Cards -->
+<div class="space-y-4 mb-6">
+<!-- Calendar Card -->
+<div class="bg-surface-container-lowest rounded-xl p-5 card-shadow flex items-start gap-4 border border-surface-container transition-all active:scale-[0.98]">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container text-[24px]">calendar_today</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-label-lg text-[16px] font-semibold text-on-surface">Connect calendar</h3>
+<button class="text-primary font-label-lg text-label-lg font-bold hover:underline">Connect</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-tight">
+                            See your events and prep you before each one
+                        </p>
+</div>
+</div>
+<!-- Location Card -->
+<div class="bg-surface-container-lowest rounded-xl p-5 card-shadow flex items-start gap-4 border border-surface-container transition-all active:scale-[0.98]">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container text-[24px]">location_on</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-label-lg text-[16px] font-semibold text-on-surface">Enable location</h3>
+<button class="text-primary font-label-lg text-label-lg font-bold hover:underline">Enable</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-tight">
+                            Get conversation tips for places around you
+                        </p>
+</div>
+</div>
+</div>
+<!-- Privacy Note -->
+<div class="flex items-center justify-center gap-2 text-on-surface-variant opacity-70 mb-auto">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span class="font-label-lg text-[12px]">Private to you. Change anytime.</span>
+</div>
+<!-- Footer Actions -->
+<div class="mt-8 space-y-4">
+<button class="w-full primary-gradient text-on-primary font-label-lg py-5 rounded-full card-shadow font-semibold active:scale-95 transition-all duration-200">
+                    Finish setup
+                </button>
+<button class="w-full text-on-surface-variant font-label-lg py-2 hover:text-primary transition-colors active:scale-95">
+                    Maybe later
+                </button>
+</div>
+</main>
+<!-- Hidden Data-Alt descriptions for AI mapping -->
+<div class="hidden">
+<img data-alt="A clean, minimalist digital interface showing a calendar integration icon. The aesthetic is modern and premium with soft blue and white tones. The lighting is bright and even, reflecting a light-mode UI design. A professional atmosphere that feels trustworthy and high-end, utilizing a corporate modern style with generous whitespace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs-cV6SmCdUFIBbuFuqyDdshZzI5JlW6st2oLfel1b6BS1D1Izer_mNeGf7NYMdGs11NWTF3hlivrJuxfhwRnUns4QkgyUpvvkltZC6EouU2qh-DaG6obsBQFvA8CRAq7SIqRtSog1NYp184HbSESUtjd7CoD930iu1vhwoNd5CjnfhPNlv86Rf0WhHM051ja5xjWsjwy0brNpWT0wM1BZMQN3GFDFF99BFU7bkCGJQpS3egL9HXANSyqYKIaa6h6WFH2_glRyKeg"/>
+<img data-alt="A high-quality digital illustration of a location pin icon designed for a modern app. The style is sophisticated and accessible, featuring a soft blue and cyan gradient palette. The background is a crisp, clean white, suggesting a high-end Canadian tech aesthetic. The mood is helpful and encouraging, focusing on real-world connectivity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf_aWQ0Z7p3HL4bpm8f0qgbqFgcFw-nAo4ioREnXoNG64OCqOXsCebIt31RHcqdT103AQhmUS8fjFmlnqD2nQTg4oqSZd-o3m37yJTseQdaoflqe-Yu46ovkFDnn4Qs_ymfbnC1WAKGHTNKz0ciGkT6EGKTMmT0I3L5y9VgFcqdmxsOFNuTON7w1_IFY-wU_1muKnIl1QgQlnh0jpytArtfdCXlLKd8vsVKuWR-pV1JyfDxZb_xc_KeD2KeIe_L6gJe-_Z_bUrDYs"/>
+</div>
+</div>
+<script>
+        // Micro-interaction for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('touchstart', () => {
+                button.classList.add('opacity-90');
+            });
+            button.addEventListener('touchend', () => {
+                button.classList.remove('opacity-90');
+            });
+        });
+
+        // Simulating the "Connect" and "Enable" states
+        const connectBtns = document.querySelectorAll('.text-primary.font-bold');
+        connectBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.textContent = 'Connected';
+                this.classList.remove('text-primary');
+                this.classList.add('text-secondary');
+                this.closest('.bg-surface-container-lowest').classList.add('ring-2', 'ring-primary-container', 'ring-inset');
+            });
+        });
+    </script>
+</body></html>

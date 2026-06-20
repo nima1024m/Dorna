@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#6ab2fe",
+                    "outline": "#667e8f",
+                    "inverse-primary": "#6ab2fe",
+                    "surface": "#f6faff",
+                    "surface-container-high": "#d6ebfc",
+                    "tertiary-fixed-dim": "#119ee8",
+                    "on-tertiary-container": "#00283f",
+                    "on-tertiary-fixed-variant": "#00314d",
+                    "on-surface-variant": "#4a6273",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f6faff",
+                    "surface-container-highest": "#cce6fa",
+                    "secondary-fixed": "#adecff",
+                    "on-tertiary-fixed": "#000001",
+                    "on-primary-fixed-variant": "#003963",
+                    "on-primary": "#f7f9ff",
+                    "secondary-dim": "#005b6c",
+                    "on-surface": "#1d3544",
+                    "on-secondary-fixed-variant": "#006577",
+                    "surface-variant": "#cce6fa",
+                    "background": "#f6faff",
+                    "inverse-surface": "#050f17",
+                    "on-background": "#1d3544",
+                    "inverse-on-surface": "#939ea8",
+                    "secondary-fixed-dim": "#77e3ff",
+                    "secondary": "#00687b",
+                    "on-secondary": "#effbff",
+                    "error": "#a83836",
+                    "tertiary": "#006497",
+                    "error-dim": "#67040d",
+                    "error-container": "#fa746f",
+                    "outline-variant": "#9cb5c8",
+                    "primary-fixed-dim": "#5ba5ef",
+                    "surface-container": "#dff0ff",
+                    "secondary-container": "#adecff",
+                    "primary-fixed": "#6ab2fe",
+                    "surface-dim": "#c4ddf1",
+                    "on-secondary-container": "#005a6a",
+                    "on-tertiary": "#f6f9ff",
+                    "surface-tint": "#0062a3",
+                    "primary": "#0062a3",
+                    "surface-container-low": "#eaf5ff",
+                    "tertiary-dim": "#005884",
+                    "on-error": "#fff7f6",
+                    "tertiary-fixed": "#31abf7",
+                    "on-error-container": "#6e0a12",
+                    "tertiary-container": "#31abf7",
+                    "on-secondary-fixed": "#004653",
+                    "on-primary-fixed": "#00152a",
+                    "primary-dim": "#005690",
+                    "on-primary-container": "#003054"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "gutter": "16px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md-mobile": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                    "label-lg-mobile": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-lg-mobile": ["15px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #F9F9F9;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .gradient-button {
+            background: linear-gradient(135deg, #0062a3 0%, #05C1E2 100%);
+        }
+        .persian-block {
+            background-color: #EDEDED;
+            direction: rtl;
+        }
+        .audio-wave-anim {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            height: 16px;
+        }
+        .wave-bar {
+            width: 3px;
+            background: #05C1E2;
+            border-radius: 2px;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+        @keyframes wave {
+            0%, 100% { height: 4px; }
+            50% { height: 16px; }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen text-on-surface">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-16 z-50 bg-surface shadow-sm fixed top-0">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-md-mobile text-headline-md-mobile text-primary">Phrase Detail</h1>
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-low transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">bookmark</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col px-margin-mobile pt-20 pb-24 overflow-y-hidden h-screen">
+<!-- Kicker Label -->
+<div class="mt-4 mb-3">
+<span class="text-on-surface-variant font-label-lg-mobile text-label-lg-mobile tracking-wider uppercase">Today, try saying</span>
+</div>
+<!-- Phrase Main Card -->
+<section class="glass-card rounded-xl p-6 flex flex-col gap-6">
+<!-- English Phrase -->
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface leading-tight">
+                    Do you come here often?
+                </h2>
+</div>
+<!-- Audio Control Row -->
+<div class="flex items-center justify-between py-2 border-y border-outline-variant/20">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-secondary-container text-secondary active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+</button>
+<div class="flex flex-col">
+<span class="text-on-surface-variant font-body-md-mobile text-body-md-mobile">/duː juː kʌm hɪr ˈɒf.ən/</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-secondary text-secondary font-label-lg-mobile text-label-lg-mobile hover:bg-secondary/5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+                        Hear it
+                    </button>
+<div class="flex items-center gap-2">
+<span class="text-on-surface-variant font-label-lg-mobile text-label-lg-mobile">Slow</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Persian Translation & Cultural Note -->
+<div class="persian-block rounded-lg p-4 flex flex-col gap-2">
+<p class="text-[18px] font-bold text-on-surface leading-relaxed">
+                    آیا زیاد اینجا می‌آیید؟
+                </p>
+<p class="text-on-surface-variant text-[13px] leading-relaxed text-right opacity-80">
+                    A classic conversation starter, though often seen as a bit of a cliché in social settings.
+                </p>
+</div>
+</section>
+<!-- Use Cases Section -->
+<section class="mt-8 flex flex-col gap-4">
+<h3 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-widest">When to use it</h3>
+<div class="flex flex-col gap-3">
+<div class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low border border-surface-container-high">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">check_circle</span>
+<p class="font-body-md-mobile text-body-md-mobile text-on-surface">Meeting someone new at a cafe or social event.</p>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low border border-surface-container-high">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">check_circle</span>
+<p class="font-body-md-mobile text-body-md-mobile text-on-surface">Breaking the ice in a place you visit regularly.</p>
+</div>
+</div>
+</section>
+<!-- Dynamic Visual Element (Single Viewport filler if needed) -->
+<div class="mt-auto mb-4 flex justify-center opacity-30">
+<div class="audio-wave-anim">
+<div class="wave-bar" style="animation-delay: 0.1s"></div>
+<div class="wave-bar" style="animation-delay: 0.3s"></div>
+<div class="wave-bar" style="animation-delay: 0.2s"></div>
+<div class="wave-bar" style="animation-delay: 0.4s"></div>
+<div class="wave-bar" style="animation-delay: 0.1s"></div>
+<div class="wave-bar" style="animation-delay: 0.5s"></div>
+<div class="wave-bar" style="animation-delay: 0.2s"></div>
+</div>
+</div>
+</main>
+<!-- Bottom Actions Wrapper (Fixed) -->
+<div class="fixed bottom-0 left-0 w-full p-margin-mobile bg-white/80 backdrop-blur-md z-50 flex flex-col gap-3">
+<button class="gradient-button w-full h-14 rounded-full text-on-primary font-headline-md-mobile text-headline-md-mobile shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">mic</span>
+            Practice saying it
+        </button>
+<button class="w-full py-2 text-primary font-label-lg-mobile text-label-lg-mobile text-center hover:underline active:opacity-70 transition-opacity">
+            Save to my phrases
+        </button>
+</div>
+<!-- Background Decorative Circle (Subtle) -->
+<div class="fixed -top-20 -right-20 w-64 h-64 rounded-full bg-primary/5 blur-3xl -z-10"></div>
+<div class="fixed top-1/2 -left-32 w-80 h-80 rounded-full bg-secondary/5 blur-3xl -z-10"></div>
+<script>
+        // Micro-interaction for the "Hear it" button
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('touchstart', function() {
+                this.classList.add('scale-95');
+            });
+            btn.addEventListener('touchend', function() {
+                this.classList.remove('scale-95');
+            });
+        });
+
+        // Simple audio wave toggle simulation (just visual)
+        const toggleSwitch = document.querySelector('input[type="checkbox"]');
+        toggleSwitch.addEventListener('change', function() {
+            const bars = document.querySelectorAll('.wave-bar');
+            bars.forEach(bar => {
+                bar.style.animationDuration = this.checked ? '2.4s' : '1.2s';
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=390, height=844, initial-scale=1.0" name="viewport"/>
+<title>Dorna Onboarding - Interests</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "tertiary-container": "#31abf7",
+                  "on-secondary": "#effbff",
+                  "surface": "#f6faff",
+                  "on-surface": "#1d3544",
+                  "on-tertiary-container": "#00283f",
+                  "surface-variant": "#cce6fa",
+                  "secondary-container": "#adecff",
+                  "surface-dim": "#c4ddf1",
+                  "surface-container-low": "#eaf5ff",
+                  "error": "#a83836",
+                  "secondary-dim": "#005b6c",
+                  "tertiary-fixed-dim": "#119ee8",
+                  "on-primary-container": "#003054",
+                  "on-tertiary": "#f6f9ff",
+                  "on-background": "#1d3544",
+                  "on-primary": "#f7f9ff",
+                  "surface-container-lowest": "#ffffff",
+                  "primary-container": "#6ab2fe",
+                  "background": "#f6faff",
+                  "on-tertiary-fixed": "#000001",
+                  "inverse-primary": "#6ab2fe",
+                  "inverse-on-surface": "#939ea8",
+                  "primary-fixed-dim": "#5ba5ef",
+                  "on-secondary-container": "#005a6a",
+                  "secondary-dim": "#77e3ff",
+                  "on-primary-fixed-variant": "#003963",
+                  "surface-container-highest": "#cce6fa",
+                  "error-container": "#fa746f",
+                  "secondary": "#00687b",
+                  "on-primary-fixed": "#00152a",
+                  "tertiary": "#006497",
+                  "primary-fixed": "#6ab2fe",
+                  "surface-container": "#dff0ff",
+                  "error-dim": "#67040d",
+                  "on-error": "#fff7f6",
+                  "outline-variant": "#9cb5c8",
+                  "primary-dim": "#005690",
+                  "secondary-fixed": "#adecff",
+                  "tertiary-fixed": "#31abf7",
+                  "surface-bright": "#f6faff",
+                  "surface-tint": "#0062a3",
+                  "on-surface-variant": "#4a6273",
+                  "on-secondary-fixed": "#004653",
+                  "inverse-surface": "#050f17",
+                  "outline": "#667e8f",
+                  "on-error-container": "#6e0a12",
+                  "on-secondary-fixed-variant": "#006577",
+                  "primary": "#0062a3",
+                  "tertiary-dim": "#005884",
+                  "on-tertiary-fixed-variant": "#00314d",
+                  "surface-container-high": "#d6ebfc"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "margin-mobile": "20px",
+                  "unit": "4px",
+                  "gutter": "16px"
+          },
+          "fontFamily": {
+                  "label-lg": ["Inter"],
+                  "headline-md": ["Inter"],
+                  "headline-lg": ["Inter"],
+                  "body-lg": ["Inter"],
+                  "body-md": ["Inter"]
+          },
+          "fontSize": {
+                  "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                  "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                  "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                  "body-lg": ["16px", {"lineHeight": "28px", "fontWeight": "400"}],
+                  "body-md": ["14px", {"lineHeight": "24px", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-color: #f6faff;
+      width: 390px;
+      height: 844px;
+      margin: 0 auto;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Inter', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+      font-size: 1.25rem;
+    }
+    .selected-gradient {
+      background: linear-gradient(135deg, #1c75bc 0%, #05C1E2 100%);
+    }
+    .chip-transition {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .main-btn-gradient {
+      background: linear-gradient(90deg, #1c75bc 0%, #05C1E2 100%);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background">
+<!-- Top Progress Indicator -->
+<nav class="flex flex-col items-center pt-8 px-margin-mobile">
+<div class="flex space-x-2 items-center mb-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+</div>
+<span class="font-label-lg text-label-lg text-outline-variant">1 of 3</span>
+</nav>
+<!-- Header Section -->
+<header class="px-margin-mobile mt-10">
+<h1 class="font-headline-lg text-headline-lg text-on-background tracking-tight">What are you into?</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-4 leading-relaxed">
+      Pick a few interests — Dorna uses them to suggest things to talk about.
+    </p>
+</header>
+<!-- Content Section: Interests Grid -->
+<main class="flex-1 px-margin-mobile mt-8 overflow-hidden">
+<div class="flex flex-wrap gap-3" id="interests-grid">
+<!-- Pre-selected: Soccer -->
+<button class="chip-transition selected-gradient text-on-primary flex items-center gap-2 px-5 py-3 rounded-full font-label-lg text-label-lg shadow-sm" onclick="toggleChip(this)">
+<span>Soccer</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+<!-- Pre-selected: Tech -->
+<button class="chip-transition selected-gradient text-on-primary flex items-center gap-2 px-5 py-3 rounded-full font-label-lg text-label-lg shadow-sm" onclick="toggleChip(this)">
+<span>Tech</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Movies</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Music</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Food &amp; cooking</span>
+</button>
+<!-- Pre-selected: Travel -->
+<button class="chip-transition selected-gradient text-on-primary flex items-center gap-2 px-5 py-3 rounded-full font-label-lg text-label-lg shadow-sm" onclick="toggleChip(this)">
+<span>Travel</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Fitness</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Art</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Business</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Cars</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Gaming</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Books</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Nature</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Photography</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Startups</span>
+</button>
+<button class="chip-transition bg-surface-container-lowest border border-outline-variant text-on-surface-variant px-5 py-3 rounded-full font-label-lg text-label-lg" onclick="toggleChip(this)">
+<span>Immigration life</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation: Primary Action -->
+<footer class="px-margin-mobile pb-10 mt-4">
+<button class="main-btn-gradient w-full py-4 rounded-full text-on-primary font-label-lg text-label-lg shadow-lg active:scale-[0.98] transition-transform duration-150 flex items-center justify-center space-x-2">
+<span>Continue</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</footer>
+<script>
+    function toggleChip(element) {
+      const isSelected = element.classList.contains('selected-gradient');
+      
+      if (isSelected) {
+        // Deselect
+        element.classList.remove('selected-gradient', 'text-on-primary', 'shadow-sm');
+        element.classList.add('bg-surface-container-lowest', 'border', 'border-outline-variant', 'text-on-surface-variant');
+        
+        const icon = element.querySelector('.material-symbols-outlined');
+        if (icon) icon.remove();
+      } else {
+        // Select
+        element.classList.remove('bg-surface-container-lowest', 'border', 'border-outline-variant', 'text-on-surface-variant');
+        element.classList.add('selected-gradient', 'text-on-primary', 'shadow-sm');
+        
+        const checkIcon = document.createElement('span');
+        checkIcon.className = 'material-symbols-outlined';
+        checkIcon.style.fontVariationSettings = "'FILL' 1";
+        checkIcon.textContent = 'check';
+        element.appendChild(checkIcon);
+      }
+    }
+  </script>
+</body></html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#000001",
+                        "primary-fixed": "#6ab2fe",
+                        "error-dim": "#67040d",
+                        "on-error": "#fff7f6",
+                        "on-surface": "#1d3544",
+                        "on-secondary": "#effbff",
+                        "inverse-on-surface": "#939ea8",
+                        "on-primary-fixed-variant": "#003963",
+                        "tertiary-fixed-dim": "#119ee8",
+                        "on-tertiary-fixed-variant": "#00314d",
+                        "surface-container-highest": "#cce6fa",
+                        "surface": "#f6faff",
+                        "on-primary-fixed": "#00152a",
+                        "tertiary-container": "#31abf7",
+                        "on-background": "#1d3544",
+                        "error-container": "#fa746f",
+                        "secondary-dim": "#005b6c",
+                        "secondary-fixed-dim": "#77e3ff",
+                        "on-primary-container": "#003054",
+                        "outline": "#667e8f",
+                        "error": "#a83836",
+                        "surface-dim": "#c4ddf1",
+                        "primary-dim": "#005690",
+                        "tertiary": "#006497",
+                        "on-error-container": "#6e0a12",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#6ab2fe",
+                        "on-secondary-fixed": "#004653",
+                        "on-secondary-fixed-variant": "#006577",
+                        "surface-variant": "#cce6fa",
+                        "surface-tint": "#0062a3",
+                        "surface-bright": "#f6faff",
+                        "primary-container": "#6ab2fe",
+                        "on-surface-variant": "#4a6273",
+                        "background": "#f6faff",
+                        "primary-fixed-dim": "#5ba5ef",
+                        "on-tertiary": "#f6f9ff",
+                        "secondary-fixed": "#adecff",
+                        "secondary": "#00687b",
+                        "on-primary": "#f7f9ff",
+                        "surface-container-high": "#d6ebfc",
+                        "tertiary-fixed": "#31abf7",
+                        "outline-variant": "#9cb5c8",
+                        "surface-container-low": "#eaf5ff",
+                        "on-secondary-container": "#005a6a",
+                        "primary": "#0062a3",
+                        "on-tertiary-container": "#00283f",
+                        "surface-container": "#dff0ff",
+                        "inverse-surface": "#050f17",
+                        "secondary-container": "#adecff",
+                        "tertiary-dim": "#005884"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "margin-mobile": "20px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f6faff;
+            -webkit-tap-highlight-color: transparent;
+            overflow: hidden;
+        }
+        .viewport {
+            width: 390px;
+            height: 844px;
+            margin: 0 auto;
+            position: relative;
+            background-color: #f6faff;
+            display: flex;
+            flex-direction: column;
+        }
+        .gradient-hero {
+            background: linear-gradient(135deg, #0062a3 0%, #05C1E2 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .waveform-anim div {
+            animation: wave 1.2s ease-in-out infinite;
+        }
+        @keyframes wave {
+            0%, 100% { height: 8px; }
+            50% { height: 24px; }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-slate-200">
+<div class="viewport shadow-2xl overflow-hidden font-body-md text-on-background">
+<!-- Header (Shared TopAppBar logic) -->
+<header class="flex justify-between items-start px-margin-mobile pt-8 w-full z-10">
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight">Good morning, Nima</h1>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-lg text-label-lg text-on-surface-variant">Mon, Jun 1</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<div class="flex items-center gap-1 bg-surface-container-low px-2 py-0.5 rounded-full border border-surface-variant/30">
+<span class="material-symbols-outlined text-[14px] text-tertiary">wb_sunny</span>
+<span class="font-label-lg text-[12px] text-on-surface-variant">12° · Sunny</span>
+</div>
+</div>
+</div>
+<div class="relative group">
+<img alt="Profile" class="w-12 h-12 rounded-full border-2 border-surface-container-highest shadow-sm object-cover" data-alt="A high-quality professional portrait of a stylish Persian man with a clean beard and short dark hair, set against a soft, out-of-focus urban background. The lighting is warm and natural, creating a premium and approachable atmosphere consistent with a modern corporate brand identity. The color palette is natural with soft blues and neutral tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNleNS4dur5hPhH7a01_PZL4gbHT7fW58qqFFsc69E2S-fGXPOe-7jp0nGE1cPPEOomMYuUkFfvWSsW72lC3VIzH_7hGHjUOwMmqgkHB6vWyIlqzTe60Su2URPxrbQ0uDJB0W4fdNBX43FvJdmJItyRCIwtrvOuEPCoj5RtkBXQuKk2ULDXnvuXYZnRbGe65LZF0qHQsJ4lJCqIY0pGUuKbSUoXeKPyjTSB3ZR_PHDalb4zj2KQleVEuyeTVLEuJLsARn3R9ZC0sY"/>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 px-margin-mobile mt-6 space-y-5">
+<!-- Hero Card: Your 5-min brief -->
+<section class="gradient-hero rounded-3xl p-6 relative overflow-hidden shadow-[0_8px_30px_rgb(0,98,163,0.15)] active:scale-[0.98] transition-transform duration-200">
+<div class="relative z-10 flex flex-col h-full">
+<div class="flex justify-between items-start">
+<h2 class="font-headline-md text-headline-md text-white">Your 5-min brief</h2>
+<div class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/30">
+<span class="text-white font-label-lg text-[12px]">5 min</span>
+</div>
+</div>
+<p class="text-white/90 font-body-md mt-2 max-w-[200px]">Today's events, useful phrases &amp; a bit of news</p>
+<!-- Flowing Waveform Graphic -->
+<div class="mt-8 mb-4 h-16 flex items-center gap-1.5">
+<img alt="hidden brand ref" class="hidden" src="https://lh3.googleusercontent.com/aida/AP1WRLtzaeuRl2bstfvPspaqA7Wsx86fL84qaE1Ung8nBcsyRUSeD_XhMcGXRZZf_WYpt8FOyDsca0fdFh1tIpms22saENR0en1bIvX51bLTxOPMCsLrkLIKf2gzWq3-PzBKgrsk2oWvIve3bBEmbZZp_S1e2Y3TMcD8_ivURVnN67oEPBOP7nwoKZ-IG6KHMKJHnHarSgAiI1YZCjRvt8OZqXcwxV8F5u-_hK4fISDRkj1tYwwrCBJDptATSKU"/>
+<!-- Custom CSS Waveform -->
+<div class="flex items-end gap-[3px] h-full waveform-anim">
+<div class="w-[3px] bg-cyan-200 rounded-full" style="animation-delay: 0.1s; height: 12px;"></div>
+<div class="w-[3px] bg-cyan-100 rounded-full" style="animation-delay: 0.3s; height: 24px;"></div>
+<div class="w-[3px] bg-white rounded-full" style="animation-delay: 0.2s; height: 32px;"></div>
+<div class="w-[3px] bg-cyan-200 rounded-full" style="animation-delay: 0.5s; height: 18px;"></div>
+<div class="w-[3px] bg-white rounded-full" style="animation-delay: 0.4s; height: 28px;"></div>
+<div class="w-[3px] bg-cyan-300 rounded-full" style="animation-delay: 0.7s; height: 14px;"></div>
+<div class="w-[3px] bg-white rounded-full" style="animation-delay: 0.6s; height: 20px;"></div>
+<div class="w-[3px] bg-cyan-100 rounded-full" style="animation-delay: 0.9s; height: 30px;"></div>
+<div class="w-[3px] bg-white rounded-full" style="animation-delay: 0.8s; height: 12px;"></div>
+<div class="w-[3px] bg-cyan-200 rounded-full" style="animation-delay: 0.1s; height: 22px;"></div>
+<div class="w-[3px] bg-white rounded-full" style="animation-delay: 0.3s; height: 34px;"></div>
+</div>
+</div>
+<div class="flex items-center mt-auto">
+<button class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-primary text-[32px] pl-1" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Background Decorative Shape -->
+<div class="absolute -bottom-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+</section>
+<!-- Today's Plan -->
+<section>
+<div class="flex justify-between items-center mb-3">
+<h3 class="font-label-lg text-on-surface-variant tracking-wide uppercase text-[11px]">Today's Plan</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">calendar_today</span>
+</div>
+<div class="space-y-2">
+<!-- Timeline Item 1 -->
+<div class="flex items-center p-4 bg-surface-container-lowest border border-surface-container rounded-2xl group active:bg-surface-container transition-colors">
+<div class="w-2 h-2 rounded-full bg-tertiary-container mr-4"></div>
+<div class="flex-1">
+<span class="font-label-lg text-on-surface">5:00 PM — Networking event</span>
+</div>
+<div class="bg-secondary-container px-3 py-1 rounded-full">
+<span class="font-label-lg text-[11px] text-on-secondary-container font-bold">Prep</span>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="flex items-center p-4 bg-surface-container-lowest border border-surface-container rounded-2xl group active:bg-surface-container transition-colors">
+<div class="w-2 h-2 rounded-full bg-secondary-fixed-dim mr-4"></div>
+<div class="flex-1">
+<span class="font-label-lg text-on-surface">7:30 PM — Coffee with Sara</span>
+</div>
+<div class="bg-secondary-container px-3 py-1 rounded-full">
+<span class="font-label-lg text-[11px] text-on-secondary-container font-bold">Prep</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Around You -->
+<section class="bg-surface-container-low rounded-2xl p-4 flex items-center gap-4 border border-surface-container-high/50 active:scale-[0.99] transition-transform">
+<div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-[28px]">explore</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label-lg text-on-surface leading-tight">Near Central Library</h4>
+<p class="font-body-md text-on-surface-variant text-[13px]">Tips for starting a chat here</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_right</span>
+</section>
+</main>
+<!-- Mini-player (Shared BottomNavBar logic) -->
+<footer class="mt-auto bg-surface-container-highest/60 backdrop-blur-xl border-t border-white/20 px-margin-mobile py-3 flex items-center gap-4">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[20px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+<div class="flex-1 flex flex-col">
+<span class="text-[12px] font-bold text-on-surface-variant uppercase tracking-widest">Morning Brief</span>
+<!-- Tiny Waveform -->
+<div class="flex items-center gap-0.5 mt-1 opacity-40">
+<div class="w-1 h-3 bg-primary rounded-full"></div>
+<div class="w-1 h-2 bg-primary rounded-full"></div>
+<div class="w-1 h-4 bg-primary rounded-full"></div>
+<div class="w-1 h-2 bg-primary rounded-full"></div>
+<div class="w-1 h-3 bg-primary rounded-full"></div>
+<div class="w-1 h-1 bg-primary rounded-full"></div>
+<div class="w-1 h-2 bg-primary rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</footer>
+</div>
+<script>
+        // Micro-interaction for the play button
+        const playBtn = document.querySelector('.gradient-hero button');
+        playBtn.addEventListener('click', () => {
+            const icon = playBtn.querySelector('.material-symbols-outlined');
+            if (icon.innerText === 'play_arrow') {
+                icon.innerText = 'pause';
+                // Trigger a "playing" state animation for the larger bars if desired
+            } else {
+                icon.innerText = 'play_arrow';
+            }
+        });
+
+        // Small interaction for cards
+        document.querySelectorAll('section').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

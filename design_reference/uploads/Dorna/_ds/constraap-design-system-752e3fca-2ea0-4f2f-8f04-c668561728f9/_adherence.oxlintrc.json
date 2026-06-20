@@ -1,0 +1,224 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "onboarding/**",
+              "ui_kits/app/**",
+              "ui_kits/marketing/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Inter|JetBrains Mono|Material Symbols Outlined))/i]",
+        "message": "Font not provided by the design system. Available: Inter, JetBrains Mono, Material Symbols Outlined."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {},
+    "tokens": [
+      "--badge-deleted-bg",
+      "--badge-deleted-fg",
+      "--badge-exported-bg",
+      "--badge-exported-fg",
+      "--badge-pending-bg",
+      "--badge-pending-fg",
+      "--badge-processing-bg",
+      "--badge-processing-fg",
+      "--badge-reviewed-bg",
+      "--badge-reviewed-fg",
+      "--color-background",
+      "--color-error",
+      "--color-error-container",
+      "--color-inverse-on-surface",
+      "--color-inverse-primary",
+      "--color-inverse-surface",
+      "--color-on-background",
+      "--color-on-error",
+      "--color-on-error-container",
+      "--color-on-primary",
+      "--color-on-primary-container",
+      "--color-on-primary-fixed",
+      "--color-on-primary-fixed-variant",
+      "--color-on-secondary",
+      "--color-on-secondary-container",
+      "--color-on-secondary-fixed",
+      "--color-on-secondary-fixed-variant",
+      "--color-on-surface",
+      "--color-on-surface-variant",
+      "--color-on-tertiary",
+      "--color-on-tertiary-container",
+      "--color-on-tertiary-fixed",
+      "--color-on-tertiary-fixed-variant",
+      "--color-outline",
+      "--color-outline-variant",
+      "--color-primary",
+      "--color-primary-container",
+      "--color-primary-fixed",
+      "--color-primary-fixed-dim",
+      "--color-secondary",
+      "--color-secondary-container",
+      "--color-secondary-fixed",
+      "--color-secondary-fixed-dim",
+      "--color-status-connected",
+      "--color-status-pending",
+      "--color-surface",
+      "--color-surface-bright",
+      "--color-surface-container",
+      "--color-surface-container-high",
+      "--color-surface-container-highest",
+      "--color-surface-container-low",
+      "--color-surface-container-lowest",
+      "--color-surface-dim",
+      "--color-surface-tint",
+      "--color-surface-variant",
+      "--color-tertiary",
+      "--color-tertiary-container",
+      "--color-tertiary-fixed",
+      "--color-tertiary-fixed-dim",
+      "--font-mono",
+      "--font-sans",
+      "--highlight-accent",
+      "--highlight-row-bg",
+      "--radius",
+      "--radius-2xl",
+      "--radius-full",
+      "--radius-lg",
+      "--radius-sm",
+      "--radius-xl",
+      "--shadow-card",
+      "--shadow-cta",
+      "--shadow-cta-h",
+      "--shadow-menu",
+      "--shadow-modal",
+      "--shadow-sm",
+      "--spacing-container-padding",
+      "--spacing-gutter",
+      "--spacing-sidebar-width",
+      "--spacing-topbar-height"
+    ],
+    "tokenKinds": {
+      "--color-background": "color",
+      "--color-surface": "color",
+      "--color-surface-bright": "color",
+      "--color-surface-dim": "color",
+      "--color-surface-container-lowest": "color",
+      "--color-surface-container-low": "color",
+      "--color-surface-container": "color",
+      "--color-surface-container-high": "color",
+      "--color-surface-container-highest": "color",
+      "--color-surface-variant": "color",
+      "--color-surface-tint": "color",
+      "--color-on-background": "color",
+      "--color-on-surface": "color",
+      "--color-on-surface-variant": "color",
+      "--color-inverse-surface": "color",
+      "--color-inverse-on-surface": "color",
+      "--color-primary": "color",
+      "--color-on-primary": "color",
+      "--color-primary-container": "color",
+      "--color-on-primary-container": "color",
+      "--color-primary-fixed": "color",
+      "--color-primary-fixed-dim": "color",
+      "--color-on-primary-fixed": "color",
+      "--color-on-primary-fixed-variant": "color",
+      "--color-inverse-primary": "color",
+      "--color-secondary": "color",
+      "--color-on-secondary": "color",
+      "--color-secondary-container": "color",
+      "--color-on-secondary-container": "color",
+      "--color-secondary-fixed": "color",
+      "--color-secondary-fixed-dim": "color",
+      "--color-on-secondary-fixed": "color",
+      "--color-on-secondary-fixed-variant": "color",
+      "--color-tertiary": "color",
+      "--color-on-tertiary": "color",
+      "--color-tertiary-container": "color",
+      "--color-on-tertiary-container": "color",
+      "--color-tertiary-fixed": "color",
+      "--color-tertiary-fixed-dim": "color",
+      "--color-on-tertiary-fixed": "color",
+      "--color-on-tertiary-fixed-variant": "color",
+      "--color-outline": "color",
+      "--color-outline-variant": "color",
+      "--color-error": "color",
+      "--color-on-error": "color",
+      "--color-error-container": "color",
+      "--color-on-error-container": "color",
+      "--color-status-connected": "color",
+      "--color-status-pending": "color",
+      "--badge-pending-bg": "color",
+      "--badge-pending-fg": "color",
+      "--badge-processing-bg": "color",
+      "--badge-processing-fg": "color",
+      "--badge-reviewed-bg": "color",
+      "--badge-reviewed-fg": "color",
+      "--badge-exported-bg": "color",
+      "--badge-exported-fg": "color",
+      "--badge-deleted-bg": "color",
+      "--badge-deleted-fg": "color",
+      "--highlight-row-bg": "color",
+      "--highlight-accent": "color",
+      "--font-sans": "font",
+      "--font-mono": "font",
+      "--spacing-sidebar-width": "spacing",
+      "--spacing-topbar-height": "spacing",
+      "--spacing-gutter": "spacing",
+      "--spacing-container-padding": "spacing",
+      "--radius-sm": "radius",
+      "--radius": "radius",
+      "--radius-lg": "radius",
+      "--radius-xl": "radius",
+      "--radius-2xl": "radius",
+      "--radius-full": "radius",
+      "--shadow-sm": "shadow",
+      "--shadow-card": "shadow",
+      "--shadow-cta": "shadow",
+      "--shadow-cta-h": "shadow",
+      "--shadow-menu": "shadow",
+      "--shadow-modal": "shadow"
+    },
+    "fontFamilies": [
+      "Inter",
+      "JetBrains Mono",
+      "Material Symbols Outlined"
+    ]
+  }
+}

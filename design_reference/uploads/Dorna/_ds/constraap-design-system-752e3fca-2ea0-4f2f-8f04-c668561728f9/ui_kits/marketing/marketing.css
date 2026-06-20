@@ -1,0 +1,99 @@
+/* ConstraAP — Marketing kit styles. Pairs with ../../colors_and_type.css */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { font-family: var(--font-sans); background: var(--color-background); color: var(--color-on-surface); -webkit-font-smoothing: antialiased; }
+.material-symbols-outlined { font-family: "Material Symbols Outlined"; font-weight: normal; line-height: 1; font-feature-settings: "liga"; font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.land { display: flex; min-height: 100vh; flex-direction: column; }
+
+/* Header */
+.lhead { position: sticky; top: 0; z-index: 40; display: flex; height: 56px; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--color-outline-variant); background: color-mix(in srgb, #fff 90%, transparent); backdrop-filter: blur(6px); padding: 0 24px; }
+.brand { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--color-primary); }
+.brand-tile { display: flex; height: 28px; width: 28px; align-items: center; justify-content: center; border-radius: 6px; background: var(--color-primary); }
+.brand-tile .material-symbols-outlined { font-size: 16px; color: var(--color-on-primary); }
+.btn-ghost { display: inline-flex; align-items: center; border-radius: 8px; border: 1px solid var(--color-outline-variant); padding: 6px 16px; font-size: 12px; font-weight: 500; color: var(--color-primary); transition: all .15s; background: transparent; }
+.btn-ghost:hover { border-color: color-mix(in srgb, var(--color-primary) 30%, transparent); background: var(--color-surface-container); box-shadow: var(--shadow-sm); }
+
+/* Hero */
+.hero { margin: 0 auto; display: flex; width: 100%; max-width: 720px; flex: 1; flex-direction: column; align-items: center; justify-content: center; padding: 80px 24px; text-align: center; }
+.eyebrow-pill { margin-bottom: 28px; display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; border: 1px solid var(--color-outline-variant);
+  background: var(--color-surface-container); padding: 4px 12px; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-on-surface-variant); }
+.eyebrow-pill .dot { height: 6px; width: 6px; border-radius: 999px; background: var(--color-status-connected); }
+.hero h1 { margin-bottom: 16px; font-size: 40px; font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; color: var(--color-primary); }
+.hero h1 .muted { color: var(--color-on-surface-variant); }
+.hero p { margin-bottom: 36px; max-width: 520px; font-size: 16px; line-height: 1.6; color: var(--color-on-surface-variant); }
+.btn-cta { display: inline-flex; align-items: center; gap: 6px; border-radius: 8px; background: var(--color-primary); padding: 10px 24px; font-size: 13px; font-weight: 500;
+  color: var(--color-on-primary); box-shadow: var(--shadow-cta); transition: all .15s; border: none; }
+.btn-cta:hover { background: var(--color-inverse-surface); box-shadow: var(--shadow-cta-h); }
+.btn-cta .material-symbols-outlined { font-size: 16px; }
+
+/* Features */
+.features { border-top: 1px solid var(--color-outline-variant); background: var(--color-surface-container-lowest); padding: 56px 24px; }
+.features-inner { margin: 0 auto; max-width: 900px; }
+.features-eyebrow { margin-bottom: 40px; text-align: center; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-on-surface-variant); }
+.fgrid { display: grid; gap: 1px; overflow: hidden; border-radius: 4px; border: 1px solid var(--color-outline-variant); background: var(--color-outline-variant); grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 760px) { .fgrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .fgrid { grid-template-columns: 1fr; } }
+.fcell { background: var(--color-surface-container-lowest); padding: 24px; }
+.fcell .ico { margin-bottom: 14px; display: flex; height: 36px; width: 36px; align-items: center; justify-content: center; border-radius: 2px; background: var(--color-surface-container); }
+.fcell .ico .material-symbols-outlined { font-size: 18px; color: var(--color-primary); }
+.fcell h3 { margin-bottom: 6px; font-size: 13px; font-weight: 600; letter-spacing: -0.01em; color: var(--color-on-surface); }
+.fcell p { font-size: 12px; line-height: 1.6; color: var(--color-on-surface-variant); }
+
+/* Footer */
+.lfoot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+  border-top: 1px solid var(--color-outline-variant); padding: 20px 24px; font-size: 11px; color: var(--color-on-surface-variant); }
+.lfoot nav { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.lfoot a:hover { color: var(--color-primary); }
+
+/* ───── Login modal ───── */
+.modal-root { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.modal-backdrop { position: absolute; inset: 0; background: color-mix(in srgb, #0f0f12 55%, transparent); backdrop-filter: blur(10px); border: none; animation: backdrop-in .22s ease-out both; }
+@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes panel-in { from { opacity: 0; transform: scale(.96) translateY(12px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal-panel { position: relative; z-index: 10; width: 100%; max-width: 420px; overflow: hidden; border-radius: 16px; border: 1px solid rgba(255,255,255,.2);
+  background: var(--color-surface-container-lowest); box-shadow: var(--shadow-modal); animation: panel-in .28s cubic-bezier(.22,1,.36,1) both; }
+.orb { position: absolute; border-radius: 999px; filter: blur(48px); pointer-events: none; }
+.orb-a { right: -64px; top: -64px; height: 160px; width: 160px; background: color-mix(in srgb, var(--color-primary) 8%, transparent); }
+.orb-b { bottom: -80px; left: -48px; height: 144px; width: 144px; background: color-mix(in srgb, var(--color-status-connected) 10%, transparent); }
+.modal-head { position: relative; border-bottom: 1px solid color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
+  background: linear-gradient(to bottom, var(--color-surface-container-low), var(--color-surface-container-lowest)); padding: 24px 24px 20px; }
+.modal-close { position: absolute; right: 16px; top: 16px; display: flex; height: 32px; width: 32px; align-items: center; justify-content: center;
+  border-radius: 999px; border: none; background: transparent; color: var(--color-on-surface-variant); transition: all .15s; }
+.modal-close:hover { background: var(--color-surface-container); color: var(--color-on-surface); }
+.modal-close .material-symbols-outlined { font-size: 20px; }
+.modal-icon { margin-bottom: 16px; display: flex; height: 44px; width: 44px; align-items: center; justify-content: center; border-radius: 12px;
+  background: var(--color-primary); box-shadow: var(--shadow-cta); }
+.modal-icon .material-symbols-outlined { font-size: 22px; color: var(--color-on-primary); }
+.modal-head h2 { padding-right: 32px; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; color: var(--color-primary); }
+.modal-head p { margin-top: 4px; font-size: 13px; line-height: 1.5; color: var(--color-on-surface-variant); }
+.modal-body { position: relative; padding: 20px 24px; }
+.field { display: block; margin-bottom: 14px; }
+.field > span { margin-bottom: 6px; display: block; font-size: 12px; font-weight: 500; color: var(--color-on-surface); }
+.input { width: 100%; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--color-outline-variant) 90%, transparent);
+  background: var(--color-surface-container-lowest); padding: 10px 14px; font-size: 13px; color: var(--color-on-surface); font-family: inherit; outline: none; transition: border-color .15s, box-shadow .15s; }
+.input::placeholder { color: color-mix(in srgb, var(--color-on-surface-variant) 60%, transparent); }
+.input:focus { border-color: color-mix(in srgb, var(--color-primary) 40%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 10%, transparent); }
+.pwrap { position: relative; }
+.pwrap .input { padding-right: 40px; }
+.peye { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); border: none; background: transparent; border-radius: 4px; padding: 4px;
+  color: var(--color-on-surface-variant); transition: color .15s; }
+.peye:hover { color: var(--color-on-surface); }
+.peye .material-symbols-outlined { font-size: 18px; }
+.btn-submit { display: flex; width: 100%; align-items: center; justify-content: center; gap: 8px; border-radius: 12px; background: var(--color-primary);
+  padding: 10px 16px; font-size: 13px; font-weight: 500; color: var(--color-on-primary); box-shadow: 0 2px 8px rgba(0,0,0,.2); border: none; transition: background .15s; }
+.btn-submit:hover { background: var(--color-inverse-surface); }
+.btn-submit .material-symbols-outlined { font-size: 18px; }
+.divider { margin: 20px 0; display: flex; align-items: center; gap: 12px; }
+.divider span.line { height: 1px; flex: 1; background: color-mix(in srgb, var(--color-outline-variant) 80%, transparent); }
+.divider span.or { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-on-surface-variant); }
+.sso { display: flex; flex-direction: column; gap: 12px; }
+.btn-sso { display: flex; width: 100%; align-items: center; justify-content: center; gap: 10px; border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--color-outline-variant) 80%, transparent); background: var(--color-surface-container-lowest);
+  padding: 8px 16px; font-size: 13px; font-weight: 500; color: var(--color-on-surface); transition: all .15s; }
+.btn-sso:hover { border-color: var(--color-outline); background: var(--color-surface-container); box-shadow: var(--shadow-sm); }
+.modal-foot { border-top: 1px solid color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
+  background: color-mix(in srgb, var(--color-surface-container-low) 50%, transparent); padding: 12px 24px; text-align: center; }
+.modal-foot p { font-size: 11px; color: var(--color-on-surface-variant); }
