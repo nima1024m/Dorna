@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'dev.flutter.flutter-gradle-plugin'
+    id 'com.google.gms.google-services'
 }
 
 def localProperties = new Properties()
@@ -10,11 +11,6 @@ if (localPropertiesFile.exists()) {
     localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
     }
-}
-
-def flutterRoot = localProperties.getProperty('flutter.sdk')
-if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -32,21 +28,15 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-
-apply plugin: 'com.google.gms.google-services'
 android {
     namespace "com.dorna.app"
-    compileSdk 35
+    compileSdk 36
+    ndkVersion flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-        // Required for flutter_local_notifications 16.0.0
         coreLibraryDesugaringEnabled true
-    }
-
-    kotlinOptions {
-        jvmTarget = '17'
     }
 
     sourceSets {
@@ -55,8 +45,11 @@ android {
 
     defaultConfig {
         applicationId "com.dorna.app"
-        minSdkVersion 23
-        targetSdkVersion 35
+        // minSdk raised 23 -> 24 with the Flutter 3.44 upgrade (Flutter's new
+        // default; drops Android 6.0 / API 23, approved). Explicit literal so it
+        // won't silently rise further and Flutter's migrator won't rewrite it.
+        minSdk 24
+        targetSdk 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -77,15 +70,23 @@ android {
             signingConfig signingConfigs.release
             shrinkResources false
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
-    // Add the lintOptions to ignore the issues with flutter_local_notifications
-    lintOptions {
+    // Ignore lint issues from some plugins (AGP 9: `lint`, was `lintOptions`).
+    lint {
         disable 'InvalidPackage', 'ObsoleteSdkInt', 'GradleDependency'
         checkReleaseBuilds false
         abortOnError false
+    }
+}
+
+// AGP 9 / Kotlin 2.x: configure the JVM target via the Kotlin DSL
+// (replaces the deprecated `kotlinOptions { jvmTarget }` block).
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
 }
 
@@ -94,8 +95,6 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     // Use androidx.core 1.13.0 which includes setStylusHandwritingEnabled
     implementation 'androidx.core:core:1.13.0'
     implementation 'androidx.core:core-ktx:1.13.0'
@@ -103,13 +102,13 @@ dependencies {
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
 
     // Required for Java 8+ APIs on older Android devices
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
 
     // Fix multidex issues
     implementation 'androidx.multidex:multidex:2.0.1'
 }
 
-// Work around flutter_local_notifications issue
+// Work around plugin androidx.core version skew
 configurations.all {
     resolutionStrategy {
         // Use consistent androidx.core version throughout the app

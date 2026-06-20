@@ -1,17 +1,3 @@
-buildscript {
-    ext.kotlin_version = '2.1.0'
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.3.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.8'
-    }
-}
-
 allprojects {
     repositories {
         google()
@@ -19,14 +5,31 @@ allprojects {
     }
 }
 
-rootProject.buildDir = '../build'
+// Redirect build output to ../build (Flutter convention).
+// Uses the Gradle 9 layout API (the old `rootProject.buildDir = ...` is removed).
+def newBuildDir = rootProject.layout.buildDirectory.dir("../../build").get()
+rootProject.layout.buildDirectory.value(newBuildDir)
+
 subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    def newSubprojectBuildDir = newBuildDir.dir(project.name)
+    project.layout.buildDirectory.value(newSubprojectBuildDir)
+
+    // Force third-party Android plugins that compile against an older compileSdk
+    // (e.g. flutter_keyboard_visibility @ android-31) up to the app's compileSdk,
+    // so AGP 9's dependency-compileSdk check passes. Registered here, before the
+    // evaluationDependsOn block, so the callback is added prior to evaluation.
+    afterEvaluate { proj ->
+        if (proj.hasProperty("android")) {
+            proj.android {
+                compileSdk 36
+            }
+        }
+    }
 }
 subprojects {
-    project.evaluationDependsOn(':app')
+    project.evaluationDependsOn(":app")
 }
 
 tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+    delete rootProject.layout.buildDirectory
 }

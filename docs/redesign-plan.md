@@ -125,15 +125,13 @@ as targets, confirm before applying. **If any platform can't build cleanly, STOP
 - ⚠️ Android `flutter build apk` is **blocked**: Flutter 3.44 needs **Gradle ≥ 8.7** (project on 8.4) + AGP-9 newDsl note → resolved in **A2**. Build verified green at end of A2.
 - Commit: `chore(deps): upgrade Flutter 3.44.2 + Dart 3.12 + dependencies`
 
-#### ☐ A2 — Android (Gradle / AGP / Kotlin / SDK)
-- Current (read `frontend/android/…`): Gradle **8.4**, AGP **8.3.0**, Kotlin **2.1.0**, compileSdk/targetSdk **35**, minSdk **23**, Java **17**, plugins-DSL, google-services **4.3.8**, desugar **2.0.4**.
-- Targets: Gradle **9.6** (AGP 9.2 needs ≥9.4.1), AGP **9.2.0**, Kotlin **2.4.0**, compile/targetSdk **36** (Play requires API 36 by 2026-08-31).
-- [ ] Bump Gradle wrapper (`gradle/wrapper/gradle-wrapper.properties`).
-- [ ] Bump AGP + Kotlin (`android/settings.gradle` plugins block; legacy `android/build.gradle`). AGP 9 is a **major DSL break** — follow the AGP 9 / Kotlin-K2 migration; needs JDK 17 (have it).
-- [ ] `compileSdk`/`targetSdk` → 36 in `android/app/build.gradle`. **Keep `minSdk` 23** (D7 — do not raise without approval).
-- [ ] Update androidx/google-services deps as needed.
-- [ ] Verify: clean `fvm flutter build apk --debug` (and `--release` if signing allows).
-- Commit: `chore(android): Gradle/AGP/Kotlin + SDK 36 upgrade`
+#### ✅ A2 — Android (Gradle / AGP / Kotlin / SDK) — DONE 2026-06-20 (build green)
+- [x] Gradle **8.4 → 9.1.0**, AGP **8.3.0 → 9.0.1**, Kotlin **2.1.0 → 2.3.20** — matched Flutter 3.44's blessed template set (not absolute-latest 9.2/9.6/2.4) for compatibility.
+- [x] compileSdk/targetSdk **35 → 36** (Play requirement). **minSdk 23 → 24** (approved by owner — Flutter 3.44's default; drops Android 6.0/API 23; set as explicit literal so the migrator / a future Flutter won't move it again).
+- [x] AGP-9 migrations: removed redundant legacy `buildscript`; `buildDir`→`layout.buildDirectory`; `lintOptions`→`lint`; `kotlinOptions`→`kotlin{compilerOptions}`; google-services 4.3.8→4.4.2 via plugins DSL; proguard `-android`→`-android-optimize`; desugar 2.0.4→2.1.4; added `newDsl=false`/`builtInKotlin=false` + jvmargs→8G (per Flutter 3.44 template); subproject `compileSdk 36` override (old plugins, e.g. flutter_keyboard_visibility @ android-31); `/build/` added to android/.gitignore.
+- [x] Verify: `flutter build apk --debug` **green** (app-debug.apk, 166 MB).
+- [~] Follow-up: "Built-in Kotlin" deprecation **warning** — some plugins still apply the Kotlin Gradle plugin (will error in a future Flutter); works now via `builtInKotlin=false`. Migrate/replace those plugins later.
+- Commit: `chore(android): Gradle 9 / AGP 9 / Kotlin 2.3 + SDK 36 upgrade`
 
 #### ☐ A3 — iOS / Swift / Keyboard (PREPARE on Windows · VERIFY on macOS)
 - Current: Podfile iOS **14.0**; Runner SWIFT_VERSION **5.0** / deploy **12.0**; CustomKeyboard ext **15.0**; framework **18.2**. KeyboardKit **9.7.2** (SPM).
