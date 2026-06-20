@@ -23,6 +23,7 @@ import 'package:sizer/sizer.dart';
 import 'controllers/auth/auth_controller.dart';
 import 'controllers/settings/settings_controller.dart';
 import 'firebase_options.dart';
+import 'theme/app_theme.dart';
 
 bool isLimitedVersion = false;
 
@@ -237,10 +238,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                           ? Transition.fadeIn
                           : Transition.rightToLeftWithFade,
                       scrollBehavior: MyCustomScrollBehavior(),
-                      theme: _buildTheme(
-                          settingsController.lightTheme, Brightness.light),
-                      darkTheme: _buildTheme(
-                          settingsController.darkTheme, Brightness.dark),
+                      theme: AppTheme.light,
+                      darkTheme: AppTheme.dark,
                       themeMode: settingsController.isDarkTheme.value
                           ? ThemeMode.dark
                           : ThemeMode.light,
@@ -267,69 +266,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
-  ThemeData _buildTheme(ThemeData baseTheme, Brightness brightness) {
-    final bool isDark = brightness == Brightness.dark;
-
-    var displayLarge = TextStyle(
-      fontSize: 14.sp,
-      color: isDark ? const Color(0xffCCCCCC) : AppColors.subtitle,
-      fontWeight: Platform.isIOS ? FontWeight.w500 : FontWeight.w700,
-      letterSpacing: Platform.isIOS ? -0.7 : -0.2,
-      fontFamily: 'SFProDisplayBold',
-    );
-    return baseTheme.copyWith(
-      brightness: brightness,
-      inputDecorationTheme: InputDecorationTheme(
-        errorStyle:
-            displayLarge.copyWith(fontSize: 11.sp, color: AppColors.errorText),
-      ),
-      textTheme: baseTheme.textTheme.copyWith(
-        displayLarge: displayLarge,
-        titleLarge: TextStyle(
-          fontSize: 14.sp,
-          color: isDark ? const Color(0xffCCCCCC) : AppColors.text2,
-          fontWeight: FontWeight.w700,
-          letterSpacing: Platform.isIOS ? -1.0 : -0.2,
-          fontFamily: 'SFProDisplayBold',
-        ),
-        titleSmall: TextStyle(
-          fontSize: 11.sp,
-          color: isDark ? const Color(0xffCCCCCC) : AppColors.text2,
-          fontWeight: FontWeight.w400,
-          letterSpacing: -0.2,
-          fontFamily: 'SFProDisplayRegular',
-        ),
-        bodyLarge: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w500,
-          color: isDark ? const Color(0xffCCCCCC) : AppColors.text2,
-          letterSpacing: -0.2,
-          fontFamily: 'SFProDisplayMedium',
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 12.sp,
-          color: isDark ? const Color(0xffFFFFFF) : AppColors.mainBlack,
-          letterSpacing: -0.2,
-          fontFamily: 'SFProDisplayRegular',
-          fontWeight: FontWeight.w400,
-        ),
-        bodySmall: TextStyle(
-          fontSize: 12.sp,
-          color: isDark ? const Color(0xffAAAAAA) : AppColors.text2,
-          letterSpacing: -0.2,
-          fontFamily: 'SFProDisplayLight',
-          fontWeight: FontWeight.w100,
-        ),
-        titleMedium: TextStyle(
-          fontSize: 10.sp,
-          color: isDark ? const Color(0xffCCCCCC) : const Color(0xff3D3D3D),
-          fontFamily: 'SFProDisplayMedium',
-          letterSpacing: -0.2,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
 }
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {

@@ -66,6 +66,9 @@ dependencies:
   just_audio: ^0.10.5
   intl:
   package_info_plus: ^10.1.0
+  # Inter typeface for the redesign (DESIGN.md). NOTE: google_fonts fetches at
+  # runtime by default; follow-up = bundle Inter as an asset for offline/perf.
+  google_fonts:
 
 dev_dependencies:
   flutter_test:

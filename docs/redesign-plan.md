@@ -133,7 +133,8 @@ as targets, confirm before applying. **If any platform can't build cleanly, STOP
 - [~] Follow-up: "Built-in Kotlin" deprecation **warning** — some plugins still apply the Kotlin Gradle plugin (will error in a future Flutter); works now via `builtInKotlin=false`. Migrate/replace those plugins later.
 - Commit: `chore(android): Gradle 9 / AGP 9 / Kotlin 2.3 + SDK 36 upgrade`
 
-#### ☐ A3 — iOS / Swift / Keyboard (PREPARE on Windows · VERIFY on macOS)
+#### ⏸️ A3 — iOS / Swift / Keyboard — DEFERRED to a macOS session (owner-approved 2026-06-20)
+> Blocked on this Windows box: CocoaPods (`pod update`) is macOS-only, the Xcode build is the only verification, and KeyboardKit 9→10 is a major API rewrite too risky to migrate blind. Do this (and Phase K, keyboard restyle) together on a Mac. A1+A2 are done; the app builds for Android. Original A3 steps below stand.
 - Current: Podfile iOS **14.0**; Runner SWIFT_VERSION **5.0** / deploy **12.0**; CustomKeyboard ext **15.0**; framework **18.2**. KeyboardKit **9.7.2** (SPM).
 - Targets: Swift **6.x** (Xcode 26.5 ships ~6.3.2), unify iOS deployment target (D8, e.g. **16**), KeyboardKit **10.5.1** (major 9→10; Pro merged into one repo).
 - [ ] Bump `IPHONEOS_DEPLOYMENT_TARGET` across targets + Podfile `platform :ios`.
@@ -144,14 +145,13 @@ as targets, confirm before applying. **If any platform can't build cleanly, STOP
 - [ ] Verify: **clean iOS build on macOS** (cannot verify on this box).
 - Commit: `chore(ios): Swift + iOS target + KeyboardKit 10 upgrade`
 
-### ☐ Phase 0 — FOUNDATION: design tokens + theme
-Everything visual depends on this.
-- [ ] Extract tokens from `DESIGN.md` + Tailwind configs → a Dart token layer (colors, type scale, spacing(4px base), radii, shadows, the blue→cyan gradient). Source the values, don't invent.
-- [ ] Build proper `ThemeData` + `ColorScheme` + `TextTheme` for **both light and dark** (derive the dark `ColorScheme` from the brand seed via M3 tonal palettes — design ships no dark values; refine later) and wire into `GetMaterialApp` (`main.dart`), keeping `animated_theme_switcher` + `sizer`.
-- [ ] Refactor `lib/widgets/ui/app_colors.dart` into the token system (keep a thin shim if many call-sites, then migrate off it).
-- [ ] Add Inter font (D2) to `pubspec.yaml` assets.
-- [ ] Verify: analyze clean; app boots with new theme.
-- Commit: `feat(theme): design tokens + ThemeData/ColorScheme/TextTheme`
+### ✅ Phase 0 — FOUNDATION: design tokens + theme — DONE 2026-06-20
+- [x] Token layer `lib/theme/app_tokens.dart`: `DornaColors` (exact M3 palette from DESIGN.md YAML), `DornaSpacing` (4px base / 20 margin / 16 gutter), `DornaRadii`, blue→cyan `brandGradient`, cyan accent.
+- [x] `lib/theme/app_theme.dart`: `AppTheme.light` (exact M3 scheme) + `AppTheme.dark` (`ColorScheme.fromSeed` — design ships no dark values; refine later) + Inter `TextTheme` (DESIGN.md type scale). Wired into `GetMaterialApp`; `animated_theme_switcher` + `sizer` kept.
+- [x] `app_colors.dart` → thin shim over `DornaColors` (preserves API so existing screens compile; migrate off it in Phases 1+). Dropped the old SF Pro `_buildTheme` (main.dart) + settings_controller's hand-built themes.
+- [x] Inter via `google_fonts`. ⏳ follow-up: bundle Inter as an asset (runtime fetch now).
+- [x] Verify: `flutter analyze` **0 errors** (320 lint-debt, net −2), `flutter test` pass, `flutter build apk` green.
+- Commit: `feat(theme): design tokens + ThemeData/ColorScheme/TextTheme (Phase 0)`
 
 ### ☐ Phase 1 — Shared UI primitives
 Restyle `lib/widgets/ui/*` to the theme (they propagate everywhere): `custom_button`,

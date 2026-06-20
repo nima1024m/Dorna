@@ -1,7 +1,6 @@
 import 'package:dorna/services/keyboard_service.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
+import 'package:dorna/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -154,64 +153,11 @@ class SettingsController extends GetxController {
 
   ThemeData get darkTheme => _buildDarkTheme();
 
-  ThemeData _buildLightTheme() {
-    return ThemeData(
-      fontFamily: 'SFProDisplayRegular',
-      brightness: Brightness.light,
-      scaffoldBackgroundColor: const Color(0xffFEFEFE),
-      primaryColorDark: AppColors.primaryColor(),
-      primaryColor: AppColors.primaryColor(),
-      colorScheme: ColorScheme.light(
-        primary: AppColors.primaryColor(),
-        secondary: AppColors.primaryColor(),
-        onPrimary: Colors.white,
-        background: const Color(0xffFEFEFE),
-        surface: const Color(0xffFEFEFE),
-        onSurface: const Color(0xff000000),
-        error: AppColors.errorText,
-      ),
-      appBarTheme: const AppBarTheme(
-        centerTitle: true,
-        elevation: 0,
-        systemOverlayStyle: SystemUiOverlayStyle.light,
-        backgroundColor: Color(0xffFEFEFE),
-        foregroundColor: Color(0xff000000),
-      ),
-      dividerTheme: const DividerThemeData(
-        color: Color(0xffE0E0E0),
-        space: 28,
-      ),
-    );
-  }
+  // Theme is now defined centrally by the design-token system; see
+  // lib/theme/app_theme.dart (Phase 0 of the redesign).
+  ThemeData _buildLightTheme() => AppTheme.light;
 
-  ThemeData _buildDarkTheme() {
-    return _buildLightTheme().copyWith(
-      brightness: Brightness.dark,
-      scaffoldBackgroundColor: const Color(0xff0E0E0E),
-      primaryColorDark: AppColors.primaryColor(),
-      primaryColor: AppColors.primaryColor(),
-      colorScheme: ColorScheme.dark(
-        primary: AppColors.primaryColor(),
-        secondary: AppColors.primaryColor(),
-        onPrimary: Colors.white,
-        background: const Color(0xff121212),
-        surface: const Color(0xff1E1E1E),
-        onSurface: const Color(0xffFFFFFF),
-        error: AppColors.errorText,
-      ),
-      // appBarTheme: AppBarTheme(
-      //   centerTitle: true,
-      //   elevation: 0,
-      //   systemOverlayStyle: SystemUiOverlayStyle.dark,
-      //   backgroundColor: const Color(0xff1E1E1E),
-      //   foregroundColor: const Color(0xffFFFFFF),
-      // ),
-      // dividerTheme: const DividerThemeData(
-      //   color: Color(0xff333333),
-      //   space: 28,
-      // ),
-    );
-  }
+  ThemeData _buildDarkTheme() => AppTheme.dark;
 
   ThemeData get currentTheme => isDarkTheme.value ? darkTheme : lightTheme;
 }
