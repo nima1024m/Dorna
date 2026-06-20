@@ -6,7 +6,7 @@ import '../../controllers/settings/settings_controller.dart';
 import '../../widgets/instruction/instruction_background.dart';
 import '../../widgets/instruction/instruction_button.dart';
 import '../../widgets/instruction/instruction_card.dart';
-import '../../widgets/ui/app_colors.dart';
+import '../../theme/app_tokens.dart';
 import '../../widgets/ui/custom_switch_tile.dart';
 import '../home/home_screen.dart';
 
@@ -35,11 +35,12 @@ class _InstructionCollectDataScreenState
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return InstructionBackground(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Main white card
+          // Main card
           InstructionCard(
             width: double.infinity,
             child: Column(
@@ -49,23 +50,21 @@ class _InstructionCollectDataScreenState
                 Image.asset(
                   'assets/images/logo.png',
                   width: 80,
-                  color: AppColors.primaryColor(),
+                  color: cs.primary,
                 ),
                 const SizedBox(height: 24),
-                // Heading - "Just one more thing..."
                 Text(
                   'Done and ready to go!',
                   style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color: AppColors.textMain(),
+                        color: cs.onSurface,
                         fontSize: 18.sp,
                       ),
                 ),
                 const SizedBox(height: 24),
-                // Heading - "Just one more thing..."
                 Text(
                   'Just one last thing...',
                   style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color: AppColors.textMain(),
+                        color: cs.onSurface,
                         fontSize: 14.sp,
                         height: 1.3,
                       ),
@@ -74,7 +73,7 @@ class _InstructionCollectDataScreenState
                 Text(
                   'We use a smart system to help you get the most out of your daily writing. By learning from your mistakes, we can show you which grammar issues to improve and how to get better at both writing and speaking. Just turn this option on, and we’ll only store your grammar mistakes—never your personal information.',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: AppColors.textMain(),
+                        color: cs.onSurface,
                         fontSize: 13.sp,
                         height: 1.3,
                       ),
@@ -97,10 +96,9 @@ class _InstructionCollectDataScreenState
                   onPressed: onContinueTap,
                   text: 'Continue',
                   loading: loading,
-                  border:
-                      Border.all(color: const Color(0xffFF9500), width: 1.5),
+                  border: Border.all(color: DornaColors.warning, width: 1.5),
                   backgroundColor: Colors.transparent,
-                  textColor: const Color(0xffFF9500),
+                  textColor: DornaColors.warning,
                 ),
               ],
             ),

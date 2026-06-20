@@ -12,7 +12,7 @@ import '../../widgets/instruction/instruction_button.dart';
 import '../../widgets/instruction/instruction_card.dart';
 import '../../widgets/instruction/instruction_list.dart';
 import '../../widgets/instruction/terms_privacy_footer.dart';
-import '../../widgets/ui/app_colors.dart';
+import '../../theme/app_tokens.dart';
 import 'instruction_collect_data_screen.dart';
 import 'instruction_second_screen.dart';
 
@@ -101,12 +101,12 @@ class _InstructionFirstScreenState extends State<InstructionFirstScreen>
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final cs = Theme.of(context).colorScheme;
     return InstructionBackground(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Main white card
+          // Main card
           InstructionCard(
             width: double.infinity,
             padding:
@@ -118,14 +118,14 @@ class _InstructionFirstScreenState extends State<InstructionFirstScreen>
                 Image.asset(
                   'assets/images/logo.png',
                   width: 80,
-                  color: AppColors.primaryColor(),
+                  color: cs.primary,
                 ),
                 const SizedBox(height: 24),
                 // Heading
                 Text(
                   'To fully experience Dorna,\nPlease follow the instructions:',
                   style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color: AppColors.textMain(),
+                        color: cs.onSurface,
                         fontSize: 14.sp,
                         height: 1.3,
                       ),
@@ -143,9 +143,7 @@ class _InstructionFirstScreenState extends State<InstructionFirstScreen>
                     child: Text(
                       'Skip for now',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: isDarkMode
-                                ? AppColors.textMain().withOpacity(0.4)
-                                : AppColors.greySubtext(),
+                            color: cs.onSurfaceVariant,
                             fontSize: 13.sp,
                           ),
                     ),
@@ -185,11 +183,11 @@ class _InstructionFirstScreenState extends State<InstructionFirstScreen>
               'Allow full access',
               style: justCheckFullAccess
                   ? Theme.of(context).textTheme.displayLarge?.copyWith(
-                        color: AppColors.textMain(),
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 13.sp,
                       )
                   : Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.textMain(),
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 13.sp,
                       ),
             ),
@@ -204,7 +202,10 @@ class _InstructionFirstScreenState extends State<InstructionFirstScreen>
                     'assets/icons/ic_info.svg',
                     width: 20,
                     height: 20,
-                    color: AppColors.textMain().withOpacity(0.5),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withValues(alpha: 0.5),
                   ),
                 ),
               ),
@@ -219,9 +220,9 @@ class _InstructionFirstScreenState extends State<InstructionFirstScreen>
     return InstructionButton(
       onPressed: onGoToSettingsTap,
       text: 'Go to "Keyboards"',
-      border: Border.all(color: const Color(0xffFF9500), width: 1.2),
+      border: Border.all(color: DornaColors.warning, width: 1.2),
       backgroundColor: Colors.transparent,
-      textColor: const Color(0xffFF9500),
+      textColor: DornaColors.warning,
       loading: loading,
     );
   }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../screens/settings/privacy_policy_screen.dart';
-import '../ui/app_colors.dart';
 import '../ui/custom_underline_text.dart';
 
 class TermsPrivacyFooter extends StatelessWidget {
@@ -25,7 +24,7 @@ class TermsPrivacyFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     var style = Theme.of(context).textTheme.bodySmall!.copyWith(
           fontSize: 12.sp,
-          color: AppColors.greySubtext(),
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
         );
     return Column(
       children: [

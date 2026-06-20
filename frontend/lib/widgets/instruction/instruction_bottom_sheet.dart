@@ -3,28 +3,28 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../utils/utils.dart';
-import '../ui/app_colors.dart';
 
 class InstructionBottomSheetContent extends StatelessWidget {
   const InstructionBottomSheetContent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     final titleStyle = Theme.of(context).textTheme.displayLarge?.copyWith(
           fontSize: 15.sp,
           height: 1.5,
-          color: AppColors.textMain(),
+          color: cs.onSurface,
         );
     final bodyStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
           fontSize: 14.sp,
           height: 1.35,
-          color: AppColors.greySubtext(),
+          color: cs.onSurfaceVariant,
         );
 
     return Container(
       padding: const EdgeInsets.only(bottom: 32, top: 20, left: 48, right: 48),
       decoration: BoxDecoration(
-        color: const Color(0xff2E3633).withOpacity(0.3),
+        color: cs.surfaceContainerHighest.withValues(alpha: 0.7),
         borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
       clipBehavior: Clip.antiAlias,
@@ -41,7 +41,7 @@ class InstructionBottomSheetContent extends StatelessWidget {
                 height: 4,
                 margin: const EdgeInsets.only(bottom: 24),
                 decoration: BoxDecoration(
-                  color: AppColors.neutral2,
+                  color: cs.outlineVariant,
                   borderRadius: BorderRadius.circular(6),
                 ),
               ),

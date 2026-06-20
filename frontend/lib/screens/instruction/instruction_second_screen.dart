@@ -11,7 +11,7 @@ import '../../widgets/instruction/instruction_button.dart';
 import '../../widgets/instruction/instruction_card.dart';
 import '../../widgets/instruction/instruction_list.dart';
 import '../../widgets/instruction/terms_privacy_footer.dart';
-import '../../widgets/ui/app_colors.dart';
+import '../../theme/app_tokens.dart';
 import '../home/home_screen.dart';
 import 'instruction_collect_data_screen.dart';
 
@@ -76,11 +76,12 @@ class _InstructionSecondScreenState extends State<InstructionSecondScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return InstructionBackground(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Main white card
+          // Main card
           InstructionCard(
             width: double.infinity,
             child: Column(
@@ -90,14 +91,14 @@ class _InstructionSecondScreenState extends State<InstructionSecondScreen> {
                 Image.asset(
                   'assets/images/logo.png',
                   width: 80,
-                  color: AppColors.primaryColor(),
+                  color: cs.primary,
                 ),
                 const SizedBox(height: 24),
                 // Heading - "Just one more thing..."
                 Text(
                   'Just one more thing...',
                   style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color: AppColors.textMain(),
+                        color: cs.onSurface,
                         fontSize: 14.sp,
                         height: 1.3,
                       ),
@@ -110,9 +111,9 @@ class _InstructionSecondScreenState extends State<InstructionSecondScreen> {
                 InstructionButton(
                   onPressed: onOpenKeyboardTap,
                   text: 'Open keyboard',
-                  border: Border.all(color: const Color(0xffFF9500), width: 1.5),
+                  border: Border.all(color: DornaColors.warning, width: 1.5),
                   backgroundColor: Colors.transparent,
-                  textColor: const Color(0xffFF9500),
+                  textColor: DornaColors.warning,
                 ),
                 Offstage(
                     offstage: true,
@@ -148,13 +149,13 @@ class _InstructionSecondScreenState extends State<InstructionSecondScreen> {
             Text(
               'Tap and hold the ',
               style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                    color: AppColors.textMain(),
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 13.sp,
               ),
             ),
             Icon(
               Icons.language,
-              color: AppColors.textMain(),
+              color: Theme.of(context).colorScheme.onSurface,
               size: 16,
             ),
           ],

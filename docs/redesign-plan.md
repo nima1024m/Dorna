@@ -201,8 +201,15 @@ design across most screens and makes dark mode correct.
 
 **Phase 4 done 2026-06-20.**
 
-**Phase 5 — Keyboard-setup / instruction**
-- [ ] keyboard_extension_intro · [ ] dorna_keyboard_in_action · [ ] instruction first/second/collect-data. Commit: `redesign(instruction): …`
+**✅ Phase 5 — Keyboard-setup / instruction — DONE 2026-06-20** (tokenization restyle; functional keyboard-detection flow preserved)
+- [x] instruction first/second/collect-data restyled onto the theme.
+- Migrated the instruction flow off `AppColors` + hardcoded colors onto `ColorScheme`/`DornaColors`. Widgets: `instruction_background` (dropped the legacy scattered-letters image → clean `cs.surface`), `instruction_card` (`surfaceContainerLowest` + `outlineVariant` border + soft shadow), `instruction_button` (orange `#FF9500` → `DornaColors.warning` accent), `instruction_list` (step circles → `primary`/`onPrimary`, connectors → `outlineVariant`), `instruction_bottom_sheet`, `terms_privacy_footer`. Screens: the 3 instruction screens (logo → `primary`, headings → `onSurface`, CTAs → `DornaColors.warning`). New opacity calls use `withValues(alpha:)` (no new deprecation lint).
+- [~] The design's **`keyboard_extension_intro`** ("Get Dorna on your keyboard" value-prop) and **`dorna_keyboard_in_action`** (faux-chat keyboard demo) marketing screens were **not** built — they're optional showcase screens (the real keyboard is the iOS-native one, Phase K). The functional setup flow is the Phase-5 deliverable. ⏳ Optional follow-up: add the intro/demo showcase screens.
+- [~] Instruction completion still routes to the old `HomeScreen`; the live-entry switch to `MainShell` happens in Phase 6 (one place).
+- [x] Verify: `flutter analyze` **0 errors** (295 lint-debt, net −4), `flutter test` **All tests passed**, `flutter build apk` green.
+- Commit: `redesign(instruction): restyle keyboard-setup flow to the theme`
+
+**Phase 5 done 2026-06-20.**
 
 **Phase 6 — Today home hub**
 - [ ] today_welcome (empty) · [ ] today_dorna_home (populated: brief hero, plan timeline, around-you card, mini-player). Commit: `redesign(home): today hub`

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_tokens.dart';
+
 class InstructionCard extends StatelessWidget {
   final Widget child;
   final double width;
@@ -8,25 +10,26 @@ class InstructionCard extends StatelessWidget {
   const InstructionCard({
     super.key,
     required this.child,
-    required this.width,this.padding,
-
+    required this.width,
+    this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+    final cs = Theme.of(context).colorScheme;
     return Container(
       width: width,
-      padding: padding?? const EdgeInsets.symmetric(horizontal: 32, vertical: 50),
+      padding:
+          padding ?? const EdgeInsets.symmetric(horizontal: 32, vertical: 50),
       decoration: BoxDecoration(
-        color: isDarkMode ? const Color(0xff141515) : Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: cs.surfaceContainerLowest,
+        borderRadius: BorderRadius.circular(DornaRadii.lg),
+        border: Border.all(color: cs.outlineVariant.withValues(alpha: 0.5)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: cs.shadow.withValues(alpha: 0.06),
+            blurRadius: 18,
+            offset: const Offset(0, 6),
           ),
         ],
       ),

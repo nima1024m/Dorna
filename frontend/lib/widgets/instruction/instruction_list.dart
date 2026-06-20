@@ -1,8 +1,6 @@
 import 'package:dorna/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-import '../ui/app_colors.dart';
-
 class InstructionList extends StatelessWidget {
   final List<String> instructions;
   final bool isCompleted;
@@ -21,13 +19,14 @@ class InstructionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final cs = Theme.of(context).colorScheme;
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, index) {
         final isStepCompleted = isCompleted || index < activeStep;
         final isCurrentStep = index == activeStep;
+        final isFilled = isStepCompleted || index == activeStep;
 
         return Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,33 +37,20 @@ class InstructionList extends StatelessWidget {
               height: 24,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isStepCompleted || index == activeStep
-                    ? AppColors.primaryColor()
-                    : isDarkMode
-                        ? Colors.transparent
-                        : Colors.white,
-                border: Border.all(
-                  color: AppColors.primaryColor(),
-                  width: 1,
-                ),
+                color: isFilled ? cs.primary : cs.surfaceContainerLowest,
+                border: Border.all(color: cs.primary, width: 1),
               ),
               child: isStepCompleted
-                  ? const Icon(
-                      Icons.done,
-                      color: Colors.white,
-                      size: 12,
-                    )
+                  ? Icon(Icons.done, color: cs.onPrimary, size: 12)
                   : FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
                         '${index + 1 + startIndex}',
                         style:
                             Theme.of(context).textTheme.displayLarge?.copyWith(
-                        color: isCurrentStep || isStepCompleted
-                            ? (isDarkMode ? Colors.black : Colors.white)
-                                  : AppColors.primaryColor(),
-                              fontSize: 12.sp,
-                            ),
+                                  color: isFilled ? cs.onPrimary : cs.primary,
+                                  fontSize: 12.sp,
+                                ),
                       ),
                     ),
             ),
@@ -80,25 +66,15 @@ class InstructionList extends StatelessWidget {
                       ? customWidgets![index]!
                       : Text(
                           instructions[index],
-                          style: isCurrentStep && !isStepCompleted
-                              ? Theme.of(context)
-                                  .textTheme
-                                  .displayLarge
-                                  ?.copyWith(
-                                    color: isStepCompleted
-                                        ? Colors.grey
-                                        : AppColors.textMain(),
-                                    fontSize: 13.sp,
-                                  )
-                              : Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: isStepCompleted
-                                        ? Colors.grey
-                                        : AppColors.textMain(),
-                                    fontSize: 13.sp,
-                                  ),
+                          style: (isCurrentStep && !isStepCompleted
+                                  ? Theme.of(context).textTheme.displayLarge
+                                  : Theme.of(context).textTheme.bodyMedium)
+                              ?.copyWith(
+                            color: isStepCompleted
+                                ? cs.onSurfaceVariant
+                                : cs.onSurface,
+                            fontSize: 13.sp,
+                          ),
                         ),
                 ],
               ),
@@ -112,7 +88,7 @@ class InstructionList extends StatelessWidget {
           width: 2,
           height: 30,
           margin: const EdgeInsets.only(top: 8, bottom: 8, left: 10),
-          color: isDarkMode ? const Color(0xff2E373F) : const Color(0xffCFD6DC),
+          color: cs.outlineVariant,
         ),
       ),
       itemCount: instructions.length,
