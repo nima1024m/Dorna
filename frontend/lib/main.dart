@@ -32,19 +32,6 @@ final RouteObserver<ModalRoute<void>> routeObserver =
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  FlutterSecureStorage storage = const FlutterSecureStorage();
-  // storage.write(
-  //    key: 'access_token',
-  //    value:
-  //        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImM5NDI1YmE1LTY1MTEtNDk5MC04ODcxLWU2ZjM5MDNiYzU4YSIsInN1YiI6Im1pbGFkaGFzZWxAZ21haWwuY29tIiwianRpIjoiNzA2M2VjMWEtYjA3Ny00MjQ3LTg0NTUtNzUwYTJlNTUyODE1IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6Im1pbGFkIGhnIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoibWlsYWRoYXNlbEBnbWFpbC5jb20iLCJleHAiOjE3MzMxNjU4MTUsImlzcyI6IlNCb2R5IiwiYXVkIjoiU0JvZHkifQ.PIMv-NHKn_GZAgxLg5xaUgKthpnOO95zHPRdehhrEbk');
-  // storage.write(
-  //     key: 'user',
-  //     value:
-  //     jsonEncode({"id":"a56d0521-ab46-47b1-a550-a8a8daf49e58","email":"tebebehan@gmail.com",
-  //       "password":"A1a2a2a3","userName":"tebebehan@gmail.com",
-  //       "firstName":"milad","lastName":"hf",
-  //       "birthDate":"8/19/2014 7:30:00 PM","weight":null,"height":null,"gender":null}));
-
   _initSystemChrome();
   await clearSecureStorageOnReinstall();
   final SettingsController settingsController = Get.put(SettingsController());
