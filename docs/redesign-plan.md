@@ -242,8 +242,15 @@ design across most screens and makes dark mode correct.
 
 **Phase 8 done 2026-06-20.**
 
-**Phase 9 — Profile / progress**
-- [ ] you_profile_progress (streak, stat tiles, weak areas, interests, saved). Commit: `redesign(profile): …`
+**✅ Phase 9 — Profile / progress — DONE 2026-06-20** (all 3 shell tabs now live)
+- [x] you_profile_progress (`screens/profile/profile_tab_screen.dart`): Dorna wordmark + gear (→ Settings); avatar with medal badge + name + streak pill; 3 stat tiles (phrases / conversations / briefs); "You're improving" card (trending-up watermark + weak-area pills); Interests chips + Edit (→ InterestsScreen); Saved-phrases row. Identity (name/avatar) is real; streak / stats / weak-areas / interests / saved-count are **placeholder** (F6 wires stats & learning-insights-driven weak areas; F1 wires saved phrases).
+- New reusable primitives `widgets/ui/dorna_card.dart` (`DornaCard`) + `widgets/ui/dorna_pill.dart` (`DornaPill`, tonal/outlined). New `ProfileProgressController`.
+- [x] **Practice tab**: built a presentable hub placeholder (`screens/practice/practice_screen.dart`) — feature cards (Talk with Dorna / Phrase decks / Event prep / Ice-breakers) flagging "coming soon" (deep features are F4/F5).
+- [x] `MainShell` now hosts all three live tabs (Today / Practice / Profile); the `_TabPlaceholder` stub is removed. The Profile gear is the live entry to the Phase-8 Settings hub.
+- [x] Verify: `flutter analyze` **0 errors** (294 lint-debt; new files lint-clean), `flutter test` **All tests passed**, `flutter build apk` green.
+- Commit: `redesign(profile): profile/progress tab + live practice hub`
+
+**Phase 9 done 2026-06-20. — UI redesign (Phases 0–9) COMPLETE on this Windows box; iOS Phase K + A3 and the F1–F8 backend features remain (see below).**
 
 ### ☐ Phase K — Keyboard restyle (native, after Phase 0 · verify on macOS)
 Using KeyboardKit 10's styling/theming, restyle the custom keyboard to the new design,

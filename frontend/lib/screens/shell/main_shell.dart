@@ -6,12 +6,11 @@ import '../../widgets/home/brief_mini_player.dart';
 import '../../widgets/ui/dorna_bottom_nav.dart';
 import '../brief/brief_player_screen.dart';
 import '../home/today_screen.dart';
+import '../practice/practice_screen.dart';
+import '../profile/profile_tab_screen.dart';
 
-/// The redesign's 3-tab app shell (Today / Practice / Profile).
-///
-/// Today (Phase 6) is live; Practice and Profile are placeholders filled in by
-/// their phases (Practice → practice hub, Profile → Phase 9). The brief
-/// mini-player docks just above the nav once a brief has started.
+/// The redesign's 3-tab app shell (Today / Practice / Profile), all live. The
+/// brief mini-player docks just above the nav once a brief has started.
 class MainShell extends StatefulWidget {
   static const String routeName = '/main';
 
@@ -25,10 +24,10 @@ class _MainShellState extends State<MainShell> {
   int _index = 0;
   final TodayController _today = Get.put(TodayController());
 
-  late final List<Widget> _tabs = const [
+  static const List<Widget> _tabs = [
     TodayScreen(),
-    _TabPlaceholder(title: 'Practice', icon: Icons.forum_outlined),
-    _TabPlaceholder(title: 'Profile', icon: Icons.person_outline),
+    PracticeScreen(),
+    ProfileTabScreen(),
   ];
 
   @override
@@ -59,36 +58,6 @@ class _MainShellState extends State<MainShell> {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Temporary placeholder for an unbuilt tab. Replaced by the real screen in the
-/// tab's phase.
-class _TabPlaceholder extends StatelessWidget {
-  final String title;
-  final IconData icon;
-
-  const _TabPlaceholder({required this.title, required this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 48, color: cs.primary),
-            const SizedBox(height: 12),
-            Text(
-              '$title — coming soon',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ],
-        ),
       ),
     );
   }
