@@ -5,8 +5,6 @@ import 'package:dorna/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'app_colors.dart';
-
 // Custom Input
 class CustomFormInput extends StatefulWidget {
   final bool isSecureText;
@@ -230,10 +228,8 @@ class _CustomFormInputState extends State<CustomFormInput>
     widget.borderColor = isFocused
         ? Theme.of(context).colorScheme.primary
         : hasError
-            ? AppColors.errorText
-            : AppColors.greySubtext();
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+            ? Theme.of(context).colorScheme.error
+            : Theme.of(context).colorScheme.onSurfaceVariant;
     if (hasError &&
         widget.validator != null &&
         widget.validator!(widget.controller?.text) == null) {
@@ -434,7 +430,7 @@ class _CustomFormInputState extends State<CustomFormInput>
                     style: widget.style ??
                         Theme.of(context).textTheme.displayLarge?.copyWith(
                               fontSize: 13.sp,
-                              color: AppColors.textMain(),
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                     cursorColor: Theme.of(context).colorScheme.primary,
                     decoration: InputDecoration(
@@ -508,25 +504,25 @@ class _CustomFormInputState extends State<CustomFormInput>
                       hintStyle: widget.hintStyle ??
                           Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 fontSize: 13.sp,
-                                color: isDarkMode
-                                    ? const Color(0xffFFFFFF).withOpacity(0.25)
-                                    : const Color(0xff2E3633).withOpacity(0.25),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant,
                               ),
                       errorStyle: const TextStyle(fontSize: 0),
                       labelStyle: widget.labelStyle?.copyWith(
                             color: hasError
-                                ? AppColors.errorText
+                                ? Theme.of(context).colorScheme.error
                                 : isFocused
                                     ? Theme.of(context).colorScheme.primary
                                     : (widget.unFocusedLabelColor),
                           ) ??
                           Theme.of(context).textTheme.displayLarge?.copyWith(
                                 color: hasError
-                                    ? AppColors.errorText
+                                    ? Theme.of(context).colorScheme.error
                                     : isFocused
                                         ? Theme.of(context).colorScheme.primary
                                         : (widget.unFocusedLabelColor ??
-                                            AppColors.greySubtext()),
+                                            Theme.of(context).colorScheme.onSurfaceVariant),
                                 fontSize: 14.sp,
                               ),
                       fillColor: widget.fillColor ?? Colors.transparent,
@@ -542,7 +538,7 @@ class _CustomFormInputState extends State<CustomFormInput>
                                 _obscureText
                                     ? Icons.visibility_outlined
                                     : Icons.visibility_off_outlined,
-                                color: AppColors.greySubtext().withOpacity(0.5),
+                                color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.5),
                                 size: 23,
                               ),
                             )
@@ -565,7 +561,7 @@ class _CustomFormInputState extends State<CustomFormInput>
                                     true
                             ? 0
                             : 11.sp,
-                        color: AppColors.errorText),
+                        color: Theme.of(context).colorScheme.error),
                   ),
                 ),
               if (widget.maxLines > 1 && _thumbHeight > 0)
@@ -638,7 +634,7 @@ class _CustomFormInputState extends State<CustomFormInput>
                         child: widget.suffixIcon != null
                             ? Icon(
                                 widget.suffixIcon,
-                                color: AppColors.grey4,
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
                               )
                             : widget.suffix!),
                   ),

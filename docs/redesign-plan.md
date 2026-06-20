@@ -153,18 +153,27 @@ as targets, confirm before applying. **If any platform can't build cleanly, STOP
 - [x] Verify: `flutter analyze` **0 errors** (320 lint-debt, net −2), `flutter test` pass, `flutter build apk` green.
 - Commit: `feat(theme): design tokens + ThemeData/ColorScheme/TextTheme (Phase 0)`
 
-### ☐ Phase 1 — Shared UI primitives
-Restyle `lib/widgets/ui/*` to the theme (they propagate everywhere): `custom_button`,
-`custom_form_input`, `custom_list_tile`, `custom_switch_tile` (iOS toggle), `back_header`,
-`header`, `toast`, `image_picker_sheet`, `app_safearea`, `custom_underline_text`.
-**New primitives the design needs:** gradient hero card + play FAB, animated audio
-waveform, persistent mini-player, selection chip (gradient+check), phrase card
-(IPA + Hear it + Persian gloss), 3-tab glass bottom nav, segment chips, stat tile,
-timeline row.
-- [ ] Restyle each existing `ui/` widget (decouple from `AppColors`, read `Theme`).
-- [ ] Build each new primitive.
-- [ ] Verify: analyze clean; a sample screen renders them.
-- Commit(s): `redesign(ui): restyle shared primitives` / `feat(ui): new design primitives`
+### ☐ Phase 1 — Shared UI primitives (restyle existing)
+Restyle `lib/widgets/ui/*` to consume the theme (`Theme.of(context).colorScheme` /
+`textTheme`) instead of the `AppColors` shim / hardcoded colors — propagates the new
+design across most screens and makes dark mode correct.
+> **Refinement (2026-06-20):** the NEW design primitives (gradient hero + play FAB,
+> audio waveform, mini-player, selection chip, phrase card, 3-tab glass bottom nav,
+> segment chips, stat tile, timeline row) are built **within the screen/app-shell
+> phase that first uses them** (extracted as reusables), not speculatively here —
+> their APIs depend on real usage and can't be verified in isolation. (Bottom nav →
+> Phase 2; hero / waveform / mini-player → Phase 6–7; phrase card → F1; etc.)
+- [x] Restyled to `Theme` (ColorScheme / textTheme + `DornaColors` for the brand
+  gradient): `custom_button` (brand blue→cyan CTA gradient + onPrimary),
+  `custom_form_input`, `custom_list_tile`, `custom_switch_tile`, `back_header`,
+  `header`, `image_picker_sheet`. Decoupled from the `AppColors` shim and removed the
+  `isDarkMode` branches (dark mode is now correct via ColorScheme). `toast` left as-is
+  (intentional dark overlay, no AppColors coupling); `custom_underline_text` /
+  `app_safearea` have no color coupling.
+- [x] Verify: `flutter analyze` **0 errors** (308 lint-debt, net −12), `flutter test` pass, `flutter build apk` green.
+- Commit: `redesign(ui): restyle shared primitives to the theme`
+
+**Phase 1 done 2026-06-20.**
 
 ### ☐ Phase 2 — App shell / IA / navigation
 - [ ] Build the 3-tab scaffold (Today/Practice/Profile, glass bottom nav, active pill) per D4.

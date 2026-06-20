@@ -1,5 +1,4 @@
 import 'package:dorna/utils/utils.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -43,7 +42,7 @@ class BackHeader extends StatelessWidget implements PreferredSizeWidget {
                 child: SvgPicture.asset(
                   'assets/icons/arrow_back.svg',
                   height: 16,
-                  color: AppColors.textMain(),
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ),
@@ -57,7 +56,9 @@ class BackHeader extends StatelessWidget implements PreferredSizeWidget {
                             title.toString(),
                             style:
                                 Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: AppColors.textMain(),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface,
                                       fontSize: 14.sp,
                                     ),
                           )

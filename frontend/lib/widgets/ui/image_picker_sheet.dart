@@ -2,8 +2,6 @@ import 'package:dorna/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'app_colors.dart';
-
 class ImagePickerSheet extends StatelessWidget {
   final Function(XFile) onImagePicked;
   final Function() onRemoveImage;
@@ -51,7 +49,9 @@ class ImagePickerSheet extends StatelessWidget {
                   style: Theme.of(context)
                     .textTheme
                     .bodyMedium
-                      ?.copyWith(color: AppColors.errorText, fontSize: 16.sp),
+                      ?.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                          fontSize: 16.sp),
                 )),
               onTap: () {
                 Navigator.of(context).pop();

@@ -7,7 +7,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../screens/auth/profile_screen.dart';
-import 'app_colors.dart';
 
 class Header extends StatefulWidget {
   const Header({Key? key}) : super(key: key);
@@ -37,7 +36,7 @@ class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
@@ -52,7 +51,7 @@ class _HeaderState extends State<Header> {
                 'assets/images/logotype.png',
                 width: 240,
                 fit: BoxFit.contain,
-                color: AppColors.primaryColor(),
+                color: cs.primary,
               ),
               const Spacer(),
               SizedBox(
@@ -62,16 +61,14 @@ class _HeaderState extends State<Header> {
                   onPressed: onPodcastTap,
                   backgroundColor: Colors.transparent,
                   border: Border.all(
-                    color: isDarkMode
-                        ? Colors.white.withOpacity(0.1)
-                        : Colors.black.withOpacity(0.1),
+                    color: cs.outlineVariant,
                     width: 1.5,
                   ),
                   borderRadius: BorderRadius.circular(10),
                   buttonWidget: Center(
                     child: Icon(
                       Icons.podcasts,
-                      color: AppColors.textMain(),
+                      color: cs.onSurface,
                       size: 22,
                     ),
                   ),
@@ -87,9 +84,7 @@ class _HeaderState extends State<Header> {
                   onPressed: onProfileTap,
                   backgroundColor: Colors.transparent,
                   border: Border.all(
-                    color: isDarkMode
-                        ? Colors.white.withOpacity(0.1)
-                        : Colors.black.withOpacity(0.1),
+                    color: cs.outlineVariant,
                     width: 1.5,
                   ),
                   borderRadius: BorderRadius.circular(10),
@@ -105,7 +100,7 @@ class _HeaderState extends State<Header> {
                                 : 'assets/icons/ic_login.svg',
                             width: size,
                             height: size,
-                            color: AppColors.textMain(),
+                            color: cs.onSurface,
                           );
                         }),
                   ),

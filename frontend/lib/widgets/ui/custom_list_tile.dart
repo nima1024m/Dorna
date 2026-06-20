@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dorna/utils/utils.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -61,14 +60,14 @@ class _CustomListTileState extends State<CustomListTile>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: widget.margin ?? const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Material(
-            color: isDarkMode ? Colors.transparent : Colors.white,
+            color: cs.surfaceContainerLowest,
             borderRadius: BorderRadius.circular(12),
             child: InkWell(
               radius: Platform.isIOS ? 500 : null,
@@ -89,10 +88,7 @@ class _CustomListTileState extends State<CustomListTile>
                 padding: widget.padding ??
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 decoration: BoxDecoration(
-                  border: Border.all(
-                      color: isDarkMode
-                          ? Colors.white.withOpacity(0.1)
-                          : Colors.black.withOpacity(0.1)),
+                  border: Border.all(color: cs.outlineVariant),
                   borderRadius: BorderRadius.circular(12),
                   color: isExpanded
                       ? widget.expandedBackgroundColor
@@ -110,10 +106,8 @@ class _CustomListTileState extends State<CustomListTile>
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontSize: 14.sp,
                                     color: widget.isEnabled
-                                        ? AppColors.textMain()
-                                        : (isDarkMode
-                                            ? Colors.white.withOpacity(0.1)
-                                            : Colors.black.withOpacity(0.25)),
+                                        ? cs.onSurface
+                                        : cs.onSurface.withOpacity(0.38),
                                   ),
                         ),
                         const Spacer(),
@@ -125,7 +119,7 @@ class _CustomListTileState extends State<CustomListTile>
                               'assets/icons/ic_arrow.svg',
                               width: 16,
                               height: 16,
-                              color: AppColors.textMain(),
+                              color: cs.onSurface,
                             ),
                           ),
                       ],
@@ -142,7 +136,7 @@ class _CustomListTileState extends State<CustomListTile>
               child: Text(
                 widget.subtitle!,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.greySubtext().withOpacity(0.5),
+                      color: cs.onSurfaceVariant,
                       fontSize: 13.sp,
                     ),
               ),

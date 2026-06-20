@@ -1,6 +1,8 @@
 import 'package:dorna/utils/utils.dart';
 import 'package:flutter/material.dart';
 
+import '../../theme/app_tokens.dart';
+
 class CustomButton extends StatelessWidget {
   final Function onPressed;
   final Widget? buttonWidget;
@@ -49,10 +51,11 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     buttonHeight ??= Utils.isTablet() ? 70 : 52;
     var textColorValue = !isEnabled
-        ? Colors.white.withOpacity(0.4)
-        : (textColor ?? Colors.white);
+        ? cs.onPrimary.withOpacity(0.4)
+        : (textColor ?? cs.onPrimary);
     return AnimatedContainer(
       width: padding == null ? double.infinity : null,
       height: setDefaultHeight ? buttonHeight : null,
@@ -68,14 +71,10 @@ class CustomButton extends StatelessWidget {
             ? backgroundColor
             : isEnabled
                 ? backgroundColor
-                : const Color(0xff8B8B66).withOpacity(0.5),
+                : cs.onSurface.withOpacity(0.12),
         gradient: (backgroundColor == null && isEnabled)
             ? LinearGradient(
-                colors: gradientColors ??
-                    [
-                      Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.primary,
-                    ],
+                colors: gradientColors ?? [cs.primary, DornaColors.accentCyan],
                 begin: Alignment.bottomRight,
                 end: Alignment.topLeft,
               )
@@ -130,7 +129,7 @@ class CustomButton extends StatelessWidget {
                           width: 20,
                           height: 20,
                           child: CircularProgressIndicator(
-                          color: loadingColor ?? Colors.white,
+                          color: loadingColor ?? cs.onPrimary,
                           strokeWidth: 3,
                           ),
                         ),

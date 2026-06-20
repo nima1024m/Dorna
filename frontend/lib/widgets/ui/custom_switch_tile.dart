@@ -2,7 +2,6 @@ import 'package:dorna/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'app_colors.dart';
 import 'custom_list_tile.dart';
 
 class CustomSwitchTile extends StatelessWidget {
@@ -25,6 +24,7 @@ class CustomSwitchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     var padding = margin ?? const EdgeInsets.symmetric(horizontal: 12);
     return Padding(
       padding: padding,
@@ -37,15 +37,15 @@ class CustomSwitchTile extends StatelessWidget {
               leadingIcon,
               width: 22,
               height: 22,
-              color: AppColors.textMain(),
+              color: cs.onSurface,
             ),
             trailing: Switch.adaptive(
               value: value,
               onChanged: onChanged,
-              activeColor: Colors.white,
-              activeTrackColor: AppColors.primaryColor(),
-              inactiveThumbColor: Colors.white,
-              inactiveTrackColor: Colors.black.withOpacity(0.1),
+              activeThumbColor: cs.onPrimary,
+              activeTrackColor: cs.primary,
+              inactiveThumbColor: cs.surfaceContainerLowest,
+              inactiveTrackColor: cs.outlineVariant,
               trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
             ),
             showArrow: subtitle == null,
@@ -58,7 +58,7 @@ class CustomSwitchTile extends StatelessWidget {
               child: Text(
                 subtitle!,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.greySubtext().withOpacity(0.5),
+                      color: cs.onSurfaceVariant,
                       fontSize: 13.sp,
                     ),
               ),
