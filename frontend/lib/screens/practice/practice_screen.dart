@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../controllers/brief/brief_player_controller.dart';
 import '../../theme/app_tokens.dart';
 import '../../utils/utils.dart';
 import '../../widgets/ui/dorna_card.dart';
@@ -39,12 +41,14 @@ class PracticeScreen extends StatelessWidget {
     Utils.appContext = context;
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
+    final brief = Get.find<BriefPlayerController>();
     return SafeArea(
       bottom: false,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(
-            DornaSpacing.screenMargin, 16, DornaSpacing.screenMargin, 110),
-        child: Column(
+      child: Obx(
+        () => SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(DornaSpacing.screenMargin, 16,
+              DornaSpacing.screenMargin, brief.started.value ? 170 : 110),
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Practice',
@@ -91,6 +95,7 @@ class PracticeScreen extends StatelessWidget {
               const SizedBox(height: DornaSpacing.md),
             ],
           ],
+          ),
         ),
       ),
     );

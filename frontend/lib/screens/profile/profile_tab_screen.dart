@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/brief/brief_player_controller.dart';
 import '../../controllers/profile/profile_progress_controller.dart';
 import '../../theme/app_tokens.dart';
 import '../../utils/utils.dart';
@@ -20,14 +21,16 @@ class ProfileTabScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Utils.appContext = context;
     final c = Get.put(ProfileProgressController());
+    final brief = Get.find<BriefPlayerController>();
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
 
     return SafeArea(
       bottom: false,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(
-            DornaSpacing.screenMargin, 12, DornaSpacing.screenMargin, 110),
+      child: Obx(
+        () => SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(DornaSpacing.screenMargin, 12,
+            DornaSpacing.screenMargin, brief.started.value ? 170 : 110),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -153,6 +156,7 @@ class ProfileTabScreen extends StatelessWidget {
           ],
         ),
       ),
+        ),
     );
   }
 }

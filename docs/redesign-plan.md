@@ -252,6 +252,12 @@ design across most screens and makes dark mode correct.
 
 **Phase 9 done 2026-06-20. — UI redesign (Phases 0–9) COMPLETE on this Windows box; iOS Phase K + A3 and the F1–F8 backend features remain (see below).**
 
+**✅ Post-redesign adversarial review (2026-06-20)** — ran a multi-agent review over the whole `f382837..HEAD` diff (raised 13 → confirmed 6). Fixed the real ones in `redesign(brief): unify brief playback…`:
+- **Brief-playback state desync** — the mini-player and the full player held two independent play states. Unified onto a single shell-scoped `BriefPlayerController` (registered in `MainShell.initState`); `TodayController` no longer holds playback state; the hero, mini-player and full player now share one source of truth.
+- **Ticker leak** — the `Timer.periodic` was never cancelled (a manual `Get.put` controller isn't auto-disposed, so `onClose` didn't fire). Now `play/pause/stop` create and tear down the ticker; pausing cancels it.
+- **Bottom padding** — Practice/Profile scroll content now clears the docked mini-player reactively (like Today).
+- **Deferred (reuse-only, low):** extract a shared `DornaActionRow` (practice/saved/around-you/settings rows), a `BriefGradientCard`/`BriefPlayButton`, and a `glassSurface` helper (bottom-nav + mini-player); merge `BriefWaveform`/`AnimatedWaveform`. Fold into the separate lint/simplify pass — do NOT mix into feature work.
+
 ### ☐ Phase K — Keyboard restyle (native, after Phase 0 · verify on macOS)
 Using KeyboardKit 10's styling/theming, restyle the custom keyboard to the new design,
 pulling colors/typography from the tokens where sensible (`keyboard_extension_intro` /

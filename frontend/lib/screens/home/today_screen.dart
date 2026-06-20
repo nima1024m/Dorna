@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/brief/brief_player_controller.dart';
 import '../../controllers/today/today_controller.dart';
 import '../../theme/app_tokens.dart';
 import '../../utils/utils.dart';
@@ -24,6 +25,7 @@ class TodayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Utils.appContext = context;
     final c = Get.find<TodayController>();
+    final brief = Get.find<BriefPlayerController>();
     final tt = Theme.of(context).textTheme;
     final cs = Theme.of(context).colorScheme;
 
@@ -31,7 +33,7 @@ class TodayScreen extends StatelessWidget {
       bottom: false,
       child: Obx(() {
         final empty = c.events.isEmpty;
-        final bottomClear = c.briefStarted.value ? 150.0 : 96.0;
+        final bottomClear = brief.started.value ? 150.0 : 96.0;
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(DornaSpacing.screenMargin, 24,
               DornaSpacing.screenMargin, bottomClear),
@@ -57,7 +59,7 @@ class TodayScreen extends StatelessWidget {
                 durationIcon: empty ? Icons.timer_outlined : null,
                 playOnLeft: !empty,
                 onPlay: () {
-                  c.startBrief();
+                  brief.play();
                   Get.toNamed(BriefPlayerScreen.routeName);
                 },
               ),

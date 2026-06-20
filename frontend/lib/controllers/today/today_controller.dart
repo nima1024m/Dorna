@@ -83,20 +83,4 @@ class TodayController extends GetxController {
   // ── Around you (placeholder; null → location prompt) ──
   final RxnString aroundPlace = RxnString('Central Library');
   static const String aroundTip = 'Tips for starting a chat here';
-
-  // ── Mini-player runtime state (local) ──
-  final RxBool briefStarted = false.obs;
-  final RxBool briefPlaying = false.obs;
-
-  void startBrief() {
-    briefStarted.value = true;
-    briefPlaying.value = true;
-  }
-
-  void toggleMiniPlayer() => briefPlaying.toggle();
-
-  void dismissMiniPlayer() {
-    briefStarted.value = false;
-    briefPlaying.value = false;
-  }
 }

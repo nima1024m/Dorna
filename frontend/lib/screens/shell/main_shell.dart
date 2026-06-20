@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/brief/brief_player_controller.dart';
 import '../../controllers/today/today_controller.dart';
 import '../../widgets/home/brief_mini_player.dart';
 import '../../widgets/ui/dorna_bottom_nav.dart';
@@ -22,7 +23,6 @@ class MainShell extends StatefulWidget {
 
 class _MainShellState extends State<MainShell> {
   int _index = 0;
-  final TodayController _today = Get.put(TodayController());
 
   static const List<Widget> _tabs = [
     TodayScreen(),
@@ -31,7 +31,16 @@ class _MainShellState extends State<MainShell> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    // Shell-scoped controllers shared by the tabs and the mini-player.
+    Get.put(TodayController());
+    Get.put(BriefPlayerController());
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final brief = Get.find<BriefPlayerController>();
     return Scaffold(
       extendBody: true,
       body: IndexedStack(index: _index, children: _tabs),
@@ -39,11 +48,11 @@ class _MainShellState extends State<MainShell> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Obx(
-            () => _today.briefStarted.value
+            () => brief.started.value
                 ? BriefMiniPlayer(
-                    playing: _today.briefPlaying.value,
-                    onToggle: _today.toggleMiniPlayer,
-                    onClose: _today.dismissMiniPlayer,
+                    playing: brief.isPlaying.value,
+                    onToggle: brief.togglePlay,
+                    onClose: brief.stop,
                     onTap: () => Get.toNamed(BriefPlayerScreen.routeName),
                   )
                 : const SizedBox.shrink(),

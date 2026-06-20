@@ -92,6 +92,8 @@ class BriefPlayerController extends GetxController {
 
   static const List<double> speeds = [1.0, 1.25, 1.5];
 
+  /// Whether the brief has been started (drives the shell mini-player).
+  final RxBool started = false.obs;
   final RxInt position = 134.obs; // 2:14
   final RxBool isPlaying = false.obs;
   final RxInt speedIndex = 0.obs;
@@ -108,24 +110,47 @@ class BriefPlayerController extends GetxController {
 
   @override
   void onClose() {
-    _ticker?.cancel();
+    _stopTicker();
     super.onClose();
   }
 
-  void togglePlay() {
-    isPlaying.toggle();
-    if (isPlaying.value) {
-      _ticker ??= Timer.periodic(const Duration(seconds: 1), (_) {
-        if (!isPlaying.value) return;
-        final next = position.value + speed.round();
-        if (next >= totalSeconds) {
-          position.value = totalSeconds;
-          isPlaying.value = false;
-        } else {
-          position.value = next;
-        }
-      });
-    }
+  void _startTicker() {
+    _ticker ??= Timer.periodic(const Duration(seconds: 1), (_) {
+      if (!isPlaying.value) return;
+      final next = position.value + speed.round();
+      if (next >= totalSeconds) {
+        position.value = totalSeconds;
+        pause();
+      } else {
+        position.value = next;
+      }
+    });
+  }
+
+  void _stopTicker() {
+    _ticker?.cancel();
+    _ticker = null;
+  }
+
+  /// Start the brief (from the Today hero) — marks it started and plays.
+  void play() {
+    started.value = true;
+    isPlaying.value = true;
+    _startTicker();
+  }
+
+  void pause() {
+    isPlaying.value = false;
+    _stopTicker();
+  }
+
+  void togglePlay() => isPlaying.value ? pause() : play();
+
+  /// Stop and dismiss the brief (mini-player close).
+  void stop() {
+    _stopTicker();
+    isPlaying.value = false;
+    started.value = false;
   }
 
   void seekFraction(double f) =>
