@@ -30,6 +30,11 @@ import '../screens/settings/contact_us_screen.dart';
 import '../screens/settings/privacy_policy_screen.dart';
 import '../screens/settings/terms_and_privacy_screen.dart';
 import '../screens/settings/terms_screen.dart';
+import '../screens/onboarding/building_brief_screen.dart';
+import '../screens/onboarding/interests_screen.dart';
+import '../screens/onboarding/permissions_screen.dart';
+import '../screens/onboarding/situations_screen.dart';
+import '../screens/onboarding/welcome_screen.dart';
 import '../screens/shell/main_shell.dart';
 import '../screens/splash/splash_screen.dart';
 import '../screens/tones/tones_screen.dart';
@@ -67,6 +72,26 @@ List<GetPage> routes = [
   GetPage(
     name: MainShell.routeName,
     page: () => const MainShell(),
+  ),
+  GetPage(
+    name: WelcomeScreen.routeName,
+    page: () => const WelcomeScreen(),
+  ),
+  GetPage(
+    name: InterestsScreen.routeName,
+    page: () => const InterestsScreen(),
+  ),
+  GetPage(
+    name: SituationsScreen.routeName,
+    page: () => const SituationsScreen(),
+  ),
+  GetPage(
+    name: PermissionsScreen.routeName,
+    page: () => const PermissionsScreen(),
+  ),
+  GetPage(
+    name: BuildingBriefScreen.routeName,
+    page: () => const BuildingBriefScreen(),
   ),
   GetPage(
     name: LanguagesScreen.routeName,

@@ -185,8 +185,11 @@ design across most screens and makes dark mode correct.
 **Phase 2 done 2026-06-20.**
 
 ### ☐ Phases 3–9 — Screen redesigns (one checkbox per screen)
-**Phase 3 — Onboarding flow** (`welcome → interests → situations → calendar/location → building`)
-- [ ] welcome_to_dorna · [ ] what_are_you_into · [ ] what_do_you_want_to_talk_about · [ ] let_dorna_learn_your_day · [ ] building/brief loader. Commit: `redesign(onboarding): …`
+**✅ Phase 3 — Onboarding flow — DONE 2026-06-20** (`welcome → interests → situations → permissions → building`)
+- [x] welcome_to_dorna · [x] what_are_you_into (interests) · [x] what_do_you_want_to_talk_about (situations) · [x] let_dorna_learn_your_day (permissions) · [x] building/brief loader.
+- Built natively against the theme: `OnboardingController` (interest/situation/perm state + design lists), `OnboardingProgressDots`, selectable chips + situation cards, brand-gradient CTAs, `city_morning.png` hero asset, animated "building" loader.
+- [~] Flow is internally navigable (welcome → … → building → `MainShell`) but **not yet the live entry** (splash still → `HomeScreen`) and selections aren't persisted — wire both when the backend taxonomy + calendar/location features land (F-phases). The old `onboarding_screen.dart` carousel is superseded (delete once the new flow goes live).
+- Commit: `redesign(onboarding): welcome → building flow`
 
 **Phase 4 — Auth flow restyle** (D5)
 - [ ] auth landing · [ ] sign in · [ ] sign up · [ ] email verification · [ ] reset (email/otp/form) · [ ] profile · [ ] change password. Commit: `redesign(auth): …`
