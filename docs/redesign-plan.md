@@ -276,7 +276,10 @@ controller + screen + widgets against the real endpoint.** Proposed order:
 - [ ] **F3 Around You / location** (`around_you`, `coffee_shop_details`) — geolocation → nearby venues + scene starter phrases + maps/places provider (D9). *Backend: NEW.*
 - [ ] **F4 Conversation practice + feedback** (`talk_with_dorna_live_practice`, `nice_chat…level_up`) — STT + scene-aware LLM dialogue + TTS + correction/pronunciation feedback. *Backend: NEW + likely realtime; largest slice.*
 - [ ] **F5 Calendar + networking event prep** (`networking_event_prep`, `networking_ice_breakers`, practice deck/hub) — calendar OAuth (D10) → event-aware prep + ice-breaker decks. *Backend: NEW.*
-- [ ] **F6 Profile progress / streaks** (`you_profile_progress`) — streaks, stats (phrases/conversations/briefs), weak-area rollups from insights + keyboard usage. *Backend: PARTIAL→extend.*
+- [x] **F6 Profile progress / streaks** — DONE 2026-06-20 (backend + Flutter; seeded sample data).
+  - *Backend:* `UserStats` model (per-user streak + counters); service (`get_or_create_stats` seeds sample 6-day-streak / 24-8-12, **real streak logic** via `record_activity`, `increment_counter` hooks for other features, `build_summary` aggregating saved-phrase count + weak-areas from `UserLearningInsights`); router `/v1/stats` (GET `/me`, POST `/activity`); Alembic `c2d4e6f8a0b1`; 4 tests. Verified: `alembic heads`=c2d4e6f8a0b1, suite **113 passed**.
+  - *Flutter:* `ProfileProgressController` now fetches `GET /v1/stats/me` and pings `POST /v1/stats/activity` on app open (advances the streak), falling back to sample values if undeployed. Profile streak/stats/weak-areas are now real. Verified: analyze 0 errors, tests pass, apk green.
+  - ⚠️ **Owner step:** `make upgrade` + deploy. Counters increment as F2/F4 ship (they call `increment_counter`).
 - [ ] **F7 Push notifications** (`notification`) — event-triggered deep-linked pushes. *Backend + Firebase Messaging (currently only firebase_core).*
 - [ ] **F8 Subscription/billing** (Free→Upgrade) — only if in scope (D11).
 

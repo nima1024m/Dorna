@@ -22,3 +22,4 @@ from .topic_podcast_script import TopicPodcastScript
 from .topic_article import TopicArticle
 from .phrase import Phrase
 from .user_saved_phrase import UserSavedPhrase
+from .user_stats import UserStats
