@@ -65,20 +65,11 @@ class TodayController extends GetxController {
   static const String weatherLabel = 'Sunny';
   static const IconData weatherIcon = Icons.wb_sunny_rounded;
 
-  // ── Plan (placeholder; empty list → welcome/empty state) ──
-  final RxList<PlanEvent> events = <PlanEvent>[
-    const PlanEvent(
-        id: 'networking',
-        time: '5:00 PM',
-        title: 'Networking event',
-        kind: 'networking'),
-    const PlanEvent(
-        id: 'coffee',
-        time: '7:30 PM',
-        title: 'Coffee with Sara',
-        kind: 'coffee',
-        dotAccent: true),
-  ].obs;
+  // ── Plan ──
+  // Empty by default → the Today hub shows the "welcome / no events yet" state
+  // for a new or calendar-disconnected user (matches the design's today_welcome).
+  // Real events come from the calendar (F5); see TodayScreen.
+  final RxList<PlanEvent> events = <PlanEvent>[].obs;
 
   // ── Around you (placeholder; null → location prompt) ──
   final RxnString aroundPlace = RxnString('Central Library');

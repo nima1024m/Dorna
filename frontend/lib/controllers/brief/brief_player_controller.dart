@@ -140,6 +140,12 @@ class BriefPlayerController extends GetxController {
   final RxSet<String> savedPhrases = <String>{}.obs;
 
   Timer? _ticker;
+  bool _seeking = false;
+
+  /// While the user drags the scrubber, the ticker must not advance position
+  /// (otherwise the thumb fights the drag).
+  void beginSeek() => _seeking = true;
+  void endSeek() => _seeking = false;
 
   int get currentIndex => segments.isEmpty
       ? 0
@@ -156,15 +162,17 @@ class BriefPlayerController extends GetxController {
   }
 
   /// Pull today's generated brief; on success replace the placeholder segments.
-  /// On 202 (generating) / 404 / error, keep the placeholder set.
-  Future<void> fetchBrief() async {
+  /// On 202 the brief is still generating — poll a few times before giving up.
+  /// On 404 / error, keep the placeholder set.
+  Future<void> fetchBrief({int attempt = 0}) async {
     try {
       final r = await _apiClient.request(
         url: 'v1/daily-brief/today',
         method: ApiMethod.get,
         skipErrorStatusCodes: const [202, 404],
       );
-      if (r != null && r.statusCode == 200 && r.data is Map) {
+      if (r == null) return;
+      if (r.statusCode == 200 && r.data is Map) {
         final content = (r.data['content'] as Map?) ?? const {};
         final segs = (content['segments'] as List?) ?? const [];
         final parsed = segs
@@ -178,6 +186,10 @@ class BriefPlayerController extends GetxController {
         }
         final d = content['date']?.toString();
         if (d != null && d.isNotEmpty) dateLabel.value = d;
+      } else if (r.statusCode == 202 && attempt < 4) {
+        // Still generating — retry shortly (the worker finishes async).
+        await Future.delayed(const Duration(seconds: 4));
+        await fetchBrief(attempt: attempt + 1);
       }
     } catch (_) {
       // keep placeholder segments
@@ -192,7 +204,7 @@ class BriefPlayerController extends GetxController {
 
   void _startTicker() {
     _ticker ??= Timer.periodic(const Duration(seconds: 1), (_) {
-      if (!isPlaying.value) return;
+      if (!isPlaying.value || _seeking) return;
       final next = position.value + speed.round();
       if (next >= totalSeconds) {
         position.value = totalSeconds;

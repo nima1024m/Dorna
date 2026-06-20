@@ -27,7 +27,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
     final args = Get.arguments;
     final scene = (args is Map && args['scene'] is String)
         ? args['scene'] as String
-        : 'small_talk';
+        : ConversationScenes.smallTalk;
     _c.start(scene).then((_) => _scrollToEnd());
   }
 

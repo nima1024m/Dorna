@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from sqlalchemy import delete, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import Phrase, UserSavedPhrase
@@ -54,7 +55,11 @@ async def save_phrase(db: AsyncSession, user_id: int, phrase_id: int) -> None:
     )
     if existing.scalar_one_or_none() is None:
         db.add(UserSavedPhrase(user_id=user_id, phrase_id=phrase_id))
-        await db.commit()
+        try:
+            await db.commit()
+        except IntegrityError:
+            # Concurrent save of the same phrase — already there; idempotent.
+            await db.rollback()
 
 
 async def unsave_phrase(db: AsyncSession, user_id: int, phrase_id: int) -> None:

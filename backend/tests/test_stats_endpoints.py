@@ -1,6 +1,10 @@
-from datetime import date, timedelta
+from datetime import datetime, timedelta, timezone
 
 import pytest
+
+
+def _today():
+    return datetime.now(timezone.utc).date()
 
 from app.main import app
 from app.api.deps import get_db
@@ -70,7 +74,7 @@ def _reset_overrides():
 
 @pytest.mark.anyio
 async def test_get_stats_existing(client):
-    stats = _DummyStats(last_active_on=date.today())
+    stats = _DummyStats(last_active_on=_today())
     fake_session = _FakeSession(
         results=[
             _FakeResult(scalar=stats),  # get_or_create
@@ -119,7 +123,7 @@ async def test_get_stats_creates_when_missing(client):
 @pytest.mark.anyio
 async def test_activity_increments_streak(client):
     stats = _DummyStats(
-        last_active_on=date.today() - timedelta(days=1), streak_days=6, longest_streak=6
+        last_active_on=_today() - timedelta(days=1), streak_days=6, longest_streak=6
     )
     fake_session = _FakeSession(
         results=[
@@ -144,7 +148,7 @@ async def test_activity_increments_streak(client):
 
 @pytest.mark.anyio
 async def test_activity_same_day_noop(client):
-    stats = _DummyStats(last_active_on=date.today(), streak_days=6)
+    stats = _DummyStats(last_active_on=_today(), streak_days=6)
     fake_session = _FakeSession(
         results=[
             _FakeResult(scalar=stats),  # record_activity get_or_create

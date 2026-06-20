@@ -41,7 +41,9 @@ class SettingsScreen extends StatelessWidget {
     Utils.appContext = context;
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
-    final hub = Get.put(SettingsHubController());
+    final hub = Get.isRegistered<SettingsHubController>()
+        ? Get.find<SettingsHubController>()
+        : Get.put(SettingsHubController());
     final settings = Get.find<SettingsController>();
     final auth = Get.find<AuthController>();
 

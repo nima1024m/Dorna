@@ -2,6 +2,17 @@ import 'package:get/get.dart';
 
 import '../../config/api_client.dart';
 
+/// The conversation scene ids the backend understands. Must stay in sync with
+/// the openers in `backend/app/services/conversation.py` (`_OPENERS`).
+class ConversationScenes {
+  ConversationScenes._();
+  static const String smallTalk = 'small_talk';
+  static const String networking = 'networking';
+  static const String cafe = 'cafe';
+  static const String work = 'work';
+  static const String neighbours = 'neighbours';
+}
+
 class ConversationMessage {
   final String role; // 'user' | 'assistant'
   final String text;
@@ -28,7 +39,7 @@ class ConversationController extends GetxController {
   final RxBool isStarting = false.obs;
   final RxBool isSending = false.obs;
   final RxnString sessionId = RxnString();
-  String scene = 'small_talk';
+  String scene = ConversationScenes.smallTalk;
 
   Future<void> start(String scene) async {
     this.scene = scene;
@@ -61,6 +72,7 @@ class ConversationController extends GetxController {
     messages.add(ConversationMessage(role: 'user', text: t));
     final userIndex = messages.length - 1;
     isSending.value = true;
+    var ok = false;
     try {
       final r = await _apiClient.request(
         url: 'v1/conversation/$id/turn',
@@ -69,6 +81,7 @@ class ConversationController extends GetxController {
         skipErrorStatusCodes: const [404],
       );
       if (r != null && r.statusCode == 200 && r.data is Map) {
+        ok = true;
         final correction = (r.data['correction']?.toString() ?? '');
         final tip = (r.data['tip']?.toString() ?? '');
         if (correction.isNotEmpty || tip.isNotEmpty) {
@@ -82,6 +95,12 @@ class ConversationController extends GetxController {
       }
     } catch (_) {
     } finally {
+      // Don't leave the user's message hanging with no response.
+      if (!ok) {
+        messages.add(const ConversationMessage(
+            role: 'assistant',
+            text: "Sorry — I lost the thread there. Mind trying that again?"));
+      }
       isSending.value = false;
     }
   }

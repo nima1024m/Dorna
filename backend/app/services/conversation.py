@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import uuid
+
 from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -41,9 +43,13 @@ async def start_session(
 async def _load_session(
     db: AsyncSession, session_id: str, user_id: int
 ) -> ConversationSession:
+    try:
+        sid = uuid.UUID(str(session_id))
+    except (ValueError, TypeError):
+        raise HTTPException(status_code=404, detail="Conversation not found")
     res = await db.execute(
         select(ConversationSession).where(
-            ConversationSession.id == session_id,
+            ConversationSession.id == sid,
             ConversationSession.user_id == user_id,
         )
     )
@@ -75,13 +81,10 @@ async def add_turn(
 ) -> dict:
     session = await _load_session(db, session_id, user_id)
 
-    db.add(
-        ConversationTurn(
-            session_id=session.id, user_id=user_id, role="user", text=user_text
-        )
-    )
-    await db.commit()
-
+    # Build history from the prior turns, call the model, then persist both the
+    # user turn and the reply in ONE commit. If the AI call fails nothing is
+    # committed — so a failed request leaves no dangling user turn and a retry
+    # won't duplicate it.
     history = _history_text(await _turns(db, session_id))
     result = await AI.conversation_turn(
         scene=session.scene, history=history, user_message=user_text
@@ -91,6 +94,11 @@ async def add_turn(
     tip = (result.get("tip") or "").strip() or None
     feedback = {"correction": correction, "tip": tip} if (correction or tip) else None
 
+    db.add(
+        ConversationTurn(
+            session_id=session.id, user_id=user_id, role="user", text=user_text
+        )
+    )
     db.add(
         ConversationTurn(
             session_id=session.id,

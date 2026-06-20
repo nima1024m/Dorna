@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import datetime, timedelta, timezone
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -22,11 +22,16 @@ _SAMPLE_WEAK_AREAS = ["articles (a/an)", "past tense"]
 COUNTERS = ("phrases_learned", "conversations", "briefs_heard")
 
 
+def _today():
+    """UTC date, to match the daily-brief day boundary."""
+    return datetime.now(timezone.utc).date()
+
+
 async def get_or_create_stats(db: AsyncSession, user_id: int) -> UserStats:
     res = await db.execute(select(UserStats).where(UserStats.user_id == user_id))
     stats = res.scalar_one_or_none()
     if stats is None:
-        stats = UserStats(user_id=user_id, last_active_on=date.today(), **_SEED)
+        stats = UserStats(user_id=user_id, last_active_on=_today(), **_SEED)
         db.add(stats)
         await db.commit()
     return stats
@@ -35,7 +40,7 @@ async def get_or_create_stats(db: AsyncSession, user_id: int) -> UserStats:
 async def record_activity(db: AsyncSession, user_id: int) -> UserStats:
     """Update the daily streak for an app-open ping."""
     stats = await get_or_create_stats(db, user_id)
-    today = date.today()
+    today = _today()
     last = stats.last_active_on
     if last == today:
         return stats

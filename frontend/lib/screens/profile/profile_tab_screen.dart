@@ -6,6 +6,7 @@ import '../../controllers/phrase/phrase_controller.dart';
 import '../../controllers/profile/profile_progress_controller.dart';
 import '../../theme/app_tokens.dart';
 import '../../utils/utils.dart';
+import '../../widgets/ui/dorna_action_row.dart';
 import '../../widgets/ui/dorna_card.dart';
 import '../../widgets/ui/dorna_pill.dart';
 import '../../widgets/ui/user_avatar.dart';
@@ -21,7 +22,7 @@ class ProfileTabScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Utils.appContext = context;
-    final c = Get.put(ProfileProgressController());
+    final c = Get.find<ProfileProgressController>();
     final brief = Get.find<BriefPlayerController>();
     final phraseC = Get.find<PhraseController>();
     final cs = Theme.of(context).colorScheme;
@@ -121,38 +122,12 @@ class ProfileTabScreen extends StatelessWidget {
                 )),
             const SizedBox(height: DornaSpacing.xl),
             // Saved phrases
-            Obx(() => DornaCard(
+            Obx(() => DornaActionRow(
+                  icon: Icons.bookmark,
+                  title: 'Saved phrases',
+                  subtitle: '${phraseC.saved.length} phrases collected',
+                  tileSize: 46,
                   onTap: () => Get.toNamed(SavedPhrasesScreen.routeName),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 46,
-                        height: 46,
-                        decoration: BoxDecoration(
-                          color: cs.surfaceContainer,
-                          borderRadius: BorderRadius.circular(DornaRadii.md),
-                        ),
-                        child: Icon(Icons.bookmark, color: cs.primary),
-                      ),
-                      const SizedBox(width: DornaSpacing.md),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Saved phrases',
-                                style: tt.bodyLarge?.copyWith(
-                                    color: cs.onSurface,
-                                    fontWeight: FontWeight.w700)),
-                            const SizedBox(height: 2),
-                            Text('${phraseC.saved.length} phrases collected',
-                                style: tt.bodyMedium
-                                    ?.copyWith(color: cs.onSurfaceVariant)),
-                          ],
-                        ),
-                      ),
-                      Icon(Icons.chevron_right, color: cs.outlineVariant),
-                    ],
-                  ),
                 )),
           ],
         ),

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/brief/brief_player_controller.dart';
+import '../../controllers/conversation/conversation_controller.dart';
 import '../../theme/app_tokens.dart';
 import '../../utils/utils.dart';
-import '../../widgets/ui/dorna_card.dart';
+import '../../widgets/ui/dorna_action_row.dart';
 import '../../widgets/ui/toast.dart';
 import '../conversation/conversation_screen.dart';
 import '../phrase/phrase_library_screen.dart';
@@ -61,48 +62,21 @@ class PracticeScreen extends StatelessWidget {
                 style: tt.bodyLarge?.copyWith(color: cs.onSurfaceVariant)),
             const SizedBox(height: DornaSpacing.xl),
             for (final item in _items) ...[
-              DornaCard(
+              DornaActionRow(
+                icon: item.$1,
+                title: item.$2,
+                subtitle: item.$3,
                 onTap: () {
                   switch (item.$2) {
                     case 'Phrase decks':
                       Get.toNamed(PhraseLibraryScreen.routeName);
                     case 'Talk with Dorna':
                       Get.toNamed(ConversationScreen.routeName,
-                          arguments: {'scene': 'small_talk'});
+                          arguments: {'scene': ConversationScenes.smallTalk});
                     default:
                       showCustomToast('${item.$2} is coming soon', context);
                   }
                 },
-                child: Row(
-                  children: [
-                    Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: cs.surfaceContainer,
-                        borderRadius: BorderRadius.circular(DornaRadii.md),
-                      ),
-                      child: Icon(item.$1, color: cs.primary, size: 26),
-                    ),
-                    const SizedBox(width: DornaSpacing.md),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(item.$2,
-                              style: tt.bodyLarge?.copyWith(
-                                  color: cs.onSurface,
-                                  fontWeight: FontWeight.w700)),
-                          const SizedBox(height: 2),
-                          Text(item.$3,
-                              style: tt.bodyMedium
-                                  ?.copyWith(color: cs.onSurfaceVariant)),
-                        ],
-                      ),
-                    ),
-                    Icon(Icons.chevron_right, color: cs.outlineVariant),
-                  ],
-                ),
               ),
               const SizedBox(height: DornaSpacing.md),
             ],

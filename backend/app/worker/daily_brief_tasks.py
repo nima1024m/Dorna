@@ -12,6 +12,7 @@ from contextlib import asynccontextmanager
 from datetime import date, datetime, timezone
 
 from sqlalchemy import select, update
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 import app.core.ai as AI
@@ -60,8 +61,19 @@ async def _get_or_create(db: AsyncSession, user_id: int, brief_date: date) -> Da
             user_id=user_id, brief_date=brief_date, status=DailyBriefStatus.QUEUED
         )
         db.add(brief)
-        await db.commit()
-        await db.refresh(brief)
+        try:
+            await db.commit()
+            await db.refresh(brief)
+        except IntegrityError:
+            # Another worker created the (user, date) brief first — load theirs.
+            await db.rollback()
+            res = await db.execute(
+                select(DailyBrief).where(
+                    DailyBrief.user_id == user_id,
+                    DailyBrief.brief_date == brief_date,
+                )
+            )
+            brief = res.scalar_one()
     return brief
 
 

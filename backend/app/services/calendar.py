@@ -10,6 +10,7 @@ Tokens are encrypted at rest when `CALENDAR_TOKEN_ENC_KEY` (a Fernet key) is set
 from __future__ import annotations
 
 import logging
+import uuid
 from datetime import datetime, timedelta, timezone
 
 import httpx
@@ -144,6 +145,8 @@ async def _google_access_token(db: AsyncSession, conn: CalendarConnection) -> st
     conn.token_expiry = datetime.now(UTC) + timedelta(
         seconds=int(tok.get("expires_in", 3600))
     )
+    # Commit the refreshed token immediately so it isn't lost if a later step
+    # (e.g. the events fetch) fails.
     await db.commit()
     return _dec(conn.access_token) or ""
 
@@ -254,9 +257,13 @@ async def list_upcoming_events(
 
 
 async def get_event_prep(db: AsyncSession, user_id: int, event_id: str) -> dict:
+    try:
+        eid = uuid.UUID(str(event_id))
+    except (ValueError, TypeError):
+        raise HTTPException(status_code=404, detail="Event not found")
     res = await db.execute(
         select(CalendarEvent).where(
-            CalendarEvent.id == event_id, CalendarEvent.user_id == user_id
+            CalendarEvent.id == eid, CalendarEvent.user_id == user_id
         )
     )
     event = res.scalar_one_or_none()

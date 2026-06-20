@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../controllers/brief/brief_player_controller.dart';
 import '../../controllers/calendar/calendar_controller.dart';
 import '../../controllers/phrase/phrase_controller.dart';
+import '../../controllers/profile/profile_progress_controller.dart';
 import '../../controllers/today/today_controller.dart';
 import '../../services/push_service.dart';
 import '../../widgets/home/brief_mini_player.dart';
@@ -41,6 +42,7 @@ class _MainShellState extends State<MainShell> {
     Get.put(BriefPlayerController());
     Get.put(PhraseController());
     Get.put(CalendarController());
+    Get.put(ProfileProgressController());
     // Register for push now that the user is authenticated (F7).
     PushService.instance.init();
   }

@@ -49,7 +49,7 @@ class TodayScreen extends StatelessWidget {
         // Real calendar events take precedence over the placeholder plan.
         final realEvents =
             cal.events.where((e) => (e.title ?? '').isNotEmpty).toList();
-        final empty = realEvents.isEmpty && c.events.isEmpty;
+        final empty = realEvents.isEmpty;
         final bottomClear = brief.started.value ? 150.0 : 96.0;
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(DornaSpacing.screenMargin, 24,
@@ -121,7 +121,7 @@ class TodayScreen extends StatelessWidget {
                   ctaLabel: 'Connect calendar',
                   onCta: () => _comingSoon(context, 'Calendar connection'),
                 )
-              else if (realEvents.isNotEmpty)
+              else
                 Column(
                   children: [
                     for (final e in realEvents) ...[
@@ -132,21 +132,6 @@ class TodayScreen extends StatelessWidget {
                         onTap: () => _showEventPrep(context, cal, e.id),
                       ),
                       if (e != realEvents.last)
-                        const SizedBox(height: DornaSpacing.sm),
-                    ],
-                  ],
-                )
-              else
-                Column(
-                  children: [
-                    for (final e in c.events) ...[
-                      PlanEventTile(
-                        time: e.time,
-                        title: e.title,
-                        dotAccent: e.dotAccent,
-                        onTap: () => _comingSoon(context, 'Event prep'),
-                      ),
-                      if (e != c.events.last)
                         const SizedBox(height: DornaSpacing.sm),
                     ],
                   ],
