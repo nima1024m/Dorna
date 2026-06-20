@@ -81,6 +81,8 @@ class Settings(BaseSettings):
     GOOGLE_APPLICATION_CREDENTIALS_CLIENT_X509_CERT_URL: Optional[str] = None
     GOOGLE_APPLICATION_CREDENTIALS_UNIVERSE_DOMAIN: Optional[str] = None
     GOOGLE_APPLICATION_CREDENTIALS: Optional[str] = None
+    # FCM push: reuses the Google service account above; falls back to its project id.
+    FCM_PROJECT_ID: Optional[str] = None
     RESET_TTL_MIN: Optional[int] = None
     BREVO_API_KEY: Optional[str] = None
     BREVO_DORNA_FORGET_PASS_TEMPLATE_ID: Optional[int] = None
