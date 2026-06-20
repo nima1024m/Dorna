@@ -9,6 +9,9 @@
 .tags*
 **/.vagrant/
 **/DerivedData/
+# Xcode build output (xcodebuild writes ios/build/; Flutter's own build
+# output lives in frontend/build/, ignored by ../.gitignore's /build/).
+build/
 Icon?
 **/Pods/
 **/.symlinks/
