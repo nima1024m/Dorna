@@ -268,7 +268,10 @@ KeyboardToolbarView, ToneView, GrammarView, TranslationView, Layout/*).
 ### ☐ New-feature vertical slices (backend-first; prioritize per D6)
 Each slice: **API contract → backend model + endpoint + Alembic migration → frontend
 controller + screen + widgets against the real endpoint.** Proposed order:
-- [ ] **F1 Phrase library + saved phrases** (`phrase_spotlight`, `saved`) — phrase corpus (IPA, Persian gloss, "when to use", TTS) + per-user save. *Backend: NEW models/endpoints/migration.*
+- [x] **F1 Phrase library + saved phrases** — DONE 2026-06-20 (backend + Flutter; needs `make upgrade` + deploy to go live).
+  - *Backend:* models `Phrase` + `UserSavedPhrase`; service (list w/ category/search + per-user `saved` flag, idempotent save, unsave); router `/v1/phrases` (GET list, GET `/saved`, POST/DELETE `/{id}/save`); Alembic migration `f1a9b3c7d2e4` (head `b2a7f3c19d40`→) creating both tables + seeding 12 everyday phrases (EN + IPA + Persian gloss + when-to-use + example); 4 endpoint tests. Verified: app imports, `alembic heads`=f1a9b3c7d2e4, full suite **109 passed**. (TTS-of-phrase is a later add.)
+  - *Flutter:* `Phrase` model, `PhraseController` (shell-scoped; fetch/save/unsave, optimistic, degrades gracefully if endpoint absent), `PhraseCard`, `PhraseLibraryScreen` (Practice → "Phrase decks") + `SavedPhrasesScreen` (Profile → "Saved phrases"); Profile saved-count is now real. Verified: analyze 0 errors, tests pass, apk green.
+  - ⚠️ **Owner step to go live:** `cd backend && make upgrade` (apply the migration) then deploy the API; until then the Flutter screens show empty states (no crash).
 - [ ] **F2 Daily brief generation + scheduling** (`building`, brief player) — extend podcast infra to a scheduled, segmented daily brief (weather/news/phrases/challenge) + EN+Persian transcript + "brief time". *Backend: PARTIAL→extend; Celery beat schedule.*
 - [ ] **F3 Around You / location** (`around_you`, `coffee_shop_details`) — geolocation → nearby venues + scene starter phrases + maps/places provider (D9). *Backend: NEW.*
 - [ ] **F4 Conversation practice + feedback** (`talk_with_dorna_live_practice`, `nice_chat…level_up`) — STT + scene-aware LLM dialogue + TTS + correction/pronunciation feedback. *Backend: NEW + likely realtime; largest slice.*

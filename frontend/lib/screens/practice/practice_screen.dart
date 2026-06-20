@@ -6,6 +6,7 @@ import '../../theme/app_tokens.dart';
 import '../../utils/utils.dart';
 import '../../widgets/ui/dorna_card.dart';
 import '../../widgets/ui/toast.dart';
+import '../phrase/phrase_library_screen.dart';
 
 /// The **Practice** tab — a hub of conversation/phrase features. The deep
 /// features (live AI conversation, decks, event prep) are F4/F5; for now this
@@ -60,7 +61,9 @@ class PracticeScreen extends StatelessWidget {
             const SizedBox(height: DornaSpacing.xl),
             for (final item in _items) ...[
               DornaCard(
-                onTap: () => showCustomToast('${item.$2} is coming soon', context),
+                onTap: () => item.$2 == 'Phrase decks'
+                    ? Get.toNamed(PhraseLibraryScreen.routeName)
+                    : showCustomToast('${item.$2} is coming soon', context),
                 child: Row(
                   children: [
                     Container(

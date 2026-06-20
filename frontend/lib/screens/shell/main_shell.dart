@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/brief/brief_player_controller.dart';
+import '../../controllers/phrase/phrase_controller.dart';
 import '../../controllers/today/today_controller.dart';
 import '../../widgets/home/brief_mini_player.dart';
 import '../../widgets/ui/dorna_bottom_nav.dart';
@@ -36,6 +37,7 @@ class _MainShellState extends State<MainShell> {
     // Shell-scoped controllers shared by the tabs and the mini-player.
     Get.put(TodayController());
     Get.put(BriefPlayerController());
+    Get.put(PhraseController());
   }
 
   @override

@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/brief/brief_player_controller.dart';
+import '../../controllers/phrase/phrase_controller.dart';
 import '../../controllers/profile/profile_progress_controller.dart';
 import '../../theme/app_tokens.dart';
 import '../../utils/utils.dart';
 import '../../widgets/ui/dorna_card.dart';
 import '../../widgets/ui/dorna_pill.dart';
-import '../../widgets/ui/toast.dart';
 import '../../widgets/ui/user_avatar.dart';
 import '../onboarding/interests_screen.dart';
+import '../phrase/saved_phrases_screen.dart';
 import '../settings/settings_screen.dart';
 
 /// The redesigned **Profile** tab — identity, streak, progress stats, weak
@@ -22,6 +23,7 @@ class ProfileTabScreen extends StatelessWidget {
     Utils.appContext = context;
     final c = Get.put(ProfileProgressController());
     final brief = Get.find<BriefPlayerController>();
+    final phraseC = Get.find<PhraseController>();
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
 
@@ -120,8 +122,7 @@ class ProfileTabScreen extends StatelessWidget {
             const SizedBox(height: DornaSpacing.xl),
             // Saved phrases
             Obx(() => DornaCard(
-                  onTap: () =>
-                      showCustomToast('Saved phrases is coming soon', context),
+                  onTap: () => Get.toNamed(SavedPhrasesScreen.routeName),
                   child: Row(
                     children: [
                       Container(
@@ -143,7 +144,7 @@ class ProfileTabScreen extends StatelessWidget {
                                     color: cs.onSurface,
                                     fontWeight: FontWeight.w700)),
                             const SizedBox(height: 2),
-                            Text('${c.savedCount.value} phrases collected',
+                            Text('${phraseC.saved.length} phrases collected',
                                 style: tt.bodyMedium
                                     ?.copyWith(color: cs.onSurfaceVariant)),
                           ],

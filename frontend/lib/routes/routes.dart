@@ -14,6 +14,8 @@ import '../screens/auth/sign_in_screen.dart';
 import '../screens/auth/sign_up_screen.dart';
 import '../screens/brief/brief_player_screen.dart';
 import '../screens/instruction/instruction_collect_data_screen.dart';
+import '../screens/phrase/phrase_library_screen.dart';
+import '../screens/phrase/saved_phrases_screen.dart';
 import '../screens/instruction/instruction_first_screen.dart';
 import '../screens/instruction/instruction_second_screen.dart';
 import '../screens/keyboard_debug_screen.dart';
@@ -82,6 +84,14 @@ List<GetPage> routes = [
   GetPage(
     name: SettingsScreen.routeName,
     page: () => const SettingsScreen(),
+  ),
+  GetPage(
+    name: PhraseLibraryScreen.routeName,
+    page: () => const PhraseLibraryScreen(),
+  ),
+  GetPage(
+    name: SavedPhrasesScreen.routeName,
+    page: () => const SavedPhrasesScreen(),
   ),
   GetPage(
     name: WelcomeScreen.routeName,
