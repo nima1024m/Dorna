@@ -30,6 +30,7 @@ import '../screens/settings/contact_us_screen.dart';
 import '../screens/settings/privacy_policy_screen.dart';
 import '../screens/settings/terms_and_privacy_screen.dart';
 import '../screens/settings/terms_screen.dart';
+import '../screens/shell/main_shell.dart';
 import '../screens/splash/splash_screen.dart';
 import '../screens/tones/tones_screen.dart';
 import '../screens/webview/webview_screen.dart';
@@ -62,6 +63,10 @@ List<GetPage> routes = [
   GetPage(
     name: HomeScreen.routeName,
     page: () => const HomeScreen(),
+  ),
+  GetPage(
+    name: MainShell.routeName,
+    page: () => const MainShell(),
   ),
   GetPage(
     name: LanguagesScreen.routeName,
@@ -154,10 +159,6 @@ List<GetPage> routes = [
   GetPage(
     name: LearningGoalsScreen.routeName,
     page: () => LearningGoalsScreen(),
-  ),
-  GetPage(
-    name: PodcastOnboardingScreen.routeName,
-    page: () => const PodcastOnboardingScreen(),
   ),
   GetPage(
     name: PreparingBriefingScreen.routeName,

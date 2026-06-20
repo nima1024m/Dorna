@@ -175,11 +175,14 @@ design across most screens and makes dark mode correct.
 
 **Phase 1 done 2026-06-20.**
 
-### ☐ Phase 2 — App shell / IA / navigation
-- [ ] Build the 3-tab scaffold (Today/Practice/Profile, glass bottom nav, active pill) per D4.
-- [ ] Rework `lib/routes/routes.dart`: tab roots vs pushed full-screen; **fix the duplicate `PodcastOnboardingScreen` GetPage registration**; add placeholders for new routes.
-- [ ] Verify: analyze; navigation works.
+### ✅ Phase 2 — App shell / IA / navigation — DONE 2026-06-20
+- [x] Glass 3-tab bottom nav `lib/widgets/ui/dorna_bottom_nav.dart` (Today/Practice/Profile, active `primaryContainer` pill, `BackdropFilter` blur) + `MainShell` `lib/screens/shell/main_shell.dart` (IndexedStack of placeholder tabs, route `/main`). First "new primitive".
+- [x] `routes.dart`: registered `MainShell`; **removed the duplicate `PodcastOnboardingScreen` GetPage**.
+- [~] Splash/onboarding still route to the existing `HomeScreen` so the branch stays runnable; the switch to `MainShell` happens when the Today hub lands (Phase 6). Tab bodies are placeholders until Phases 6 / F5 / 9.
+- [x] Verify: `flutter analyze` **0 errors** (307 lint-debt, −1), `flutter test` pass, `flutter build apk` green.
 - Commit: `feat(nav): 3-tab app shell + route restructure`
+
+**Phase 2 done 2026-06-20.**
 
 ### ☐ Phases 3–9 — Screen redesigns (one checkbox per screen)
 **Phase 3 — Onboarding flow** (`welcome → interests → situations → calendar/location → building`)
