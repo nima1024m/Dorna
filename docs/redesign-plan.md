@@ -127,7 +127,7 @@ as targets, confirm before applying. **If any platform can't build cleanly, STOP
 
 #### ✅ A2 — Android (Gradle / AGP / Kotlin / SDK) — DONE 2026-06-20 (build green)
 - [x] Gradle **8.4 → 9.1.0**, AGP **8.3.0 → 9.0.1**, Kotlin **2.1.0 → 2.3.20** — matched Flutter 3.44's blessed template set (not absolute-latest 9.2/9.6/2.4) for compatibility.
-- [x] compileSdk/targetSdk **35 → 36** (Play requirement). **minSdk 23 → 24** (approved by owner — Flutter 3.44's default; drops Android 6.0/API 23; set as explicit literal so the migrator / a future Flutter won't move it again).
+- [x] compileSdk/targetSdk **35 → 36** (Play requirement). **minSdk** tracks **`flutter.minSdkVersion`** (owner-approved — currently API 24 / Android 7.0; auto-follows Flutter's recommended floor, no manual bumps).
 - [x] AGP-9 migrations: removed redundant legacy `buildscript`; `buildDir`→`layout.buildDirectory`; `lintOptions`→`lint`; `kotlinOptions`→`kotlin{compilerOptions}`; google-services 4.3.8→4.4.2 via plugins DSL; proguard `-android`→`-android-optimize`; desugar 2.0.4→2.1.4; added `newDsl=false`/`builtInKotlin=false` + jvmargs→8G (per Flutter 3.44 template); subproject `compileSdk 36` override (old plugins, e.g. flutter_keyboard_visibility @ android-31); `/build/` added to android/.gitignore.
 - [x] Verify: `flutter build apk --debug` **green** (app-debug.apk, 166 MB).
 - [~] Follow-up: "Built-in Kotlin" deprecation **warning** — some plugins still apply the Kotlin Gradle plugin (will error in a future Flutter); works now via `builtInKotlin=false`. Migrate/replace those plugins later.

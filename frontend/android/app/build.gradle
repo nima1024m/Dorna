@@ -45,10 +45,10 @@ android {
 
     defaultConfig {
         applicationId "com.dorna.app"
-        // minSdk raised 23 -> 24 with the Flutter 3.44 upgrade (Flutter's new
-        // default; drops Android 6.0 / API 23, approved). Explicit literal so it
-        // won't silently rise further and Flutter's migrator won't rewrite it.
-        minSdk 24
+        // Track Flutter's recommended minimum (owner-approved): always uses the
+        // best supported floor (currently API 24 / Android 7.0) with no manual
+        // bumps, and matches the form Flutter's gradle migrator expects.
+        minSdkVersion flutter.minSdkVersion
         targetSdk 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
