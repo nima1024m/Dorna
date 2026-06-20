@@ -20,19 +20,19 @@ extension SizerExt on num {
   /// Calculates the height depending on the device's screen size
   ///
   /// Eg: 20.h -> will take 20% of the screen's height
-  double get h => this * SizerUtil.height / 100;
+  double get h => this * Device.height / 100;
 
   /// Calculates the width depending on the device's screen size
   ///
   /// Eg: 20.w -> will take 20% of the screen's width
-  double get w => this * SizerUtil.width / 100;
+  double get w => this * Device.width / 100;
 
   /// Calculates the sp (Scalable Pixel) depending on the device's screen size
   double get sp =>
       (Utils.isTablet()
-          ? (this * (SizerUtil.width / 5) / 100)
-          : (this * (SizerUtil.width / 3) / 100)) -
-      (Platform.isIOS ? (1 * (SizerUtil.width / 3) / 100) : 0);
+          ? (this * (Device.width / 5) / 100)
+          : (this * (Device.width / 3) / 100)) -
+      (Platform.isIOS ? (1 * (Device.width / 3) / 100) : 0);
 }
 
 extension MyParser on String {

@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
@@ -244,16 +244,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                       themeMode: settingsController.isDarkTheme.value
                           ? ThemeMode.dark
                           : ThemeMode.light,
-                      builder: (context, widget) => ResponsiveWrapper.builder(
-                        widget,
-                        // maxWidth: 1200,
-                        // minWidth: 480,
-                        defaultScale: true,
-                        breakpoints: [
-                          const ResponsiveBreakpoint.resize(480, name: MOBILE),
-                          const ResponsiveBreakpoint.resize(800, name: TABLET),
-                          const ResponsiveBreakpoint.resize(1000,
-                              name: DESKTOP),
+                      builder: (context, widget) =>
+                          ResponsiveBreakpoints.builder(
+                        child: widget!,
+                        breakpoints: const [
+                          Breakpoint(start: 0, end: 480, name: MOBILE),
+                          Breakpoint(start: 481, end: 800, name: TABLET),
+                          Breakpoint(
+                              start: 801, end: double.infinity, name: DESKTOP),
                         ],
                       ),
                       initialRoute: SplashScreen.routeName,
