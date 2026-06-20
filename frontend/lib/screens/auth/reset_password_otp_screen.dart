@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:dorna/screens/auth/reset_password_form_screen.dart';
+import 'package:dorna/theme/app_tokens.dart';
 import 'package:dorna/utils/utils.dart';
 import 'package:dorna/widgets/auth/auth_header.dart';
 import 'package:dorna/widgets/auth/auth_skeleton.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:dorna/widgets/ui/custom_button.dart';
 import 'package:dorna/widgets/ui/toast.dart';
 import 'package:flutter/material.dart';
@@ -180,7 +180,7 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
   @override
   Widget build(BuildContext context) {
     Utils.appContext = context;
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final cs = Theme.of(context).colorScheme;
     return Scaffold(
       body: SafeArea(
         child: Form(
@@ -241,19 +241,16 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
                         borderWidth: 1.5,
                         activeBorderWidth: 1.5,
                         inactiveBorderWidth: 1.5,
-                        activeColor: AppColors.greySubtext(),
-                        selectedColor: Theme.of(context).colorScheme.secondary,
-                        selectedFillColor: isDarkMode
-                            ? Colors.transparent
-                            : Colors.grey.shade100,
+                        activeColor: cs.onSurfaceVariant,
+                        selectedColor: cs.secondary,
+                        selectedFillColor: cs.surfaceContainerHigh,
                         inactiveFillColor: Colors.transparent,
-                        inactiveColor: AppColors.greySubtext(),
-                        activeFillColor:
-                            isDarkMode ? Colors.transparent : Colors.white,
-                        errorBorderColor: AppColors.errorText,
+                        inactiveColor: cs.onSurfaceVariant,
+                        activeFillColor: cs.surfaceContainerLowest,
+                        errorBorderColor: cs.error,
                         errorBorderWidth: 1.5,
                       ),
-                      cursorColor: Theme.of(context).colorScheme.primary,
+                      cursorColor: cs.primary,
                     ),
                   ),
                 ),
@@ -268,7 +265,7 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
                     Text(
                       'Didn’t receive email? ',
                       style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                            color: AppColors.greySubtext(),
+                            color: cs.onSurfaceVariant,
                             fontSize: 12.sp,
                           ),
                     ),
@@ -283,8 +280,8 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
                             .displayLarge
                             ?.copyWith(
                               color: (_resendCountdown == 0 && !_isResending)
-                                  ? AppColors.warningText
-                                  : AppColors.greySubtext(),
+                                  ? DornaColors.warning
+                                  : cs.onSurfaceVariant,
                               fontSize: 12.sp,
                             ),
                       ),
@@ -298,7 +295,7 @@ class _ResetPasswordOtpScreenState extends State<ResetPasswordOtpScreen> {
                               .textTheme
                               .displayLarge
                               ?.copyWith(
-                                color: AppColors.greySubtext(),
+                                color: cs.onSurfaceVariant,
                                 fontSize: 12.sp,
                               ),
                         ),

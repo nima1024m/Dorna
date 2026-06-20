@@ -6,7 +6,6 @@ import 'package:dorna/utils/utils.dart';
 import 'package:dorna/widgets/auth/delete_account_dialog.dart';
 import 'package:dorna/widgets/auth/profile_photo.dart';
 import 'package:dorna/widgets/auth/sign_out_dialog.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:dorna/widgets/ui/back_header.dart';
 import 'package:dorna/widgets/ui/custom_form_input.dart';
 import 'package:dorna/widgets/ui/custom_list_tile.dart';
@@ -210,7 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final cs = Theme.of(context).colorScheme;
     var padding = const EdgeInsets.symmetric(horizontal: 16);
     Utils.appContext = context;
 
@@ -231,15 +230,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onPressed: _onLogoutTap,
                     backgroundColor: Colors.transparent,
                     border: Border.all(
-                      color: isDarkMode
-                          ? Colors.white.withOpacity(0.1)
-                          : Colors.black.withOpacity(0.1),
+                      color: cs.outlineVariant,
                       width: 1.5,
                     ),
                     borderRadius: BorderRadius.circular(10),
                     buttonWidget: Icon(
                       Icons.logout,
-                      color: AppColors.textMain(),
+                      color: cs.onSurface,
                       size: 22,
                     ),
                   ),
@@ -266,12 +263,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.all(20),
                       margin: padding,
                       decoration: BoxDecoration(
-                        color: isDarkMode ? Colors.transparent : Colors.white,
+                        color: cs.surfaceContainerLowest,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: isDarkMode
-                              ? Colors.white.withOpacity(0.1)
-                              : Colors.black.withOpacity(0.1),
+                          color: cs.outlineVariant,
                         ),
                       ),
                       child: Column(
@@ -287,7 +282,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     .textTheme
                                     .bodyMedium
                                     ?.copyWith(
-                                      color: AppColors.greySubtext()
+                                      color: cs.onSurfaceVariant
                                           .withOpacity(0.5),
                                       fontSize: 13.sp,
                                     ),
@@ -301,7 +296,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       .textTheme
                                       .bodyMedium
                                       ?.copyWith(
-                                        color: AppColors.textMain(),
+                                        color: cs.onSurface,
                                         fontSize: 13.sp,
                                       ),
                                 );
@@ -324,7 +319,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           .textTheme
                                           .bodyMedium
                                           ?.copyWith(
-                                            color: AppColors.greySubtext()
+                                            color: cs.onSurfaceVariant
                                                 .withOpacity(0.5),
                                             fontSize: 13.sp,
                                           ),
@@ -338,7 +333,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             isEnabled: true,
                                             border: UnderlineInputBorder(
                                               borderSide: BorderSide(
-                                                color: AppColors.greySubtext(),
+                                                color: cs.onSurfaceVariant,
                                                 width: 1,
                                               ),
                                             ),
@@ -350,7 +345,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 .bodyMedium
                                                 ?.copyWith(
                                                   fontSize: 13.sp,
-                                                  color: AppColors.textMain(),
+                                                  color: cs.onSurface,
                                                 ),
                                           )
                                         : Text(
@@ -361,7 +356,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 .textTheme
                                                 .bodyMedium
                                                 ?.copyWith(
-                                                  color: AppColors.textMain(),
+                                                  color: cs.onSurface,
                                                   fontSize: 13.sp,
                                                 ),
                                           ),
@@ -392,7 +387,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           .textTheme
                                           .bodyMedium
                                           ?.copyWith(
-                                            color: AppColors.greySubtext()
+                                            color: cs.onSurfaceVariant
                                                 .withOpacity(0.5),
                                             fontSize: 13.sp,
                                           ),
@@ -404,7 +399,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           .textTheme
                                           .bodyMedium
                                           ?.copyWith(
-                                            color: AppColors.textMain(),
+                                            color: cs.onSurface,
                                             fontSize: 13.sp,
                                           ),
                                     ),
@@ -441,7 +436,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: _onDeleteAccountTap,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                             fontSize: 14.sp,
-                            color: AppColors.errorText,
+                            color: cs.error,
                           ),
                     ),
                   ],
@@ -457,17 +452,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget buildEditButton({
     required VoidCallback onPressed,
   }) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final cs = Theme.of(context).colorScheme;
     return SizedBox(
       width: 38,
       height: 38,
       child: CustomButton(
         onPressed: onPressed,
-        backgroundColor: isDarkMode ? Colors.black : Colors.white,
+        backgroundColor: cs.surfaceContainerLowest,
         border: Border.all(
-          color: isDarkMode
-              ? Colors.white.withOpacity(0.1)
-              : Colors.black.withOpacity(0.1),
+          color: cs.outlineVariant,
           width: 1.5,
         ),
         borderRadius: BorderRadius.circular(10),

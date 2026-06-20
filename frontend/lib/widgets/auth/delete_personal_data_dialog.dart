@@ -1,6 +1,5 @@
 import 'package:dorna/controllers/auth/auth_controller.dart';
 import 'package:dorna/utils/utils.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +20,7 @@ class _DeletePersonalDataDialogState extends State<DeletePersonalDataDialog> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final cs = Theme.of(context).colorScheme;
     return CupertinoAlertDialog(
       title: Text(
         'Delete personal data?',
@@ -45,9 +44,7 @@ class _DeletePersonalDataDialogState extends State<DeletePersonalDataDialog> {
           child: Text(
             'Cancel',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: isDarkMode
-                      ? CupertinoColors.white
-                      : CupertinoColors.label,
+                  color: cs.onSurface,
                   fontSize: 13.sp,
                 ),
           ),
@@ -99,7 +96,7 @@ class _DeletePersonalDataDialogState extends State<DeletePersonalDataDialog> {
                     Text(
                       'Deleting…',
                       style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                            color: AppColors.errorText,
+                            color: cs.error,
                             fontSize: 13.sp,
                           ),
                     ),
@@ -108,7 +105,7 @@ class _DeletePersonalDataDialogState extends State<DeletePersonalDataDialog> {
               : Text(
                   'Delete',
                   style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                        color: AppColors.errorText,
+                        color: cs.error,
                         fontSize: 13.sp,
                       ),
                 ),

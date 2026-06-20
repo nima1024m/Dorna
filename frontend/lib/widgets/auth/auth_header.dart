@@ -1,5 +1,4 @@
 import 'package:dorna/utils/utils.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthHeader extends StatelessWidget {
@@ -21,6 +20,7 @@ class AuthHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var isSmallDevice = Utils.isSmallDevice(context);
+    final cs = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -35,7 +35,7 @@ class AuthHeader extends StatelessWidget {
                   style: Theme.of(context).textTheme.displayLarge?.copyWith(
                         fontSize: titleSize ?? (isSmallDevice ? 25.sp : 30.sp),
                         fontWeight: FontWeight.w700,
-                        color: AppColors.textMain(),
+                        color: cs.onSurface,
                       ),
                 ),
               ),
@@ -48,7 +48,7 @@ class AuthHeader extends StatelessWidget {
             subtitle.toString(),
             style: Theme.of(context).textTheme.displayLarge?.copyWith(
                 fontSize: 15.sp,
-                color: AppColors.textMain(),
+                color: cs.onSurface,
                 fontWeight: FontWeight.w700,
               ),
         ),
@@ -57,7 +57,7 @@ class AuthHeader extends StatelessWidget {
           description,
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 fontSize: descriptionSize ?? 13.sp,
-                color: AppColors.greySubtext().withOpacity(0.8),
+                color: cs.onSurfaceVariant.withOpacity(0.8),
                 height: descriptionSize == null ? 1.6 : 1.3,
               ),
         ),

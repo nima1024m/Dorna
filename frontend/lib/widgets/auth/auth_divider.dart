@@ -1,5 +1,4 @@
 import 'package:dorna/utils/utils.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthDivider extends StatelessWidget {
@@ -12,12 +11,13 @@ class AuthDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Row(
       children: [
         Expanded(
           child: Container(
             height: 1,
-            color: AppColors.greySubtext().withOpacity(0.2),
+            color: cs.onSurfaceVariant.withOpacity(0.2),
           ),
         ),
         Padding(
@@ -25,7 +25,7 @@ class AuthDivider extends StatelessWidget {
           child: Text(
             text,
             style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                  color: AppColors.greySubtext(),
+                  color: cs.onSurfaceVariant,
                   fontSize: 12.sp,
                 ),
           ),
@@ -33,7 +33,7 @@ class AuthDivider extends StatelessWidget {
         Expanded(
           child: Container(
             height: 1,
-            color: AppColors.greySubtext().withOpacity(0.2),
+            color: cs.onSurfaceVariant.withOpacity(0.2),
           ),
         ),
       ],

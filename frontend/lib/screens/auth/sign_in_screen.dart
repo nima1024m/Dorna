@@ -3,7 +3,6 @@ import 'package:dorna/screens/auth/sign_up_screen.dart';
 import 'package:dorna/utils/utils.dart';
 import 'package:dorna/widgets/auth/auth_skeleton.dart';
 import 'package:dorna/widgets/auth/social_button.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:dorna/widgets/ui/custom_button.dart';
 import 'package:dorna/widgets/ui/custom_form_input.dart';
 import 'package:dorna/widgets/ui/toast.dart';
@@ -263,7 +262,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 isBoldLine: true,
                 style: Theme.of(context).textTheme.displayLarge?.copyWith(
                     fontSize: 12.sp,
-                    color: AppColors.primaryColor(),
+                    color: Theme.of(context).colorScheme.primary,
                     ),
               )),
         ),

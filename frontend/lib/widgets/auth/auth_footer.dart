@@ -1,5 +1,5 @@
+import 'package:dorna/theme/app_tokens.dart';
 import 'package:dorna/utils/utils.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthFooter extends StatelessWidget {
@@ -29,14 +29,14 @@ class AuthFooter extends StatelessWidget {
               Text(
                 questionText,
                 style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      color: AppColors.greySubtext(),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                       fontSize: 12.sp,
                     ),
               ),
               Text(
                 actionText,
                 style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      color: AppColors.warningText,
+                      color: DornaColors.warning,
                       fontSize: 12.sp,
                     ),
               ),

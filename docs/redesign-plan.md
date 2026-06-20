@@ -191,8 +191,15 @@ design across most screens and makes dark mode correct.
 - [~] Flow is internally navigable (welcome → … → building → `MainShell`) but **not yet the live entry** (splash still → `HomeScreen`) and selections aren't persisted — wire both when the backend taxonomy + calendar/location features land (F-phases). The old `onboarding_screen.dart` carousel is superseded (delete once the new flow goes live).
 - Commit: `redesign(onboarding): welcome → building flow`
 
-**Phase 4 — Auth flow restyle** (D5)
-- [ ] auth landing · [ ] sign in · [ ] sign up · [ ] email verification · [ ] reset (email/otp/form) · [ ] profile · [ ] change password. Commit: `redesign(auth): …`
+**✅ Phase 4 — Auth flow restyle — DONE 2026-06-20** (D5: no auth design exists → restyle the existing screens onto the new theme, like Phase 1 did for primitives)
+- [x] auth landing · [x] sign in · [x] sign up · [x] email verification · [x] reset (email/otp/form) · [x] profile · [x] change password.
+- Migrated the whole auth surface **off the `AppColors` shim** onto `ColorScheme`/`textTheme` (+ `DornaColors` for brand bits) and **removed the dead `isDarkMode ? … : …` color-branches** (dark mode is now correct via `ColorScheme`). Screens touched: `auth_screen` (logo/wordmark → `primary`; "Your Writing Assistant" ShaderMask → `DornaColors.primary→accentCyan`; secondary CTA → `primary @10%`), `sign_in` (forgot-password link → `primary`), `email_verification` (success chip → `DornaColors.success`, resend → `DornaColors.warning`), `reset_password_otp` (PinTheme → ColorScheme: borders `onSurfaceVariant`, fills `surfaceContainerHigh`/`surfaceContainerLowest`, error `error`, cursor `primary`), `profile` (cards → `surfaceContainerLowest` + `outlineVariant` border; labels `onSurfaceVariant`, values `onSurface`; delete → `error`). Widgets: `auth_header`, `auth_footer` (action → `DornaColors.warning`), `auth_divider`, `social_button`, `password_tips` (tip bubble → `surfaceContainerHigh`, valid-rule tick → `DornaColors.success`), `profile_photo`, and the 3 Cupertino dialogs (`sign_out`/`delete_account`/`delete_personal_data`).
+- `sign_up`, `change_password`, `reset_password_email`, `reset_password_form`, `auth_suggestion` had **no** `AppColors`/hardcoded-color coupling (they consume the migrated shared widgets) — left untouched. (Pre-existing unused `isDarkMode` locals there are lint-debt, not cleaned here per the "don't mix lint cleanup" rule. One commented-out `AppColors` ref remains inside a dead comment block in `change_password` — harmless.)
+- [~] **`pin_code_fields` kept at ^8.x** (re-themed in place via ColorScheme, not upgraded). The A1 follow-up to migrate the OTP field to the **v9 ground-up rewrite** (`MaterialPinField`/`PinInput`) is **NOT bundled here**: it's a dependency/API migration (the "never mix deps + redesign" rule) and the new field's entry behaviour can't be visually verified on this Windows box (no emulator). ⏳ Still an open follow-up — do it as its own commit with on-device verification.
+- [x] Verify: `flutter analyze` **0 errors** (299 lint-debt, net −8 — a side effect of dropping `AppColors`/dark-branch `withOpacity` deprecations, **not** a dedicated lint pass), `flutter test` **All tests passed**, `flutter build apk` green.
+- Commit: `redesign(auth): restyle auth flow to the theme`
+
+**Phase 4 done 2026-06-20.**
 
 **Phase 5 — Keyboard-setup / instruction**
 - [ ] keyboard_extension_intro · [ ] dorna_keyboard_in_action · [ ] instruction first/second/collect-data. Commit: `redesign(instruction): …`

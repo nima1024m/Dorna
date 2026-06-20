@@ -1,8 +1,7 @@
+import 'package:dorna/theme/app_tokens.dart';
 import 'package:dorna/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../ui/app_colors.dart';
 
 class PasswordTips extends StatelessWidget {
   final bool hasText;
@@ -21,8 +20,9 @@ class PasswordTips extends StatelessWidget {
   });
 
   Widget _row(BuildContext context, bool ok, String text) {
-    final colorOk = Colors.green.shade600;
-    final colorBad = Theme.of(context).colorScheme.error;
+    final cs = Theme.of(context).colorScheme;
+    final colorOk = DornaColors.success;
+    final colorBad = cs.error;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -32,7 +32,7 @@ class PasswordTips extends StatelessWidget {
         else
           Padding(
             padding: const EdgeInsets.all(5.5),
-            child: Icon(Icons.circle, size: 5, color: AppColors.textMain()),
+            child: Icon(Icons.circle, size: 5, color: cs.onSurface),
           ),
         const SizedBox(width: 8),
         Expanded(
@@ -40,7 +40,7 @@ class PasswordTips extends StatelessWidget {
             text,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontSize: 12.sp,
-                  color: AppColors.textMain(),
+                  color: cs.onSurface,
                 ),
           ),
         ),
@@ -50,9 +50,7 @@ class PasswordTips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final color =
-        isDarkMode ? const Color(0xff141515) : const Color(0xffE2EBF2);
+    final color = Theme.of(context).colorScheme.surfaceContainerHigh;
     return Stack(
       clipBehavior: Clip.none,
       children: [

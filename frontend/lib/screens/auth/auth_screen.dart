@@ -1,6 +1,6 @@
 import 'package:dorna/screens/auth/sign_in_screen.dart';
 import 'package:dorna/screens/auth/sign_up_screen.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
+import 'package:dorna/theme/app_tokens.dart';
 import 'package:dorna/widgets/ui/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,6 +47,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     Utils.appContext = context;
+    final cs = Theme.of(context).colorScheme;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -71,7 +72,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 child: Image.asset(
                   'assets/images/logo.png',
                   width: Utils.isSmallDevice(context) ? 150 : 180,
-                  color: AppColors.primaryColor(),
+                  color: cs.primary,
                 ),
               ),
               SizedBox(
@@ -82,7 +83,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 child: Text(
                   'Dorna',
                   style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                        color: AppColors.primaryColor(),
+                        color: cs.primary,
                         fontSize: 45.sp,
                       fontWeight: FontWeight.w900),
                 ),
@@ -99,10 +100,10 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Hero(
                         tag: 'Your Writing Assistant',
                         child: ShaderMask(
-                          shaderCallback: (bounds) => LinearGradient(
+                          shaderCallback: (bounds) => const LinearGradient(
                             colors: [
-                              AppColors.primaryColor(),
-                              AppColors.ascending()
+                              DornaColors.primary,
+                              DornaColors.accentCyan
                             ],
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
@@ -137,8 +138,8 @@ class _AuthScreenState extends State<AuthScreen> {
               CustomButton(
                 onPressed: onSignInTap,
                 text: 'Sign in',
-                backgroundColor: AppColors.primaryColor().withOpacity(0.1),
-                textColor: AppColors.primaryColor(),
+                backgroundColor: cs.primary.withOpacity(0.1),
+                textColor: cs.primary,
               ),
               const SizedBox(
                 height: 16,
@@ -149,7 +150,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   child: Text(
                     'Skip for now',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.textMain().withOpacity(0.4),
+                          color: cs.onSurface.withOpacity(0.4),
                           fontSize: 12.sp,
                         ),
                   ),
@@ -163,7 +164,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     'Learn more about Dorna keyboard',
                     isBoldLine: true,
                     style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                          color: AppColors.greySubtext(),
+                          color: cs.onSurfaceVariant,
                           fontSize: 12.sp,
                         ),
                   ),

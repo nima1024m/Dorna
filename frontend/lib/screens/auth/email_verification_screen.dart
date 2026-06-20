@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:dorna/controllers/auth/auth_controller.dart';
+import 'package:dorna/theme/app_tokens.dart';
 import 'package:dorna/utils/utils.dart';
 import 'package:dorna/widgets/auth/auth_skeleton.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:dorna/widgets/ui/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -126,6 +126,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     Utils.appContext = context;
+    final cs = Theme.of(context).colorScheme;
     bool isKeyboardOpen = MediaQuery.viewInsetsOf(context).bottom > 0;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -136,7 +137,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppColors.successText.withOpacity(0.1),
+                color: DornaColors.success.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Center(
@@ -144,7 +145,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   'assets/icons/ic_user.svg',
                   width: 22,
                   height: 22,
-                  color: AppColors.successText,
+                  color: DornaColors.success,
                 ),
               ),
             ),
@@ -165,7 +166,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   Text(
                     'Didn’t receive email? ',
                     style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                          color: AppColors.greySubtext(),
+                          color: cs.onSurfaceVariant,
                           fontSize: 12.sp,
                         ),
                   ),
@@ -175,8 +176,8 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                       'Resend',
                       style: Theme.of(context).textTheme.displayLarge?.copyWith(
                             color: (_resendCountdown == 0 && !_isResending)
-                                ? AppColors.warningText
-                                : AppColors.greySubtext(),
+                                ? DornaColors.warning
+                                : cs.onSurfaceVariant,
                             fontSize: 12.sp,
                           ),
                     ),
@@ -188,7 +189,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                         '${_resendCountdown}s',
                         style:
                             Theme.of(context).textTheme.displayLarge?.copyWith(
-                                  color: AppColors.greySubtext(),
+                                  color: cs.onSurfaceVariant,
                                   fontSize: 12.sp,
                                 ),
                       ),

@@ -105,8 +105,7 @@ class _ProfilePhotoState extends State<ProfilePhoto> {
 
   Widget _buildProfileImage() {
     final currentUser = _authController.getUserDetails;
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    var color = isDarkMode ? Colors.white : Colors.black;
+    final cs = Theme.of(context).colorScheme;
 
     // Show local image if available (during upload process)
     if (_profilePhoto != null) {
@@ -153,7 +152,7 @@ class _ProfilePhotoState extends State<ProfilePhoto> {
             return Icon(
               Icons.person,
               size: 60,
-              color: color.withOpacity(0.1),
+              color: cs.onSurface.withOpacity(0.1),
             );
           },
           progressIndicatorBuilder: (context, child, loadingProgress) {
@@ -171,14 +170,13 @@ class _ProfilePhotoState extends State<ProfilePhoto> {
     return Icon(
       Icons.person,
       size: 60,
-      color: color.withOpacity(0.1),
+      color: cs.onSurface.withOpacity(0.1),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    var color = isDarkMode ? Colors.white : Colors.black;
+    final cs = Theme.of(context).colorScheme;
 
     return Obx(() => GestureDetector(
           onTap: _isUploading ? null : onProfilePhotoTap,
@@ -192,7 +190,7 @@ class _ProfilePhotoState extends State<ProfilePhoto> {
                   margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: color.withOpacity(0.05),
+                    color: cs.onSurface.withOpacity(0.05),
                   ),
                   child: _buildProfileImage(),
                 ),
@@ -216,11 +214,9 @@ class _ProfilePhotoState extends State<ProfilePhoto> {
                     height: 38,
                     child: CustomButton(
                       onPressed: _isUploading ? () {} : onProfilePhotoTap,
-                      backgroundColor: isDarkMode ? Colors.black : Colors.white,
+                      backgroundColor: cs.surfaceContainerLowest,
                       border: Border.all(
-                        color: isDarkMode
-                            ? Colors.white.withOpacity(0.1)
-                            : color.withOpacity(0.1),
+                        color: cs.outlineVariant,
                         width: 1.5,
                       ),
                       borderRadius: BorderRadius.circular(10),

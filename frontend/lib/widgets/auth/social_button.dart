@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 import '../../utils/utils.dart';
-import '../ui/app_colors.dart';
 import '../ui/toast.dart';
 
 class SocialButton extends StatelessWidget {
@@ -25,7 +24,8 @@ class SocialButton extends StatelessWidget {
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-              color: AppColors.textMain().withOpacity(0.25), width: 1),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.25),
+              width: 1),
         ),
         child: Center(child: child),
       ),
@@ -77,7 +77,6 @@ class AppleSignInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Obx(() {
       AuthController authController = Get.find();
       return SocialButton(
@@ -86,7 +85,7 @@ class AppleSignInButton extends StatelessWidget {
             : Icon(
                 Icons.apple,
                 size: 28,
-                color: isDarkMode ? Colors.white : Colors.black,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
         onTap: () async {
           try {

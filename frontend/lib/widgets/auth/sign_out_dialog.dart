@@ -1,7 +1,6 @@
 import 'package:dorna/controllers/auth/auth_controller.dart';
 import 'package:dorna/screens/auth/auth_screen.dart';
 import 'package:dorna/utils/utils.dart';
-import 'package:dorna/widgets/ui/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +10,7 @@ class SignOutDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final cs = Theme.of(context).colorScheme;
     return Theme(
       data: Theme.of(context),
       child: CupertinoAlertDialog(
@@ -33,9 +32,7 @@ class SignOutDialog extends StatelessWidget {
             child: Text(
               'Cancel',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: isDarkMode
-                        ? CupertinoColors.white
-                        : CupertinoColors.label,
+                    color: cs.onSurface,
                     fontSize: 13.sp,
                   ),
             ),
@@ -51,7 +48,7 @@ class SignOutDialog extends StatelessWidget {
             child: Text(
               'Sign out',
               style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                    color: AppColors.errorText,
+                    color: cs.error,
                     fontSize: 13.sp,
                   ),
             ),
