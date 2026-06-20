@@ -10,6 +10,7 @@ import '../../widgets/home/empty_plan_card.dart';
 import '../../widgets/home/home_header.dart';
 import '../../widgets/home/plan_event_tile.dart';
 import '../../widgets/ui/toast.dart';
+import '../brief/brief_player_screen.dart';
 
 /// The **Today** tab — the redesign's daily home hub. Switches between the
 /// populated layout and the "welcome / no events yet" empty state.
@@ -55,7 +56,10 @@ class TodayScreen extends StatelessWidget {
                 durationLabel: empty ? '5 MIN' : TodayController.briefDuration,
                 durationIcon: empty ? Icons.timer_outlined : null,
                 playOnLeft: !empty,
-                onPlay: c.startBrief,
+                onPlay: () {
+                  c.startBrief();
+                  Get.toNamed(BriefPlayerScreen.routeName);
+                },
               ),
               const SizedBox(height: DornaSpacing.xl),
               // Plan section header

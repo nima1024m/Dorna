@@ -223,8 +223,15 @@ design across most screens and makes dark mode correct.
 
 **Phase 6 done 2026-06-20.**
 
-**Phase 7 — Daily audio brief player**
-- [ ] daily_audio_brief_player (scrubber, segments, live EN+Persian transcript). Commit: `redesign(brief): audio player`
+**✅ Phase 7 — Daily audio brief player — DONE 2026-06-20** (presentational; playback simulated)
+- [x] daily_audio_brief_player: gradient player card (segment status pill, animated waveform, scrubber + time, transport: speed 1/1.25/1.5×, replay-15 / 64px play-pause / forward-15, read-aloud), horizontal segment chips, and a live transcript card (inline cyan highlight phrase, Persian-gloss toggle, Save-phrase, segment dots).
+- New `BriefPlayerController` (`controllers/brief/`): 5 placeholder segments (label/icon/EN transcript/highlight/Persian gloss) over a **local simulated timeline** (a 1 s ticker advances position; speed/seek/segment-select/save/gloss are local). There is no curated daily-brief audio backend — F2 wires the real segmented brief via the existing `PodcastController`/`just_audio` infra.
+- New reusable widgets (`widgets/brief/`): `AnimatedWaveform` (animates only while playing), `BriefSegmentChip`, `HighlightedTranscript` (inline cyan phrase chip), `DotIndicator`.
+- Wired: Today hero play **and** the mini-player tap now push `BriefPlayerScreen` (registered in `routes.dart`). Read-aloud / pick-another-day are "coming soon" toasts (no TTS-of-transcript or date-picker backend yet).
+- [x] Verify: `flutter analyze` **0 errors** (295 lint-debt; new files add 0 lints), `flutter test` **All tests passed**, `flutter build apk` green.
+- Commit: `redesign(brief): daily audio brief player`
+
+**Phase 7 done 2026-06-20.**
 
 **Phase 8 — Settings** (absorbs languages/tones per gap analysis)
 - [ ] settings (profile, Your-day toggles, Language, Keyboard, Plan, Account) · [ ] restyle about/contact/privacy/terms. Commit: `redesign(settings): …`

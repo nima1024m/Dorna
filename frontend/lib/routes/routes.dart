@@ -12,6 +12,7 @@ import '../screens/auth/reset_password_form_screen.dart';
 import '../screens/auth/reset_password_otp_screen.dart';
 import '../screens/auth/sign_in_screen.dart';
 import '../screens/auth/sign_up_screen.dart';
+import '../screens/brief/brief_player_screen.dart';
 import '../screens/instruction/instruction_collect_data_screen.dart';
 import '../screens/instruction/instruction_first_screen.dart';
 import '../screens/instruction/instruction_second_screen.dart';
@@ -72,6 +73,10 @@ List<GetPage> routes = [
   GetPage(
     name: MainShell.routeName,
     page: () => const MainShell(),
+  ),
+  GetPage(
+    name: BriefPlayerScreen.routeName,
+    page: () => const BriefPlayerScreen(),
   ),
   GetPage(
     name: WelcomeScreen.routeName,

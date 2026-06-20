@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../controllers/today/today_controller.dart';
 import '../../widgets/home/brief_mini_player.dart';
 import '../../widgets/ui/dorna_bottom_nav.dart';
+import '../brief/brief_player_screen.dart';
 import '../home/today_screen.dart';
 
 /// The redesign's 3-tab app shell (Today / Practice / Profile).
@@ -44,6 +45,7 @@ class _MainShellState extends State<MainShell> {
                     playing: _today.briefPlaying.value,
                     onToggle: _today.toggleMiniPlayer,
                     onClose: _today.dismissMiniPlayer,
+                    onTap: () => Get.toNamed(BriefPlayerScreen.routeName),
                   )
                 : const SizedBox.shrink(),
           ),
