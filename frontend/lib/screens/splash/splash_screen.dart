@@ -10,7 +10,7 @@ import '../../controllers/settings/settings_controller.dart';
 import '../../utils/local_platform_storage.dart';
 import '../../utils/utils.dart';
 import '../../widgets/ui/toast.dart';
-import '../home/home_screen.dart';
+import '../shell/main_shell.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -81,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
       await Utils.handleKeyboardPermissionNavigation();
     } else {
       Get.offAllNamed(
-        HomeScreen.routeName,
+        MainShell.routeName,
       );
     }
   }

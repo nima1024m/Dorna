@@ -11,8 +11,8 @@ import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:sizer/sizer.dart';
 
-import '../screens/home/home_screen.dart';
 import '../screens/instruction/instruction_first_screen.dart';
+import '../screens/shell/main_shell.dart';
 import '../screens/instruction/instruction_second_screen.dart';
 import '../services/keyboard_service.dart';
 
@@ -161,7 +161,7 @@ class Utils {
             return false;
           } else {
             Get.offAllNamed(
-              HomeScreen.routeName,
+              MainShell.routeName,
             );
             return true;
           }

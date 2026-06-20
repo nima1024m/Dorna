@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../controllers/today/today_controller.dart';
+import '../../widgets/home/brief_mini_player.dart';
 import '../../widgets/ui/dorna_bottom_nav.dart';
+import '../home/today_screen.dart';
 
 /// The redesign's 3-tab app shell (Today / Practice / Profile).
 ///
-/// Tab bodies are placeholders for now; each is filled in by its own phase:
-/// Today → Phase 6 (home hub), Practice → F5 (practice hub), Profile → Phase 9.
-/// Splash/onboarding will route here once the Today hub lands (Phase 6).
+/// Today (Phase 6) is live; Practice and Profile are placeholders filled in by
+/// their phases (Practice → practice hub, Profile → Phase 9). The brief
+/// mini-player docks just above the nav once a brief has started.
 class MainShell extends StatefulWidget {
   static const String routeName = '/main';
 
@@ -18,9 +22,10 @@ class MainShell extends StatefulWidget {
 
 class _MainShellState extends State<MainShell> {
   int _index = 0;
+  final TodayController _today = Get.put(TodayController());
 
-  static const List<Widget> _tabs = <Widget>[
-    _TabPlaceholder(title: 'Today', icon: Icons.graphic_eq),
+  late final List<Widget> _tabs = const [
+    TodayScreen(),
     _TabPlaceholder(title: 'Practice', icon: Icons.forum_outlined),
     _TabPlaceholder(title: 'Profile', icon: Icons.person_outline),
   ];
@@ -30,13 +35,27 @@ class _MainShellState extends State<MainShell> {
     return Scaffold(
       extendBody: true,
       body: IndexedStack(index: _index, children: _tabs),
-      bottomNavigationBar: DornaBottomNav(
-        currentIndex: _index,
-        onTap: (i) => setState(() => _index = i),
-        items: const [
-          DornaNavItem(icon: Icons.graphic_eq, label: 'Today'),
-          DornaNavItem(icon: Icons.forum, label: 'Practice'),
-          DornaNavItem(icon: Icons.person, label: 'Profile'),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Obx(
+            () => _today.briefStarted.value
+                ? BriefMiniPlayer(
+                    playing: _today.briefPlaying.value,
+                    onToggle: _today.toggleMiniPlayer,
+                    onClose: _today.dismissMiniPlayer,
+                  )
+                : const SizedBox.shrink(),
+          ),
+          DornaBottomNav(
+            currentIndex: _index,
+            onTap: (i) => setState(() => _index = i),
+            items: const [
+              DornaNavItem(icon: Icons.graphic_eq, label: 'Today'),
+              DornaNavItem(icon: Icons.forum, label: 'Practice'),
+              DornaNavItem(icon: Icons.person, label: 'Profile'),
+            ],
+          ),
         ],
       ),
     );

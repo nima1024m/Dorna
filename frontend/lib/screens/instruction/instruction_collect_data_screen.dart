@@ -8,7 +8,7 @@ import '../../widgets/instruction/instruction_button.dart';
 import '../../widgets/instruction/instruction_card.dart';
 import '../../theme/app_tokens.dart';
 import '../../widgets/ui/custom_switch_tile.dart';
-import '../home/home_screen.dart';
+import '../shell/main_shell.dart';
 
 class InstructionCollectDataScreen extends StatefulWidget {
   const InstructionCollectDataScreen({super.key});
@@ -29,7 +29,7 @@ class _InstructionCollectDataScreenState
     settingsController.isCollectDataSeen.value = true;
     settingsController.setCollectData(settingsController.collectData.value);
     settingsController.setCollectDataSeen(true);
-    Get.offAllNamed(HomeScreen.routeName);
+    Get.offAllNamed(MainShell.routeName);
   }
 
 

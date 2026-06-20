@@ -12,7 +12,7 @@ import '../../widgets/instruction/instruction_card.dart';
 import '../../widgets/instruction/instruction_list.dart';
 import '../../widgets/instruction/terms_privacy_footer.dart';
 import '../../theme/app_tokens.dart';
-import '../home/home_screen.dart';
+import '../shell/main_shell.dart';
 import 'instruction_collect_data_screen.dart';
 
 class InstructionSecondScreen extends StatefulWidget {
@@ -38,7 +38,7 @@ class _InstructionSecondScreenState extends State<InstructionSecondScreen> {
     if (!settingsController.isCollectDataSeen.value) {
       Get.offAllNamed(InstructionCollectDataScreen.routeName);
     } else {
-      Get.offAllNamed(HomeScreen.routeName);
+      Get.offAllNamed(MainShell.routeName);
     }
   }
 

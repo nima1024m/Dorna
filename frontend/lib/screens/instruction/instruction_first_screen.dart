@@ -1,4 +1,4 @@
-import 'package:dorna/screens/home/home_screen.dart';
+import 'package:dorna/screens/shell/main_shell.dart';
 import 'package:dorna/services/keyboard_service.dart';
 import 'package:dorna/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class _InstructionFirstScreenState extends State<InstructionFirstScreen>
   bool loading = false;
 
   void onSkipTap() {
-    Get.offAllNamed(HomeScreen.routeName);
+    Get.offAllNamed(MainShell.routeName);
   }
 
   void onInfoFullAccessTap() {
@@ -87,7 +87,7 @@ class _InstructionFirstScreenState extends State<InstructionFirstScreen>
           Get.offAllNamed(InstructionCollectDataScreen.routeName);
         } else {
           Get.offAllNamed(
-            HomeScreen.routeName,
+            MainShell.routeName,
           );
         }
       } else {

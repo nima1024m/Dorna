@@ -211,8 +211,17 @@ design across most screens and makes dark mode correct.
 
 **Phase 5 done 2026-06-20.**
 
-**Phase 6 — Today home hub**
-- [ ] today_welcome (empty) · [ ] today_dorna_home (populated: brief hero, plan timeline, around-you card, mini-player). Commit: `redesign(home): today hub`
+**✅ Phase 6 — Today home hub — DONE 2026-06-20** (MainShell is now the live entry)
+- [x] today_dorna_home (populated) · [x] today_welcome (empty) — one `TodayScreen` that switches on whether the plan has events.
+- New `TodayController` (`controllers/today/`): real greeting + date from `DateTime.now()` + the signed-in user's first name; **placeholder/local** brief copy, weather, plan events, around-you, and mini-player runtime state (no backend for a curated daily brief / calendar plan / weather / places yet → F2/F3/F5).
+- New reusable widgets (`widgets/home/`): `BriefHeroCard` (brand-gradient hero + play FAB), `BriefWaveform`, `PlanEventTile` (+"Prep" chip), `EmptyPlanCard` (generic empty-state bento), `AroundYouTeaser` (place vs location-prompt variants), `BriefMiniPlayer` (glass bar), `HomeHeader`; plus `widgets/ui/user_avatar.dart` (real network avatar, reused by Today/Profile/Settings).
+- `MainShell`: tab 0 is now the live `TodayScreen`; it owns `TodayController` and docks the `BriefMiniPlayer` above the nav once a brief starts. Tabs 1–2 stay placeholders (Practice / Profile fill in later phases).
+- **Live-entry switch:** splash `navigateToNext`, `Utils.handleKeyboardPermissionNavigation`, and the 3 instruction completion routes now go to `MainShell` instead of the old `HomeScreen` (which stays registered as a legacy route; the legacy podcast-onboarding `offNamedUntil` anchors were left untouched — out of scope).
+- [~] Hero "play" currently just starts the mini-player; navigation to the Brief player lands in Phase 7. Plan/around-you/calendar CTAs show a "coming soon" toast pending their F-phase backends.
+- [x] Verify: `flutter analyze` **0 errors** (298 lint-debt; new files add 0 deprecation lints), `flutter test` **All tests passed**, `flutter build apk` green.
+- Commit: `redesign(home): today hub + MainShell live entry`
+
+**Phase 6 done 2026-06-20.**
 
 **Phase 7 — Daily audio brief player**
 - [ ] daily_audio_brief_player (scrubber, segments, live EN+Persian transcript). Commit: `redesign(brief): audio player`
