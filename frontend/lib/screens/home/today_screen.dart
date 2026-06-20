@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/brief/brief_player_controller.dart';
+import '../../controllers/calendar/calendar_controller.dart';
 import '../../controllers/today/today_controller.dart';
 import '../../theme/app_tokens.dart';
 import '../../utils/utils.dart';
@@ -21,18 +22,34 @@ class TodayScreen extends StatelessWidget {
   void _comingSoon(BuildContext context, String what) =>
       showCustomToast('$what is coming soon', context);
 
+  Future<void> _showEventPrep(
+      BuildContext context, CalendarController cal, String id) async {
+    final prep = await cal.eventPrep(id);
+    if (!context.mounted) return;
+    final summary = prep?['summary']?.toString();
+    showCustomToast(
+      summary?.isNotEmpty == true ? summary! : 'Event prep is coming soon',
+      context,
+      isSuccess: summary?.isNotEmpty == true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Utils.appContext = context;
     final c = Get.find<TodayController>();
     final brief = Get.find<BriefPlayerController>();
+    final cal = Get.find<CalendarController>();
     final tt = Theme.of(context).textTheme;
     final cs = Theme.of(context).colorScheme;
 
     return SafeArea(
       bottom: false,
       child: Obx(() {
-        final empty = c.events.isEmpty;
+        // Real calendar events take precedence over the placeholder plan.
+        final realEvents =
+            cal.events.where((e) => (e.title ?? '').isNotEmpty).toList();
+        final empty = realEvents.isEmpty && c.events.isEmpty;
         final bottomClear = brief.started.value ? 150.0 : 96.0;
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(DornaSpacing.screenMargin, 24,
@@ -103,6 +120,21 @@ class TodayScreen extends StatelessWidget {
                       'Connect your calendar to get prep before meetings and events',
                   ctaLabel: 'Connect calendar',
                   onCta: () => _comingSoon(context, 'Calendar connection'),
+                )
+              else if (realEvents.isNotEmpty)
+                Column(
+                  children: [
+                    for (final e in realEvents) ...[
+                      PlanEventTile(
+                        time: e.timeLabel,
+                        title: e.title ?? 'Event',
+                        dotAccent: e != realEvents.first,
+                        onTap: () => _showEventPrep(context, cal, e.id),
+                      ),
+                      if (e != realEvents.last)
+                        const SizedBox(height: DornaSpacing.sm),
+                    ],
+                  ],
                 )
               else
                 Column(

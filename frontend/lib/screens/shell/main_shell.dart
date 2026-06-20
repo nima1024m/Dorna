@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/brief/brief_player_controller.dart';
+import '../../controllers/calendar/calendar_controller.dart';
 import '../../controllers/phrase/phrase_controller.dart';
 import '../../controllers/today/today_controller.dart';
 import '../../services/push_service.dart';
@@ -39,6 +40,7 @@ class _MainShellState extends State<MainShell> {
     Get.put(TodayController());
     Get.put(BriefPlayerController());
     Get.put(PhraseController());
+    Get.put(CalendarController());
     // Register for push now that the user is authenticated (F7).
     PushService.instance.init();
   }

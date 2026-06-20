@@ -56,6 +56,7 @@ class GeminiAgent:
         self.__podcast_topics_prompt = 'podcast/podcast_topics_system_prompt.txt'
         self.__podcast_script_prompt = 'podcast/podcast_script_system_prompt.txt'
         self.__daily_brief_prompt = 'daily_brief/brief_system_prompt.txt'
+        self.__event_prep_prompt = 'calendar/event_prep_system_prompt.txt'
 
         self.__allowed_langs = {str(x).lower().strip() for x in (settings.ASSISTANT_LANGS or [])}
         self.__allowed_tones = {str(x).lower().strip() for x in (settings.ASSISTANT_TONES or [])}
@@ -672,6 +673,45 @@ class GeminiAgent:
             city=city, level=level, date_label=date_label, news_context=news_context
         )
         return await self.__agenerate_json(model, full_prompt, self.__daily_brief_schema())
+
+    # ---------- Event prep ----------
+    def __event_prep_schema(self) -> types.Schema:
+        return types.Schema(
+            type=types.Type.OBJECT,
+            properties={
+                "status": types.Schema(type=types.Type.STRING),
+                "summary": types.Schema(type=types.Type.STRING),
+                "openers": types.Schema(
+                    type=types.Type.ARRAY,
+                    items=types.Schema(type=types.Type.STRING),
+                ),
+                "tips": types.Schema(
+                    type=types.Type.ARRAY,
+                    items=types.Schema(type=types.Type.STRING),
+                ),
+                "message": types.Schema(type=types.Type.STRING),
+            },
+            required=["status", "summary", "openers", "tips"],
+        )
+
+    async def generate_event_prep(
+        self,
+        title: str,
+        description: str = "",
+        location: str = "",
+        when: str = "",
+        level: int = 6,
+    ) -> dict:
+        model = settings.PODCAST_GENERATE_MODEL
+        template = self.__jinja_env.get_template(self.__event_prep_prompt)
+        full_prompt = template.render(
+            title=self.__sanitize_text_block(title or ""),
+            description=self.__sanitize_text_block(description or ""),
+            location=self.__sanitize_text_block(location or ""),
+            when=self.__sanitize_text_block(when or ""),
+            level=int(level),
+        )
+        return await self.__agenerate_json(model, full_prompt, self.__event_prep_schema())
 
     # ---------- TTS ----------
     async def book_cover(self, image_paths: List[str]) -> dict:

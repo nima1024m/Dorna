@@ -77,3 +77,11 @@ async def generate_daily_brief(
     return await get_agent().generate_daily_brief(
         city=city, level=level, date_label=date_label, news_context=news_context
     )
+
+
+async def generate_event_prep(
+    title: str, description: str = "", location: str = "", when: str = "", level: int = 6
+) -> dict:
+    return await get_agent().generate_event_prep(
+        title=title, description=description, location=location, when=when, level=level
+    )

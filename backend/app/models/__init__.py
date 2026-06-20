@@ -25,3 +25,4 @@ from .user_saved_phrase import UserSavedPhrase
 from .user_stats import UserStats
 from .daily_brief import DailyBrief
 from .device_token import DeviceToken
+from .calendar import CalendarConnection, CalendarEvent

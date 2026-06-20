@@ -27,6 +27,10 @@ class Settings(BaseSettings):
     SIGNUP_TOKEN_TTL_MIN: Optional[int] = None
     GOOGLE_OAUTH_CLIENT_ID: Optional[str] = None
     APPLE_CLIENT_ID: Optional[str] = None
+    # --- Google Calendar (auth-code flow, offline access) ---
+    GOOGLE_OAUTH_CLIENT_SECRET: Optional[str] = None
+    GOOGLE_TOKEN_URI: Optional[str] = "https://oauth2.googleapis.com/token"
+    CALENDAR_TOKEN_ENC_KEY: Optional[str] = None  # Fernet key for token-at-rest
     VERIFY_TOKEN_TTL_MIN: Optional[int] = None
     RATE_SIGNIN_PER_MIN: Optional[int] = None
     RATE_SIGNUP_PER_MIN: Optional[int] = None
