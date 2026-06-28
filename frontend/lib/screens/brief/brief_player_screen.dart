@@ -215,7 +215,9 @@ class _Scrubber extends StatelessWidget {
                     .clamp(0, BriefPlayerController.totalSeconds)
                     .toDouble(),
                 max: BriefPlayerController.totalSeconds.toDouble(),
+                onChangeStart: (_) => c.beginSeek(),
                 onChanged: (v) => c.position.value = v.round(),
+                onChangeEnd: (_) => c.endSeek(),
               )),
         ),
         Padding(
